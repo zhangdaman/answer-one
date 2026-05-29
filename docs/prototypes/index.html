@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>首答 AnswerOne · 原型总览</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/theme.js?v=20260529"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-canvas text-offblack antialiased">
+  <div class="max-w-[1080px] mx-auto px-8 py-12">
+    <!-- 头部 -->
+    <header class="flex items-center gap-3 mb-2">
+      <div class="w-11 h-11 rounded-lg bg-primary text-white grid place-items-center font-display font-bold tracking-tighter text-2xl">答</div>
+      <div>
+        <h1 class="font-display text-3xl font-extrabold tracking-tighter">首答 AnswerOne · 原型总览</h1>
+        <p class="text-sm text-secondary mt-0.5">B2 高保真原型（HTML + TailwindCSS）· 风格：Industrial Refinement / Clinical Curator</p>
+      </div>
+    </header>
+
+    <!-- 调色板 -->
+    <div class="flex flex-wrap items-center gap-3 mt-6 mb-10 text-xs">
+      <span class="text-secondary mr-1">配色</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-5 h-5 rounded-lg" style="background:#2563EB"></span>主色</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-5 h-5 rounded-lg" style="background:#18181B"></span>Off-Black</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-5 h-5 rounded-lg" style="background:#16A34A"></span>高分</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-5 h-5 rounded-lg" style="background:#D97706"></span>中分</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-5 h-5 rounded-lg" style="background:#DC2626"></span>缺口</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-5 h-5 rounded-lg border border-line" style="background:#FAFAFA"></span>底色</span>
+    </div>
+
+    <!-- 全屏页 -->
+    <h2 class="text-xs font-medium text-secondary tracking-wide uppercase mb-3">独立全屏</h2>
+    <div class="grid grid-cols-3 gap-4 mb-10">
+      <a href="01-登录页.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">01</span><span class="font-medium">登录页</span></div>
+        <p class="mt-1.5 text-sm text-secondary">手机号 + 验证码 + 邀请码，邀请制入口</p>
+      </a>
+      <a href="02-引导建档.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">02</span><span class="font-medium">引导建档</span></div>
+        <p class="mt-1.5 text-sm text-secondary">首次登录完善品牌档案，5 字段 + 平台多选</p>
+      </a>
+    </div>
+
+    <!-- 工作台内页 -->
+    <h2 class="text-xs font-medium text-secondary tracking-wide uppercase mb-3">工作台内页（左侧固定导航）</h2>
+    <div class="grid grid-cols-3 gap-4">
+      <a href="03-工作台首页.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">03</span><span class="font-medium">工作台首页</span></div>
+        <p class="mt-1.5 text-sm text-secondary">进度卡 + 总分大卡 + 缺口 CTA</p>
+      </a>
+      <a href="04-品牌档案.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">04</span><span class="font-medium">品牌档案</span></div>
+        <p class="mt-1.5 text-sm text-secondary">基础信息 / 目标平台 / 提问样本</p>
+      </a>
+      <a href="05-诊断列表.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">05</span><span class="font-medium">诊断列表</span></div>
+        <p class="mt-1.5 text-sm text-secondary">历次诊断表格 + 异步进度弹层</p>
+      </a>
+      <a href="06-诊断详情.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">06</span><span class="font-medium">诊断详情（报告）</span></div>
+        <p class="mt-1.5 text-sm text-secondary">总分 + 三指标 + 平台明细 + 缺口清单</p>
+      </a>
+      <a href="07-内容生成.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">07</span><span class="font-medium">内容生成</span></div>
+        <p class="mt-1.5 text-sm text-secondary">左参数 / 右结果，缺口带入 + 行内编辑</p>
+      </a>
+      <a href="08-内容库.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">08</span><span class="font-medium">内容库</span></div>
+        <p class="mt-1.5 text-sm text-secondary">筛选条 + 3 列内容卡，待发布 / 已发布</p>
+      </a>
+      <a href="09-分发建议.html" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">09</span><span class="font-medium">分发建议</span></div>
+        <p class="mt-1.5 text-sm text-secondary">平台建议表 + 一键复制 + 复诊提醒</p>
+      </a>
+      <a href="10-内容详情.html?type=text&id=1" class="group bg-surface border border-line rounded-lg p-5 transition hover:border-primary/40 hover:shadow-card">
+        <div class="flex items-center gap-2"><span class="font-display text-sm font-bold text-secondary tracking-tighter">10</span><span class="font-medium">内容详情·编辑</span></div>
+        <p class="mt-1.5 text-sm text-secondary">从内容库进入，按 文字 / 图片 / 视频 分别渲染编辑器</p>
+      </a>
+    </div>
+
+    <p class="mt-10 text-xs text-secondary">示例品牌贯穿全程：杭州「茶语时光」奶茶店（茶饮咖啡 · 杭州）。圆角统一 8px，全中文，核心指标用 Tonal Focus 高对比填充。</p>
+  </div>
+</body>
+</html>

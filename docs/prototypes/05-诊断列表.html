@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>首答 AnswerOne · 我的诊断</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/theme.js?v=20260529"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-canvas text-offblack antialiased">
+  <div id="sidebar-root"></div>
+
+  <div class="pl-60">
+    <header class="h-16 bg-canvas/85 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center justify-between px-8">
+      <h1 class="font-display text-lg font-bold tracking-tighter">我的诊断</h1>
+      <button onclick="AODiag.start()" class="px-4 h-9 rounded-xl bg-brand-gradient text-white text-sm font-semibold inline-flex items-center gap-1.5 shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>开始新诊断
+      </button>
+    </header>
+
+    <div id="ao-flow-rail"></div>
+
+    <main class="p-8 mx-auto w-full max-w-[1280px] space-y-5 bg-page-wash">
+      <p class="text-sm text-secondary">每次诊断会向你选定的 12 个平台·端（同一平台的手机版 / 网页版分开统计）、各提 10 个本地问题，统计你被提及的情况。</p>
+
+      <div class="bg-surface border border-line rounded-lg overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-left text-secondary border-b border-line">
+              <th class="font-medium px-6 py-3">诊断时间</th>
+              <th class="font-medium px-6 py-3">总分</th>
+              <th class="font-medium px-6 py-3">提及率</th>
+              <th class="font-medium px-6 py-3">状态</th>
+              <th class="font-medium px-6 py-3 text-right">操作</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            <!-- 进行中（状态/操作由 AODiag 接管，取消后翻转为「已取消」） -->
+            <tr class="hover:bg-canvas/60 transition">
+              <td class="px-6 py-4">05-29 15:02</td>
+              <td class="px-6 py-4 text-secondary">—</td>
+              <td class="px-6 py-4 text-secondary">—</td>
+              <td class="px-6 py-4" id="running-status">
+                <span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-primary/10 text-primary text-xs font-medium">
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>进行中 · 询问中 3/10
+                </span>
+              </td>
+              <td class="px-6 py-4 text-right" id="running-action"><button onclick="AODiag.view()" class="text-xs text-primary hover:underline">查看进度</button></td>
+            </tr>
+            <!-- 已完成 42 -->
+            <tr class="hover:bg-canvas/60 transition cursor-pointer" onclick="location.href='06-诊断详情.html'">
+              <td class="px-6 py-4">05-29 14:20</td>
+              <td class="px-6 py-4"><span class="font-display text-base font-bold tracking-tighter text-warning">42</span></td>
+              <td class="px-6 py-4">30%</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-success/10 text-success text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已完成</span></td>
+              <td class="px-6 py-4 text-right"><a href="06-诊断详情.html" class="text-xs text-primary hover:underline">查看报告</a></td>
+            </tr>
+            <!-- 已完成 28 -->
+            <tr class="hover:bg-canvas/60 transition cursor-pointer" onclick="location.href='06-诊断详情.html'">
+              <td class="px-6 py-4">05-22 10:05</td>
+              <td class="px-6 py-4"><span class="font-display text-base font-bold tracking-tighter text-danger">28</span></td>
+              <td class="px-6 py-4">15%</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-success/10 text-success text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已完成</span></td>
+              <td class="px-6 py-4 text-right"><a href="06-诊断详情.html" class="text-xs text-primary hover:underline">查看报告</a></td>
+            </tr>
+            <!-- 失败 -->
+            <tr class="hover:bg-canvas/60 transition">
+              <td class="px-6 py-4">05-15 09:30</td>
+              <td class="px-6 py-4 text-secondary">—</td>
+              <td class="px-6 py-4 text-secondary">—</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-danger/10 text-danger text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-danger"></span>失败</span></td>
+              <td class="px-6 py-4 text-right"><button data-toast="正在重试这次诊断（演示）" class="text-xs text-primary hover:underline">重试</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- 诊断进度弹层（异步任务可视化） -->
+  <div id="diag-modal" class="hidden fixed inset-0 z-30 grid place-items-center px-4">
+    <div class="absolute inset-0 bg-offblack/50 backdrop-blur-sm" onclick="document.getElementById('diag-modal').classList.add('hidden')"></div>
+    <div class="relative w-full max-w-[440px] bg-surface rounded-2xl border border-line shadow-elevated p-7">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="font-display text-lg font-bold tracking-tighter">正在诊断「茶语时光」</h3>
+          <p class="text-sm text-secondary mt-0.5">预计 1–2 分钟，可后台运行，完成后通知你。</p>
+        </div>
+        <button onclick="document.getElementById('diag-modal').classList.add('hidden')" class="w-8 h-8 grid place-items-center rounded-lg text-secondary hover:bg-line/60 transition">✕</button>
+      </div>
+
+      <!-- 总进度 -->
+      <div class="mt-5">
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-secondary">正在询问 <span id="prog-current" class="text-offblack font-medium">豆包·手机版</span> · 第 <span id="prog-q">3</span> / 10 个问题</span>
+          <span id="prog-pct" class="font-display font-bold tracking-tighter">19%</span>
+        </div>
+        <div class="mt-2 h-2 rounded-full bg-line overflow-hidden"><div id="prog-bar" class="h-full w-[19%] bg-brand-gradient rounded-full"></div></div>
+        <div class="mt-1 text-xs text-secondary">平台·端进度 <span id="prog-done">2</span> / <span id="prog-total">12</span></div>
+      </div>
+
+      <!-- 平台·端清单 -->
+      <ul id="prog-list" class="mt-5 space-y-1.5 text-sm max-h-[244px] overflow-y-auto pr-1">
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-success/5"><svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0 text-success" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg><span class="flex-1">千问·手机版</span><span class="text-xs text-secondary">完成</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-success/5"><svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0 text-success" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg><span class="flex-1">千问·网页版</span><span class="text-xs text-secondary">完成</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-primary/5"><span class="w-4 h-4 shrink-0 rounded-full border-2 border-primary border-t-transparent animate-spin"></span><span class="flex-1 font-medium">豆包·手机版</span><span class="text-xs text-primary">询问中 3/10</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">豆包·网页版</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">DeepSeek·手机版</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">DeepSeek·网页版</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">腾讯元宝·手机版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">腾讯元宝·网页版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">文心·网页版</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">KIMI·网页版</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">百度AI·网页版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">AI抖音·网页版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
+      </ul>
+
+      <div class="mt-6 flex gap-2.5">
+        <button onclick="AODiag.background()" class="flex-1 h-10 rounded-lg border border-line text-sm font-medium transition hover:bg-line/50 active:bg-line outline-none focus-visible:ring-2 focus-visible:ring-primary/30">转后台运行</button>
+        <button onclick="AODiag.cancel()" class="flex-1 h-10 rounded-lg text-sm font-medium text-danger border border-danger/30 transition hover:bg-danger/5 active:bg-danger/10 outline-none focus-visible:ring-2 focus-visible:ring-danger/30">取消诊断</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新建诊断 · 设置弹层（先选平台·端，再开始） -->
+  <div id="diag-setup-modal" class="hidden fixed inset-0 z-30 grid place-items-center px-4">
+    <div class="absolute inset-0 bg-offblack/50 backdrop-blur-sm" onclick="AODiag.closeSetup()"></div>
+    <div class="relative w-full max-w-[480px] bg-surface rounded-2xl border border-line shadow-elevated p-7">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="font-display text-lg font-bold tracking-tighter">新建诊断</h3>
+          <p class="text-sm text-secondary mt-0.5">品牌「茶语时光」· 每个平台·端各提 10 个本地问题</p>
+        </div>
+        <button onclick="AODiag.closeSetup()" class="w-8 h-8 grid place-items-center rounded-lg text-secondary hover:bg-line/60 transition">✕</button>
+      </div>
+
+      <div class="mt-5">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium">选择诊断平台·端</span>
+          <button onclick="AODiag.selectAll()" class="text-xs text-primary hover:underline">全选</button>
+        </div>
+        <div id="setup-channel-grid" class="mt-2.5 grid grid-cols-3 gap-2"></div>
+        <p class="mt-2.5 text-xs text-secondary">同一平台的手机版 / 网页版联网来源不同，结果会有差异；无公开 API 的平台自动走备用算法估算。</p>
+      </div>
+
+      <div class="mt-6 flex gap-2.5">
+        <button onclick="AODiag.closeSetup()" class="flex-1 h-10 rounded-lg border border-line text-sm font-medium transition hover:bg-line/50 active:bg-line outline-none focus-visible:ring-2 focus-visible:ring-primary/30">取消</button>
+        <button onclick="AODiag.confirmStart()" class="flex-[1.4] h-10 rounded-lg bg-brand-gradient text-white text-sm font-semibold shadow-brand transition hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">开始诊断 · 已选 <span id="setup-go-count">12</span> 个平台·端</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js?v=20260529g"></script>
+  <script>
+    mountShell('diag');
+    // 诊断流程（演示）：开始 → 先在「设置」里选平台·端 → 确认后从头开始跑；列表行与进度弹层始终自洽
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const CHANNELS = [
+        { name: '千问·手机版', api: true }, { name: '千问·网页版', api: true },
+        { name: '豆包·手机版', api: true }, { name: '豆包·网页版', api: true },
+        { name: 'DeepSeek·手机版', api: true }, { name: 'DeepSeek·网页版', api: true },
+        { name: '腾讯元宝·手机版', api: false }, { name: '腾讯元宝·网页版', api: false },
+        { name: '文心·网页版', api: true }, { name: 'KIMI·网页版', api: true },
+        { name: '百度AI·网页版', api: false }, { name: 'AI抖音·网页版', api: false },
+      ];
+      const sel = new Set(CHANNELS.map((_, i) => i)); // 默认全选
+
+      function chipHTML(c, i, on) {
+        const dot = c.api ? 'bg-success' : 'bg-warning';
+        const ring = on ? 'border-primary bg-primary/5 text-offblack' : 'border-line text-secondary hover:border-primary/40';
+        return `<button type="button" data-ch="${i}" class="flex w-full items-center gap-1.5 px-2 h-9 rounded-lg border ${ring} text-[12px] font-medium transition outline-none focus-visible:ring-2 focus-visible:ring-primary/30"><span class="w-1.5 h-1.5 shrink-0 rounded-full ${dot}"></span><span class="flex-1 min-w-0 truncate text-left">${c.name}</span></button>`;
+      }
+      function renderChips() { $('setup-channel-grid').innerHTML = CHANNELS.map((c, i) => chipHTML(c, i, sel.has(i))).join(''); }
+      function refreshCount() { $('setup-go-count').textContent = sel.size; }
+
+      const AODiag = {
+        open() { $('diag-modal').classList.remove('hidden'); },
+        close() { $('diag-modal').classList.add('hidden'); },
+        openSetup() { sel.clear(); CHANNELS.forEach((_, i) => sel.add(i)); renderChips(); refreshCount(); $('diag-setup-modal').classList.remove('hidden'); },
+        closeSetup() { $('diag-setup-modal').classList.add('hidden'); },
+        toggle(i) { sel.has(i) ? sel.delete(i) : sel.add(i); renderChips(); refreshCount(); },
+        selectAll() { CHANNELS.forEach((_, i) => sel.add(i)); renderChips(); refreshCount(); },
+        setRunning() {
+          $('running-status').innerHTML = '<span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-primary/10 text-primary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>进行中 · 询问中 1/10</span>';
+          $('running-action').innerHTML = '<button onclick="AODiag.view()" class="text-xs text-primary hover:underline">查看进度</button>';
+        },
+        setCanceled() {
+          $('running-status').innerHTML = '<span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-danger/10 text-danger text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-danger"></span>已取消</span>';
+          $('running-action').innerHTML = '<button onclick="AODiag.start()" class="text-xs text-primary hover:underline">重新诊断</button>';
+        },
+        resetProgress(list) {
+          $('prog-current').textContent = list[0].name;
+          $('prog-q').textContent = '1';
+          $('prog-pct').textContent = '1%';
+          $('prog-bar').style.width = '1%';
+          $('prog-done').textContent = '0';
+          $('prog-total').textContent = list.length;
+          $('prog-list').innerHTML = list.map((c, i) => i === 0
+            ? `<li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-primary/5"><span class="w-4 h-4 shrink-0 rounded-full border-2 border-primary border-t-transparent animate-spin"></span><span class="flex-1 font-medium">${c.name}</span><span class="text-xs text-primary">询问中 1/10</span></li>`
+            : `<li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full ${c.api ? 'bg-line' : 'bg-warning'} ml-1.5 mr-1"></span><span class="flex-1 text-secondary">${c.name}</span><span class="text-xs ${c.api ? 'text-secondary' : 'text-warning'}">${c.api ? '等待' : '等待 · 备用算法'}</span></li>`
+          ).join('');
+        },
+        start() { this.openSetup(); },
+        confirmStart() {
+          const list = CHANNELS.filter((_, i) => sel.has(i));
+          if (!list.length) { AO.toast('至少选择一个平台·端', 'warn'); return; }
+          this.closeSetup();
+          this.resetProgress(list);
+          this.setRunning();
+          this.open();
+          AO.toast('诊断已开始 · ' + list.length + ' 个平台·端（演示）', 'success');
+        },
+        view() { this.open(); },
+        cancel() { this.close(); this.setCanceled(); AO.toast('已取消本次诊断（演示）', 'info'); },
+        background() { this.close(); AO.toast('诊断已转入后台运行，完成后通知你', 'info'); },
+      };
+      window.AODiag = AODiag;
+
+      $('setup-channel-grid').addEventListener('click', function (e) {
+        const b = e.target.closest('[data-ch]');
+        if (b) AODiag.toggle(Number(b.dataset.ch));
+      });
+
+      // 从工作台「开始新诊断」带 ?new=1 进入：直接弹出设置框，省去再点一次
+      if (/(?:^|[?&])new=1(?:&|$)/.test(location.search)) AODiag.openSetup();
+    })();
+  </script>
+</body>
+</html>

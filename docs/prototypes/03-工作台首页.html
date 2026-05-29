@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>首答 AnswerOne · 工作台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/theme.js?v=20260529"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-canvas text-offblack antialiased">
+  <div id="sidebar-root"></div>
+
+  <div class="pl-60">
+    <header class="h-16 bg-canvas/80 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center justify-between px-8">
+      <div class="flex items-center gap-2.5">
+        <h1 class="font-display text-[17px] font-bold tracking-tighter">工作台</h1>
+        <span class="text-muted">/</span>
+        <span class="text-sm text-secondary">概览</span>
+      </div>
+      <a href="05-诊断列表.html?new=1" class="px-4 h-9 rounded-xl bg-brand-gradient text-white text-sm font-semibold inline-flex items-center gap-1.5 shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>开始新诊断
+      </a>
+    </header>
+
+    <main class="relative p-8 mx-auto w-full max-w-[1440px] bg-page-wash">
+      <!-- 下一步建议：据旅程状态(AO_STATE)只推一个主行动，消除「从哪开始」的犹豫 -->
+      <div id="ao-next-step" class="mb-5"></div>
+
+      <!-- 英雄渐变带 -->
+      <section class="relative overflow-hidden rounded-2xl bg-brand-gradient bg-hero-mesh text-white shadow-hero mb-5">
+        <div class="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+        <div class="relative p-7 lg:p-8 flex flex-col lg:flex-row lg:items-center gap-8">
+          <!-- 左：问候 + 洞察 + CTA -->
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-center gap-2 mb-3.5">
+              <span class="inline-flex items-center gap-1.5 px-2.5 h-7 rounded-full bg-white/15 ring-1 ring-white/20 backdrop-blur text-[11px] font-medium">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>本期监测 12 个平台·端
+              </span>
+              <span class="inline-flex items-center px-2.5 h-7 rounded-full bg-white/15 ring-1 ring-white/20 backdrop-blur text-[11px] font-medium">较上次 ↑ 14</span>
+            </div>
+            <h2 class="font-display text-[28px] lg:text-[32px] font-extrabold tracking-tighter leading-tight">你好，<span id="hero-greeting-name">茶语时光</span></h2>
+            <p class="mt-2.5 text-[15px] leading-relaxed text-white/80 max-w-lg">在豆包·手机版、千问·手机版的本地查询里，AI 还几乎搜不到你。先补齐高频缺口，再复诊一次看看变化。</p>
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <a href="06-诊断详情.html" class="h-10 px-4 rounded-xl bg-white text-primary-strong text-sm font-semibold inline-flex items-center gap-1.5 shadow-lg shadow-black/10 hover:shadow-xl hover:-translate-y-0.5 transition outline-none focus-visible:ring-2 focus-visible:ring-white/60">查看完整报告<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 6 6 6-6 6"/></svg></a>
+              <a href="07-内容生成.html?from=diag" class="h-10 px-4 rounded-xl bg-white/15 text-white text-sm font-semibold inline-flex items-center gap-1.5 ring-1 ring-white/25 backdrop-blur hover:bg-white/25 transition outline-none focus-visible:ring-2 focus-visible:ring-white/50">去补齐缺口</a>
+            </div>
+          </div>
+          <!-- 右：玻璃质感总分仪表 -->
+          <a href="06-诊断详情.html" class="group shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/20 backdrop-blur p-5 flex items-center gap-5 transition hover:bg-white/15 outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+            <div class="relative w-[132px] h-[132px] shrink-0">
+              <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
+                <defs>
+                  <filter id="arcglow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#FBBF24" flood-opacity="0.7"/></filter>
+                </defs>
+                <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="10"/>
+                <circle cx="60" cy="60" r="52" fill="none" stroke="#FBBF24" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="42 100" filter="url(#arcglow)"/>
+              </svg>
+              <div class="absolute inset-0 grid place-items-center text-center">
+                <div>
+                  <div class="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">总分</div>
+                  <div class="font-display text-[48px] leading-none font-extrabold tracking-tighter tabular-nums mt-0.5">42</div>
+                  <div class="text-[11px] text-white/55 mt-1">/ 100</div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-3.5 pr-1">
+              <div><div class="text-[11px] text-white/55">提及率</div><div class="font-display text-xl font-bold tracking-tighter tabular-nums">30%</div></div>
+              <div><div class="text-[11px] text-white/55">平均位置</div><div class="font-display text-xl font-bold tracking-tighter tabular-nums">4.2</div></div>
+              <div><div class="text-[11px] text-white/55">正面率</div><div class="font-display text-xl font-bold tracking-tighter tabular-nums">60%</div></div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- 三张统计卡：彩色色块图标 -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+        <a href="05-诊断列表.html" class="group relative overflow-hidden rounded-xl bg-surface border border-line shadow-card p-5 transition-all duration-200 hover:shadow-elevated hover:-translate-y-0.5 outline-none focus-visible:ring-2 focus-visible:ring-primary/30">
+          <div class="absolute inset-x-0 top-0 h-14 bg-card-sheen pointer-events-none"></div>
+          <div class="relative flex items-start justify-between">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">已完成诊断</div>
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary grid place-items-center ring-1 ring-primary/15"><svg viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-15 2 9h6"/></svg></div>
+          </div>
+          <div class="relative mt-3 flex items-baseline gap-1.5"><span class="font-display text-[34px] leading-none font-bold tracking-tighter tabular-nums">1</span><span class="text-sm text-secondary">次</span></div>
+          <div class="relative mt-3 pt-3 border-t border-hairline flex items-center justify-between text-xs">
+            <span class="text-secondary">最近 05-29</span>
+            <span class="text-primary font-medium inline-flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">查看诊断<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
+          </div>
+        </a>
+        <a href="08-内容库.html" class="group relative overflow-hidden rounded-xl bg-surface border border-line shadow-card p-5 transition-all duration-200 hover:shadow-elevated hover:-translate-y-0.5 outline-none focus-visible:ring-2 focus-visible:ring-success/30">
+          <div class="absolute inset-x-0 top-0 h-14 bg-card-sheen pointer-events-none"></div>
+          <div class="relative flex items-start justify-between">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">已生成内容</div>
+            <div class="w-9 h-9 rounded-xl bg-success/10 text-success grid place-items-center ring-1 ring-success/15"><svg viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div>
+          </div>
+          <div class="relative mt-3 flex items-baseline gap-1.5"><span class="font-display text-[34px] leading-none font-bold tracking-tighter tabular-nums">3</span><span class="text-sm text-secondary">篇</span></div>
+          <div class="relative mt-3 pt-3 border-t border-hairline flex items-center justify-between text-xs">
+            <span class="text-warning font-medium">3 篇待分发</span>
+            <span class="text-success font-medium inline-flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">进入内容库<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
+          </div>
+        </a>
+        <a href="09-分发建议.html" class="group relative overflow-hidden rounded-xl bg-surface border border-line shadow-card p-5 transition-all duration-200 hover:shadow-elevated hover:-translate-y-0.5 outline-none focus-visible:ring-2 focus-visible:ring-accent/30">
+          <div class="absolute inset-x-0 top-0 h-14 bg-card-sheen pointer-events-none"></div>
+          <div class="relative flex items-start justify-between">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">已发布</div>
+            <div class="w-9 h-9 rounded-xl bg-accent/10 text-accent grid place-items-center ring-1 ring-accent/15"><svg viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 5l-4 15-4-7-8-1Z"/></svg></div>
+          </div>
+          <div class="relative mt-3 flex items-baseline gap-1.5"><span class="font-display text-[34px] leading-none font-bold tracking-tighter tabular-nums text-secondary">0</span><span class="text-sm text-secondary">篇</span></div>
+          <div class="relative mt-3 pt-3 border-t border-hairline flex items-center justify-between text-xs">
+            <span class="text-secondary">尚未发布</span>
+            <span class="text-accent font-medium inline-flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">去分发<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </div>
+
+      <!-- 平台可见度 + 缺口 CTA -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- 平台可见度概览 -->
+        <section class="lg:col-span-2 relative overflow-hidden rounded-xl bg-surface border border-line shadow-card p-6">
+          <div class="flex items-center justify-between mb-5">
+            <div>
+              <h3 class="font-display text-[17px] font-bold tracking-tighter">各平台·端可见度</h3>
+              <p class="text-xs text-secondary mt-0.5">你在 12 个平台·端本地问答中被提及的比例</p>
+            </div>
+            <a href="06-诊断详情.html" class="text-xs text-primary font-medium inline-flex items-center gap-0.5 hover:gap-1 transition-all">完整报告<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>
+          </div>
+          <div id="bars" class="space-y-3.5"></div>
+        </section>
+
+        <!-- 缺口 CTA：琥珀渐变 -->
+        <div class="relative overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50/60 p-6 flex flex-col shadow-card">
+          <div class="flex items-center justify-between">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white grid place-items-center shadow-lg shadow-orange-500/25">
+              <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+            </div>
+            <span class="font-display text-[40px] leading-none font-extrabold tracking-tighter tabular-nums bg-gradient-to-br from-amber-500 to-orange-600 bg-clip-text text-transparent">4</span>
+          </div>
+          <div class="font-display font-bold tracking-tighter text-[17px] mt-3.5 text-offblack">个「0 提及」缺口</div>
+          <p class="text-[13px] text-secondary mt-1 leading-relaxed flex-1">这些高频本地问题，AI 还没提到你。优先生成内容补齐它们。</p>
+          <div class="flex flex-wrap gap-1.5 my-3.5">
+            <span class="px-2 py-1 rounded-lg bg-surface border border-amber-200/70 text-[11px] text-amber-700 font-medium">杭州奶茶推荐</span>
+            <span class="px-2 py-1 rounded-lg bg-surface border border-amber-200/70 text-[11px] text-amber-700 font-medium">手作奶茶用真奶</span>
+          </div>
+          <a href="07-内容生成.html?from=diag" class="h-10 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-semibold inline-flex items-center justify-center gap-1.5 shadow-lg shadow-orange-500/25 transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-orange-400/50">去生成内容<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/app.js?v=20260529g"></script>
+  <script>
+    mountShell('home');
+    // 下一步建议：据 AO_STATE 只推一个主行动（无档案→完善；未诊断→首诊；有缺口→补齐；内容就绪→分发；已分发→复诊）
+    (function () {
+      const host = document.getElementById('ao-next-step');
+      if (!host) return;
+      const s = window.AO_STATE || {};
+      let r;
+      if (!s.hasBrand)
+        r = { title: '先完善品牌档案', desc: '填好品牌基本信息，才能开始诊断', href: '04-品牌档案.html', cta: '去完善' };
+      else if (!s.diagnosed)
+        r = { title: '开始首次内容诊断', desc: '看看 12 个 AI 平台·端里，用户能不能搜到你', href: '05-诊断列表.html?new=1', cta: '开始诊断' };
+      else if (s.gaps > 0)
+        r = { title: '补齐 ' + s.gaps + ' 个「0 提及」缺口', desc: '已完成诊断 · 这些高频问题 AI 还没提到你，优先补内容', href: '07-内容生成.html?from=diag', cta: '去生成内容' };
+      else if (s.hasContent && !s.distributed)
+        r = { title: '把内容分发到对应平台', desc: '内容已就绪 · 按平台建议发布，扩大 AI 可见度', href: '09-分发建议.html', cta: '去分发' };
+      else
+        r = { title: '7 天后回来复诊', desc: '已分发 · 过段时间复诊，对比可见度变化', href: '05-诊断列表.html?new=1', cta: '去复诊' };
+      host.innerHTML =
+        '<div class="flex flex-wrap items-center gap-4 rounded-2xl border border-line bg-surface px-5 py-4 shadow-card">' +
+          '<span class="w-11 h-11 rounded-xl grid place-items-center text-white shrink-0 shadow-brand" style="background:linear-gradient(135deg,#1D4ED8 0%,#2563EB 48%,#0EA5E9 100%)">' +
+            '<svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"/></svg>' +
+          '</span>' +
+          '<div class="min-w-0">' +
+            '<div class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">建议下一步</div>' +
+            '<div class="text-[16px] font-bold tracking-tight text-offblack mt-0.5">' + r.title + '</div>' +
+            '<div class="text-[12.5px] text-secondary mt-0.5">' + r.desc + '</div>' +
+          '</div>' +
+          '<a href="' + r.href + '" class="ml-auto inline-flex items-center gap-1.5 h-10 px-5 rounded-xl text-white text-sm font-semibold shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40" style="background:#2563EB">' + r.cta +
+            '<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>' +
+        '</div>';
+    })();
+    // 工作台问候随当前品牌变化（侧栏切换品牌时联动）
+    (function () {
+      const nameEl = document.getElementById('hero-greeting-name');
+      if (window.AO_BRANDS && window.AO_BRANDS.list[window.AO_BRANDS.current] && nameEl)
+        nameEl.textContent = window.AO_BRANDS.list[window.AO_BRANDS.current].name;
+      document.addEventListener('ao:brandchange', function (e) { if (nameEl) nameEl.textContent = e.detail.brand.name; });
+    })();
+    // 各平台·端可见度（按表现分档着色：强=翠绿 / 中=品牌蓝 / 弱=琥珀）
+    const PLATFORMS = [
+      { name: '文心·网页版', v: 52 },
+      { name: '千问·网页版', v: 46 },
+      { name: '豆包·网页版', v: 40 },
+      { name: 'DeepSeek·网页版', v: 34 },
+      { name: 'KIMI·网页版', v: 28 },
+      { name: '千问·手机版', v: 24 },
+      { name: 'DeepSeek·手机版', v: 20 },
+      { name: '腾讯元宝·网页版', v: 18 },
+      { name: '百度AI·网页版', v: 15 },
+      { name: '豆包·手机版', v: 12 },
+      { name: '腾讯元宝·手机版', v: 9 },
+      { name: 'AI抖音·网页版', v: 6 },
+    ];
+    function fillClass(v) {
+      if (v >= 45) return 'bg-gradient-to-r from-emerald-400 to-teal-500';
+      if (v >= 25) return 'bg-brand-gradient';
+      return 'bg-gradient-to-r from-amber-400 to-orange-500';
+    }
+    document.getElementById('bars').innerHTML = PLATFORMS.map(function (p) {
+      return (
+        '<div class="flex items-center gap-3">' +
+          '<div class="w-32 shrink-0 text-[13px] text-secondary truncate">' + p.name + '</div>' +
+          '<div class="flex-1 h-2.5 rounded-full bg-hairline overflow-hidden">' +
+            '<div class="h-full rounded-full ' + fillClass(p.v) + '" style="width:' + p.v + '%"></div>' +
+          '</div>' +
+          '<div class="w-10 shrink-0 text-right font-display text-[13px] font-semibold tabular-nums">' + p.v + '%</div>' +
+        '</div>'
+      );
+    }).join('');
+  </script>
+</body>
+</html>

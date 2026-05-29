@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>首答 AnswerOne · 完善品牌档案</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/theme.js?v=20260529"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-page-wash text-offblack antialiased min-h-screen flex justify-center px-4 py-12 relative overflow-hidden">
+
+  <div class="pointer-events-none absolute -top-48 left-1/2 -translate-x-1/2 w-[860px] h-[560px] rounded-full bg-brand-gradient opacity-[0.10] blur-3xl"></div>
+
+  <main class="relative z-10 w-full max-w-[620px]">
+    <!-- 步骤提示 -->
+    <div class="flex items-center gap-2.5 mb-5">
+      <div class="w-8 h-8 rounded-xl bg-brand-gradient text-white grid place-items-center font-display font-bold tracking-tighter shadow-brand">答</div>
+      <div class="flex-1">
+        <h1 class="font-display text-xl font-bold tracking-tighter">创建第一个品牌</h1>
+        <p class="text-sm text-secondary">约 2 分钟 · 先建好第一个，之后可在「品牌档案」里继续添加更多品牌</p>
+      </div>
+      <span class="text-xs text-secondary px-2.5 h-7 grid place-items-center rounded-lg bg-line/60">第 1 步 / 共 1 步</span>
+    </div>
+
+    <div class="bg-surface border border-line rounded-2xl shadow-elevated p-7 space-y-5">
+      <!-- 品牌名称 -->
+      <label class="block">
+        <span class="text-sm font-medium">品牌名称 <span class="text-danger">*</span></span>
+        <input type="text" value="茶语时光" placeholder="例如：茶语时光"
+          class="mt-1.5 w-full h-11 px-3.5 rounded-lg border border-line outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" />
+      </label>
+
+      <!-- 一句话描述 -->
+      <label class="block">
+        <span class="flex items-center justify-between text-sm font-medium">
+          <span>品牌一句话描述 <span class="text-danger">*</span></span>
+          <span class="text-xs font-normal text-secondary"><span id="setup-desc-count">18</span> / 50</span>
+        </span>
+        <input id="setup-desc" type="text" value="杭州手作鲜奶茶，主打茉莉奶绿" maxlength="50"
+          class="mt-1.5 w-full h-11 px-3.5 rounded-lg border border-line outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" />
+      </label>
+
+      <!-- 行业 / 区域 联动两列 -->
+      <div class="grid grid-cols-2 gap-4">
+        <label class="block">
+          <span class="text-sm font-medium">行业 / 品类</span>
+          <div class="relative mt-1.5">
+            <select class="w-full h-11 px-3.5 pr-9 rounded-lg border border-line bg-surface appearance-none outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20">
+              <option>餐饮</option><option selected>茶饮咖啡</option><option>烘焙甜点</option>
+              <option>美容美发</option><option>美甲美睫</option><option>健身瑜伽</option>
+              <option>宠物服务</option><option>家政保洁</option><option>装修家居</option>
+              <option>汽车服务</option><option>口腔医美</option><option>婚纱摄影</option>
+              <option>母婴月子</option><option>休闲娱乐</option><option>本地教培</option>
+            </select>
+            <svg viewBox="0 0 24 24" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium">服务区域</span>
+          <div class="mt-1.5 flex gap-2">
+            <div class="relative w-28 shrink-0">
+              <select class="w-full h-11 pl-3.5 pr-8 rounded-lg border border-line bg-surface appearance-none outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20">
+                <option>全国</option><option>省份</option><option selected>城市</option>
+              </select>
+              <svg viewBox="0 0 24 24" class="w-4 h-4 absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <input type="text" value="杭州" placeholder="填写所在城市"
+              class="flex-1 h-11 px-3.5 rounded-lg border border-line outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" />
+          </div>
+        </label>
+      </div>
+
+      <!-- 关键卖点 标签输入 -->
+      <div>
+        <span class="text-sm font-medium">关键卖点</span>
+        <span class="text-xs text-secondary ml-1">可多条，回车添加</span>
+        <div id="setup-tags" class="mt-1.5 min-h-11 px-2 py-2 flex flex-wrap items-center gap-2 rounded-lg border border-line focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition">
+          <span class="inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm">手作鲜奶<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>
+          <span class="inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm">茉莉花茶<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>
+          <span class="inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm">本地首店<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>
+          <input id="setup-tag-input" type="text" placeholder="输入卖点后回车…" class="flex-1 min-w-32 h-7 px-1.5 outline-none text-sm placeholder:text-secondary/60" />
+        </div>
+      </div>
+
+      <!-- 目标 AI 平台 多选（默认全选） -->
+      <div>
+        <span class="flex items-center justify-between text-sm font-medium">
+          <span>目标 AI 平台 · 端</span>
+          <span class="text-xs font-normal text-secondary">已选 <span id="setup-plat-count">12</span> / 12 · 默认全选</span>
+        </span>
+        <div id="setup-platforms" class="mt-2 grid grid-cols-3 gap-2.5">
+          <!-- 选中态：12 个平台·端渠道 -->
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>千问·手机版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>千问·网页版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>豆包·手机版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>豆包·网页版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>DeepSeek·手机版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>DeepSeek·网页版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>腾讯元宝·手机版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>腾讯元宝·网页版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>文心·网页版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>KIMI·网页版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>百度AI·网页版</label>
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>AI抖音·网页版</label>
+          <!-- 全选开关 -->
+          <label class="flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none"><span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>全部</label>
+        </div>
+        <p class="mt-2 text-xs text-secondary">同一平台的手机版 / 网页版联网来源不同，结果会有差异；无公开 API 的平台自动走备用算法估算。</p>
+      </div>
+
+      <!-- 主按钮 -->
+      <a href="03-工作台首页.html"
+        class="mt-1 w-full h-11 rounded-xl bg-brand-gradient text-white text-sm font-semibold grid place-items-center shadow-brand
+               transition-transform hover:-translate-y-0.5 active:translate-y-0
+               outline-none focus-visible:ring-2 focus-visible:ring-primary/40">保存并进入工作台</a>
+    </div>
+  </main>
+
+  <script>
+    // 02 引导建档 · 演示版交互
+    (function () {
+      // 描述字数
+      const desc = document.getElementById('setup-desc');
+      const descCount = document.getElementById('setup-desc-count');
+      const syncCount = () => (descCount.textContent = desc.value.length);
+      desc.addEventListener('input', syncCount);
+      syncCount();
+
+      // 卖点标签：删除 + 回车添加
+      const tags = document.getElementById('setup-tags');
+      const tagInput = document.getElementById('setup-tag-input');
+      tags.addEventListener('click', (e) => {
+        const x = e.target.closest('.tag-del'); if (!x) return;
+        x.closest('span').remove();
+      });
+      tagInput.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        const v = tagInput.value.trim(); if (!v) return;
+        const span = document.createElement('span');
+        span.className = 'inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm';
+        span.innerHTML = `${v}<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button>`;
+        tags.insertBefore(span, tagInput);
+        tagInput.value = '';
+      });
+
+      // 目标平台多选 + 全部 + 计数
+      const ON = 'flex items-center gap-2 h-11 px-3 rounded-lg border border-primary bg-primary/5 text-[13px] whitespace-nowrap cursor-pointer select-none';
+      const OFF = 'flex items-center gap-2 h-11 px-3 rounded-lg border border-line text-[13px] whitespace-nowrap text-secondary cursor-pointer select-none hover:border-secondary/40 transition';
+      const CHK_ON = '<span class="w-4 h-4 shrink-0 rounded bg-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>';
+      const CHK_OFF = '<span class="w-4 h-4 shrink-0 rounded border border-line"></span>';
+      const wrap = document.getElementById('setup-platforms');
+      const countEl = document.getElementById('setup-plat-count');
+      const labels = Array.from(wrap.querySelectorAll('label'));
+      const allLabel = labels.find((l) => l.textContent.trim() === '全部');
+      const plats = labels.filter((l) => l !== allLabel);
+      const isOn = (l) => l.classList.contains('border-primary');
+      const setState = (l, on) => { l.className = on ? ON : OFF; l.firstElementChild.outerHTML = on ? CHK_ON : CHK_OFF; };
+      const refresh = () => {
+        const n = plats.filter(isOn).length;
+        countEl.textContent = n;
+        if (allLabel) setState(allLabel, n === plats.length);
+      };
+      plats.forEach((l) => l.addEventListener('click', () => { setState(l, !isOn(l)); refresh(); }));
+      if (allLabel) allLabel.addEventListener('click', () => {
+        const target = !(plats.filter(isOn).length === plats.length);
+        plats.forEach((l) => setState(l, target));
+        refresh();
+      });
+      refresh();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "stage": "product-design",
+  "mode": "new",
+  "design_ready": true,
+  "development_ready": false,
+  "current_task": "产品设计 C 已完成（PRD 定稿 + api-contracts.md + Plan.md）。等待用户说\"开始开发\"进入多 Agent 开发。",
+  "blocked": false,
+  "notes": "技术栈：前端 Vue3+TS+Tailwind，后端 Python3.11+/FastAPI/PyCore+Celery+Redis+PostgreSQL。设计阶段全部完成：A 数据契约（PRD §9）→ B1 UI 说明书（蓝色活力，主色#2563EB）→ B2 9 个高保真原型（docs/prototypes/，响应式铺满，预览4399实测通过）→ C 定稿。C 产出：①PRD §10 技术架构与交付蓝图（路线图/架构/原型映射/Mermaid流程图/组件交互/风险）②docs/api-contracts.md（31 接口，含枚举字典与统一响应/异步格式，覆盖 9 页全部功能）③docs/Plan.md（F01-F15 功能清单、前端 P00-P09、后端 B00-B08、外部服务与测试权限清单、开发顺序）。PRD 自检全过，无 TBD 占位。进入开发前必办：①对齐全局 Python 指令与 venv 名称（本机仅 3.9.6，需升级 3.11+）②确认外部服务 Key/权限：多AI平台采集(无API走fallback)、LLM、短信、对象存储——真实值只进 .env。预览备注：中文路径致 MCP 预览改用 ASCII 副本 /Users/keqin123/.cache/ao-preview；脚本标签已加 ?v=20260529 免缓存。"
+}

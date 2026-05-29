@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>首答 AnswerOne · 品牌档案</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/theme.js?v=20260529"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-canvas text-offblack antialiased">
+  <div id="sidebar-root"></div>
+
+  <div class="pl-60">
+    <header class="h-16 bg-canvas/85 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center justify-between px-8">
+      <h1 class="font-display text-lg font-bold tracking-tighter">品牌档案</h1>
+      <button data-toast="品牌档案已保存（演示）" class="px-4 h-9 rounded-xl bg-brand-gradient text-white text-sm font-semibold shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">保存全部修改</button>
+    </header>
+
+    <div id="ao-flow-rail"></div>
+
+    <main class="p-8 mx-auto w-full max-w-[1280px] space-y-6 bg-page-wash">
+
+      <!-- 我的品牌（多品牌管理） -->
+      <section class="bg-surface border border-line rounded-lg">
+        <div class="flex items-center justify-between px-6 h-14 border-b border-line">
+          <div class="flex items-center gap-2.5">
+            <span class="w-1 h-5 rounded-full bg-brand-gradient"></span>
+            <h2 class="font-display font-bold tracking-tighter">我的品牌</h2>
+            <span class="px-2 h-5 inline-flex items-center rounded-full bg-primary/10 text-primary text-[11px] font-semibold"><span id="brand-total">2</span> 个</span>
+          </div>
+          <span class="text-xs text-secondary hidden sm:block">同一账号可维护多个品牌，选中即作为下方编辑与诊断的当前品牌</span>
+        </div>
+        <div id="brand-cards" class="p-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <button type="button" data-brand-card="0" class="ao-bcard group relative text-left rounded-xl border-2 border-primary bg-primary/[0.03] ring-1 ring-primary/15 p-4 transition hover:border-primary/60 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+            <div class="flex items-center gap-3">
+              <span class="w-11 h-11 rounded-xl bg-brand-gradient text-white grid place-items-center font-display font-bold text-lg shadow-brand shrink-0">茶</span>
+              <div class="min-w-0 flex-1">
+                <div class="font-semibold text-offblack truncate">茶语时光</div>
+                <div class="text-xs text-muted truncate">茶饮咖啡 · 杭州</div>
+              </div>
+            </div>
+            <div class="mt-3.5 flex items-center justify-between">
+              <div class="flex items-center gap-3 text-[11px] text-secondary">
+                <span><b class="text-offblack font-semibold tabular-nums">12</b><span class="text-muted">/12</span> 平台</span>
+                <span class="w-px h-3 bg-line"></span>
+                <span><b class="text-offblack font-semibold tabular-nums">12</b> 样本</span>
+              </div>
+              <span data-cur-badge class="px-2 h-6 inline-flex items-center gap-1 rounded-lg bg-primary/10 text-primary text-[11px] font-semibold"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>当前</span>
+              <span data-set-cur class="hidden px-2 h-6 inline-flex items-center rounded-lg border border-line text-[11px] font-medium text-secondary group-hover:border-primary/50 group-hover:text-primary transition">设为当前</span>
+            </div>
+          </button>
+          <button type="button" data-brand-card="1" class="ao-bcard group relative text-left rounded-xl border-2 border-line bg-surface p-4 transition hover:border-primary/60 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+            <div class="flex items-center gap-3">
+              <span class="w-11 h-11 rounded-xl bg-brand-gradient text-white grid place-items-center font-display font-bold text-lg shadow-brand shrink-0">滨</span>
+              <div class="min-w-0 flex-1">
+                <div class="font-semibold text-offblack truncate">茶语·滨江店</div>
+                <div class="text-xs text-muted truncate">茶饮咖啡 · 杭州</div>
+              </div>
+            </div>
+            <div class="mt-3.5 flex items-center justify-between">
+              <div class="flex items-center gap-3 text-[11px] text-secondary">
+                <span><b class="text-offblack font-semibold tabular-nums">10</b><span class="text-muted">/12</span> 平台</span>
+                <span class="w-px h-3 bg-line"></span>
+                <span><b class="text-offblack font-semibold tabular-nums">8</b> 样本</span>
+              </div>
+              <span data-cur-badge class="hidden px-2 h-6 inline-flex items-center gap-1 rounded-lg bg-primary/10 text-primary text-[11px] font-semibold"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>当前</span>
+              <span data-set-cur class="px-2 h-6 inline-flex items-center rounded-lg border border-line text-[11px] font-medium text-secondary group-hover:border-primary/50 group-hover:text-primary transition">设为当前</span>
+            </div>
+          </button>
+          <a href="04-品牌档案.html?newBrand=1" id="brand-new-card" class="rounded-xl border-2 border-dashed border-line hover:border-primary/50 hover:bg-primary/[0.02] p-4 flex flex-col items-center justify-center gap-2 text-center transition outline-none focus-visible:ring-2 focus-visible:ring-primary/30 min-h-[108px]">
+            <span class="w-10 h-10 rounded-xl bg-primary/10 text-primary grid place-items-center"><svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="text-sm font-medium text-primary">新建品牌</span>
+            <span class="text-[11px] text-muted">为另一家门店 / 品牌单独诊断</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 品牌身份横幅 -->
+      <section class="relative overflow-hidden rounded-xl bg-brand-gradient bg-hero-mesh text-white shadow-hero p-6">
+        <div class="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+        <div class="relative flex items-center gap-5">
+          <div id="hero-glyph" class="w-16 h-16 rounded-2xl bg-white/15 ring-1 ring-white/25 backdrop-blur grid place-items-center font-display font-extrabold text-2xl shrink-0">茶</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <h2 id="hero-name" class="font-display text-[22px] font-extrabold tracking-tighter">茶语时光</h2>
+              <span id="hero-cat" class="px-2 h-6 inline-flex items-center rounded-full bg-white/15 ring-1 ring-white/25 backdrop-blur text-[11px] font-medium">茶饮咖啡</span>
+            </div>
+            <p id="hero-desc" class="mt-1 text-[13.5px] text-white/80">杭州手作鲜奶茶，主打茉莉奶绿</p>
+          </div>
+          <div class="hidden md:flex items-center gap-6 pl-6 border-l border-white/15 shrink-0">
+            <div class="text-center"><div id="hero-plat" class="font-display text-2xl font-bold tracking-tighter tabular-nums">12/12</div><div class="text-[11px] text-white/70 mt-0.5">监测平台·端</div></div>
+            <div class="text-center"><div id="hero-sample" class="font-display text-2xl font-bold tracking-tighter tabular-nums">12</div><div class="text-[11px] text-white/70 mt-0.5">提问样本</div></div>
+            <div class="text-center"><div id="hero-selling" class="font-display text-2xl font-bold tracking-tighter tabular-nums">3</div><div class="text-[11px] text-white/70 mt-0.5">关键卖点</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 主体：宽屏两列，窄屏单列 -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
+        <!-- 左列 -->
+        <div class="space-y-6">
+      <!-- 基础信息 -->
+      <section class="bg-surface border border-line rounded-lg">
+        <div class="flex items-center justify-between px-6 h-14 border-b border-line">
+          <div class="flex items-center gap-2.5"><span class="w-1 h-5 rounded-full bg-brand-gradient"></span><h2 class="font-display font-bold tracking-tighter">基础信息</h2></div>
+          <span class="text-xs text-secondary">行内编辑，改完点右上角保存</span>
+        </div>
+        <dl class="divide-y divide-line">
+          <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
+            <dt class="text-sm text-secondary">品牌名称</dt>
+            <dd id="bi-name" class="text-sm font-medium">茶语时光</dd>
+            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+          </div>
+          <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
+            <dt class="text-sm text-secondary">一句话描述</dt>
+            <dd id="bi-desc" class="text-sm">杭州手作鲜奶茶，主打茉莉奶绿</dd>
+            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+          </div>
+          <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
+            <dt class="text-sm text-secondary">行业 / 品类</dt>
+            <dd id="bi-cat" class="text-sm">茶饮咖啡</dd>
+            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+          </div>
+          <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
+            <dt class="text-sm text-secondary">服务区域</dt>
+            <dd id="bi-region" class="text-sm">城市 · 杭州</dd>
+            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+          </div>
+          <div class="grid grid-cols-[140px_1fr_auto] items-start gap-4 px-6 py-3.5">
+            <dt class="text-sm text-secondary pt-1">关键卖点</dt>
+            <dd id="bi-selling" class="flex flex-wrap gap-2">
+              <span class="px-2.5 h-7 grid place-items-center rounded-lg bg-primary/10 text-primary text-sm">手作鲜奶</span>
+              <span class="px-2.5 h-7 grid place-items-center rounded-lg bg-primary/10 text-primary text-sm">茉莉花茶</span>
+              <span class="px-2.5 h-7 grid place-items-center rounded-lg bg-primary/10 text-primary text-sm">本地首店</span>
+            </dd>
+            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+          </div>
+        </dl>
+      </section>
+
+      <!-- 目标平台 -->
+      <section class="bg-surface border border-line rounded-lg">
+        <div class="flex items-center justify-between px-6 h-14 border-b border-line">
+          <div class="flex items-center gap-2.5"><span class="w-1 h-5 rounded-full bg-brand-gradient"></span><h2 class="font-display font-bold tracking-tighter">目标 AI 平台 · 端</h2></div>
+          <span class="text-xs text-secondary">已开启 <span id="brand-plat-count">12</span> / 12</span>
+        </div>
+        <div id="brand-platforms" class="p-6 flex flex-wrap gap-2.5">
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>千问·手机版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>千问·网页版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>豆包·手机版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>豆包·网页版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>DeepSeek·手机版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>DeepSeek·网页版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>腾讯元宝·手机版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>腾讯元宝·网页版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>文心·网页版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>KIMI·网页版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>百度AI·网页版</button>
+          <button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary transition hover:bg-primary/10"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>AI抖音·网页版</button>
+        </div>
+        <p class="px-6 pb-5 -mt-1 text-xs text-secondary flex items-center gap-3">
+          <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>API 直连</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>备用算法估算（暂无公开 API）</span>
+        </p>
+      </section>
+
+        </div>
+        <!-- 右列 -->
+        <div class="space-y-6">
+      <!-- 提问样本 -->
+      <section class="bg-surface border border-line rounded-lg">
+        <div class="flex items-center justify-between px-6 h-14 border-b border-line">
+          <div class="flex items-center gap-2.5"><span class="w-1 h-5 rounded-full bg-brand-gradient"></span><h2 class="font-display font-bold tracking-tighter">提问样本</h2></div>
+          <div class="flex items-center gap-3">
+            <span id="brand-sample-note" class="text-xs text-secondary">系统生成 10 条 · 你补充 2 条</span>
+            <button id="brand-add-sample" class="px-3 h-8 rounded-lg border border-line text-sm font-medium transition hover:bg-line/50 active:bg-line outline-none focus-visible:ring-2 focus-visible:ring-primary/30 inline-flex items-center gap-1"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>添加提问</button>
+          </div>
+        </div>
+        <ul id="brand-samples" class="divide-y divide-line">
+          <li class="flex items-center gap-3 px-6 py-3.5 group">
+            <span class="text-sm flex-1">杭州有什么好喝的奶茶？</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-line/60 text-secondary text-xs">本地查询</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-line/40 text-secondary text-xs">系统</span>
+            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-line/60">改</button>
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button>
+            </div>
+          </li>
+          <li class="flex items-center gap-3 px-6 py-3.5 group">
+            <span class="text-sm flex-1">茉莉奶绿哪家做得好？</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-line/60 text-secondary text-xs">对比推荐</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs">你补充</span>
+            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-line/60">改</button>
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button>
+            </div>
+          </li>
+          <li class="flex items-center gap-3 px-6 py-3.5 group">
+            <span class="text-sm flex-1">杭州手作奶茶推荐，哪家用真奶？</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-line/60 text-secondary text-xs">品类推荐</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-line/40 text-secondary text-xs">系统</span>
+            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-line/60">改</button>
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button>
+            </div>
+          </li>
+          <li class="flex items-center gap-3 px-6 py-3.5 group">
+            <span class="text-sm flex-1">逛街累了，附近哪里能坐下喝杯茶？</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-line/60 text-secondary text-xs">场景推荐</span>
+            <span class="px-2 h-6 grid place-items-center rounded-lg bg-line/40 text-secondary text-xs">系统</span>
+            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-line/60">改</button>
+              <button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 新建品牌弹窗 -->
+  <div id="newbrand-modal" class="hidden fixed inset-0 z-40">
+    <div data-close-new class="absolute inset-0 bg-offblack/40 backdrop-blur-sm"></div>
+    <div class="relative z-10 min-h-full flex items-start justify-center p-4 sm:p-8">
+      <div class="w-full max-w-lg rounded-2xl bg-surface shadow-elevated border border-line mt-[6vh] overflow-hidden">
+        <div class="relative bg-brand-gradient bg-hero-mesh text-white px-6 py-5">
+          <h3 class="font-display text-lg font-bold tracking-tighter">新建品牌</h3>
+          <p class="text-[13px] text-white/80 mt-0.5">为另一家门店或子品牌单独建立诊断档案</p>
+          <button data-close-new class="absolute top-4 right-4 w-8 h-8 grid place-items-center rounded-lg text-white/80 hover:bg-white/15 transition"><svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+        <div class="p-6 space-y-4">
+          <label class="block">
+            <span class="text-sm font-medium text-offblack">品牌名称 <span class="text-danger">*</span></span>
+            <input id="nb-name" type="text" maxlength="20" placeholder="如：茶语·钱江新城店" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-medium text-offblack">一句话描述</span>
+            <input id="nb-desc" type="text" maxlength="40" placeholder="一句话说清你的招牌与特色" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+          </label>
+          <div class="grid grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm font-medium text-offblack">行业 / 品类</span>
+              <input id="nb-cat" type="text" maxlength="12" placeholder="如：茶饮咖啡" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-offblack">服务区域</span>
+              <input id="nb-region" type="text" maxlength="20" placeholder="如：杭州 · 钱江新城" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+            </label>
+          </div>
+          <label class="block">
+            <span class="text-sm font-medium text-offblack">关键卖点 <span class="text-muted font-normal">（逗号分隔，最多 3 个）</span></span>
+            <input id="nb-selling" type="text" placeholder="如：手作鲜奶, 现萃茶, 到店自取" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+          </label>
+          <p class="text-[12px] text-secondary flex items-start gap-1.5"><svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0 mt-px text-primary" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>创建后系统会自动生成提问样本与监测平台，可随时在档案里调整。</p>
+        </div>
+        <div class="px-6 py-4 border-t border-line flex items-center justify-end gap-3 bg-canvas/60">
+          <button data-close-new class="px-4 h-9 rounded-lg border border-line text-sm font-medium text-secondary hover:bg-line/50 transition">取消</button>
+          <button id="nb-create" class="px-4 h-9 rounded-lg bg-brand-gradient text-white text-sm font-semibold shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0">创建品牌</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js?v=20260529g"></script>
+  <script>mountShell('brand')</script>
+  <script>
+    // ——— 04 品牌档案 · 演示版交互（含多品牌切换 / 新建）———
+    (function () {
+      // 多品牌演示数据（与侧栏切换器保持同一套品牌）
+      const BRAND_DATA = [
+        { glyph: '茶', name: '茶语时光', category: '茶饮咖啡', area: '杭州',
+          desc: '杭州手作鲜奶茶，主打茉莉奶绿', region: '城市 · 杭州',
+          selling: ['手作鲜奶', '茉莉花茶', '本地首店'], platOn: 12, sampleCount: 12, platOff: [], note: '系统生成 10 条 · 你补充 2 条',
+          samples: [
+            { q: '杭州有什么好喝的奶茶？', tag: '本地查询', src: '系统' },
+            { q: '茉莉奶绿哪家做得好？', tag: '对比推荐', src: '你补充' },
+            { q: '杭州手作奶茶推荐，哪家用真奶？', tag: '品类推荐', src: '系统' },
+            { q: '逛街累了，附近哪里能坐下喝杯茶？', tag: '场景推荐', src: '系统' },
+          ] },
+        { glyph: '滨', name: '茶语·滨江店', category: '茶饮咖啡', area: '杭州',
+          desc: '杭州二店，主打办公区现萃茶饮与轻食', region: '城市 · 杭州',
+          selling: ['现萃鲜茶', '办公轻食', '到店自取'], platOn: 10, sampleCount: 8, platOff: ['百度AI·网页版', 'AI抖音·网页版'], note: '系统生成 6 条 · 你补充 2 条',
+          samples: [
+            { q: '附近有什么好喝的茶饮？', tag: '本地查询', src: '系统' },
+            { q: '办公室下午茶喝什么提神又健康？', tag: '场景推荐', src: '你补充' },
+            { q: '杭州哪家奶茶可以线上点单到店自取？', tag: '功能查询', src: '系统' },
+            { q: '现萃茶和奶茶粉冲的有什么区别？', tag: '知识科普', src: '系统' },
+          ] },
+      ];
+
+      const wrap = document.getElementById('brand-platforms');
+      const countEl = document.getElementById('brand-plat-count');
+      const heroPlat = document.getElementById('hero-plat');
+      const list = document.getElementById('brand-samples');
+      const cards = document.getElementById('brand-cards');
+
+      const refresh = () => {
+        const n = wrap.querySelectorAll('button.border-primary').length;
+        countEl.textContent = n;
+        if (heroPlat) heroPlat.textContent = n + '/12';
+      };
+      const setPlat = (b, on) => {
+        if (on) { b.classList.add('border-primary', 'bg-primary/5', 'text-primary'); b.classList.remove('border-line', 'text-secondary'); }
+        else { b.classList.remove('border-primary', 'bg-primary/5', 'text-primary'); b.classList.add('border-line', 'text-secondary'); }
+      };
+      const sampleLi = (s) => {
+        const srcBadge = s.src === '你补充'
+          ? '<span class="px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs">你补充</span>'
+          : '<span class="px-2 h-6 grid place-items-center rounded-lg bg-line/40 text-secondary text-xs">系统</span>';
+        return '<li class="flex items-center gap-3 px-6 py-3.5 group">' +
+          '<span class="text-sm flex-1">' + s.q + '</span>' +
+          '<span class="px-2 h-6 grid place-items-center rounded-lg bg-line/60 text-secondary text-xs">' + s.tag + '</span>' +
+          srcBadge +
+          '<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">' +
+          '<button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-line/60">改</button>' +
+          '<button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button></div></li>';
+      };
+
+      // 把整个档案详情切换成第 i 个品牌（横幅 / 基础信息 / 目标平台 / 提问样本）
+      function renderDetail(i) {
+        const b = BRAND_DATA[i]; if (!b) return;
+        document.getElementById('hero-glyph').textContent = b.glyph;
+        document.getElementById('hero-name').textContent = b.name;
+        document.getElementById('hero-cat').textContent = b.category;
+        document.getElementById('hero-desc').textContent = b.desc;
+        document.getElementById('hero-sample').textContent = b.sampleCount;
+        document.getElementById('hero-selling').textContent = b.selling.length;
+        document.getElementById('bi-name').textContent = b.name;
+        document.getElementById('bi-desc').textContent = b.desc;
+        document.getElementById('bi-cat').textContent = b.category;
+        document.getElementById('bi-region').textContent = b.region;
+        document.getElementById('bi-selling').innerHTML = b.selling
+          .map((s) => '<span class="px-2.5 h-7 grid place-items-center rounded-lg bg-primary/10 text-primary text-sm">' + s + '</span>').join('');
+        const off = new Set(b.platOff || []);
+        wrap.querySelectorAll('button').forEach((btn) => setPlat(btn, !off.has(btn.textContent.trim())));
+        refresh();
+        document.getElementById('brand-sample-note').textContent = b.note || ('共 ' + b.sampleCount + ' 条');
+        list.innerHTML = b.samples.length
+          ? b.samples.map(sampleLi).join('')
+          : '<li class="px-6 text-center text-sm text-muted" style="padding-top:1.75rem;padding-bottom:1.75rem">还没有提问样本，系统会自动生成，你也可以点「添加提问」先补一条</li>';
+      }
+
+      // 品牌卡内 HTML（新建时复用，类名与静态卡保持一致以躲开 Play CDN 动态类陷阱）
+      function cardInner(b, on) {
+        return '<div class="flex items-center gap-3">' +
+          '<span class="w-11 h-11 rounded-xl bg-brand-gradient text-white grid place-items-center font-display font-bold text-lg shadow-brand shrink-0">' + b.glyph + '</span>' +
+          '<div class="min-w-0 flex-1"><div class="font-semibold text-offblack truncate">' + b.name + '</div>' +
+          '<div class="text-xs text-muted truncate">' + b.category + ' · ' + b.area + '</div></div></div>' +
+          '<div class="mt-3.5 flex items-center justify-between">' +
+          '<div class="flex items-center gap-3 text-[11px] text-secondary">' +
+          '<span><b class="text-offblack font-semibold tabular-nums">' + b.platOn + '</b><span class="text-muted">/12</span> 平台</span>' +
+          '<span class="w-px h-3 bg-line"></span>' +
+          '<span><b class="text-offblack font-semibold tabular-nums">' + b.sampleCount + '</b> 样本</span></div>' +
+          '<span data-cur-badge class="' + (on ? '' : 'hidden ') + 'px-2 h-6 inline-flex items-center gap-1 rounded-lg bg-primary/10 text-primary text-[11px] font-semibold"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>当前</span>' +
+          '<span data-set-cur class="' + (on ? 'hidden ' : '') + 'px-2 h-6 inline-flex items-center rounded-lg border border-line text-[11px] font-medium text-secondary group-hover:border-primary/50 group-hover:text-primary transition">设为当前</span></div>';
+      }
+      function setCardState(card, on) {
+        card.classList.toggle('border-primary', on);
+        card.classList.toggle('bg-primary/[0.03]', on);
+        card.classList.toggle('ring-1', on);
+        card.classList.toggle('ring-primary/15', on);
+        card.classList.toggle('border-line', !on);
+        card.classList.toggle('bg-surface', !on);
+        const badge = card.querySelector('[data-cur-badge]');
+        const setc = card.querySelector('[data-set-cur]');
+        if (badge) badge.classList.toggle('hidden', !on);
+        if (setc) setc.classList.toggle('hidden', on);
+      }
+      function syncCards(i) {
+        cards.querySelectorAll('[data-brand-card]').forEach((c) => setCardState(c, +c.getAttribute('data-brand-card') === i));
+      }
+
+      const curIndex = () => (window.AO_BRANDS ? window.AO_BRANDS.current : 0);
+
+      // 点品牌卡 → 切换当前品牌（经 AO.setBrand 让侧栏切换器一起联动）
+      cards.addEventListener('click', (e) => {
+        const card = e.target.closest('[data-brand-card]'); if (!card) return;
+        const i = +card.getAttribute('data-brand-card');
+        if (i === curIndex()) return;
+        AO.toast('已切换到「' + BRAND_DATA[i].name + '」', 'success');
+        if (window.AO && AO.setBrand) AO.setBrand(i); else { renderDetail(i); syncCards(i); }
+      });
+      // 侧栏切换器广播 → 档案详情同步（不重复弹 toast，toast 由发起方负责）
+      document.addEventListener('ao:brandchange', (e) => { renderDetail(e.detail.index); syncCards(e.detail.index); });
+
+      // 目标平台开关 + 计数（手动点单个平台）
+      wrap.addEventListener('click', (e) => {
+        const b = e.target.closest('button'); if (!b) return;
+        const on = b.classList.contains('border-primary');
+        setPlat(b, !on);
+        refresh();
+        AO.toast(b.textContent.trim() + ' 已' + (on ? '关闭' : '开启') + '监测', on ? 'info' : 'success');
+      });
+
+      // 提问样本：改 / 删 / 添加
+      list.addEventListener('click', (e) => {
+        const b = e.target.closest('button'); if (!b) return;
+        const t = b.textContent.trim();
+        if (t === '删') { b.closest('li').remove(); AO.toast('已删除该提问样本', 'info'); }
+        else if (t === '改') { AO.toast('演示版：点击文字即可行内修改', 'info'); }
+      });
+      document.getElementById('brand-add-sample').addEventListener('click', () => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center gap-3 px-6 py-3.5 group';
+        li.innerHTML =
+          '<input class="text-sm flex-1 px-2 h-8 rounded-lg border border-primary/40 outline-none focus:ring-2 focus:ring-primary/20" placeholder="输入一个用户可能会问 AI 的问题…" />' +
+          '<span class="px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs">你补充</span>' +
+          '<div class="flex gap-1"><button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button></div>';
+        list.appendChild(li);
+        li.querySelector('input').focus();
+        AO.toast('已新增一条提问样本，输入后点保存', 'success');
+      });
+
+      // ——— 新建品牌弹窗 ———
+      const modal = document.getElementById('newbrand-modal');
+      const ids = ['nb-name', 'nb-desc', 'nb-cat', 'nb-region', 'nb-selling'];
+      const openNew = () => { modal.classList.remove('hidden'); document.getElementById('nb-name').focus(); };
+      const closeNew = () => { modal.classList.add('hidden'); };
+      modal.querySelectorAll('[data-close-new]').forEach((el) => el.addEventListener('click', closeNew));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeNew(); });
+      if (/(?:^|[?&])newBrand=1(?:&|$)/.test(location.search)) openNew();
+
+      document.getElementById('nb-create').addEventListener('click', () => {
+        const v = (id) => (document.getElementById(id).value || '').trim();
+        const name = v('nb-name');
+        if (!name) { AO.toast('请先填写品牌名称', 'warn'); document.getElementById('nb-name').focus(); return; }
+        const cat = v('nb-cat') || '未分类';
+        const region = v('nb-region') || '未设置服务区域';
+        const area = region.split('·').pop().trim() || region;
+        const selling = v('nb-selling').split(/[，,、\s]+/).filter(Boolean).slice(0, 3);
+        const b = {
+          glyph: name.slice(0, 1), name, category: cat, area,
+          desc: v('nb-desc') || '（待补充一句话描述）', region,
+          selling: selling.length ? selling : ['待补充卖点'], platOn: 12, sampleCount: 0, platOff: [],
+          note: '系统将自动生成提问样本', samples: [],
+        };
+        const i = BRAND_DATA.length;
+        BRAND_DATA.push(b);
+        // 追加品牌卡（复用静态卡类名，安全）
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.setAttribute('data-brand-card', i);
+        card.className = 'ao-bcard group relative text-left rounded-xl border-2 border-line bg-surface p-4 transition hover:border-primary/60 outline-none focus-visible:ring-2 focus-visible:ring-primary/40';
+        card.innerHTML = cardInner(b, false);
+        document.getElementById('brand-new-card').before(card);
+        document.getElementById('brand-total').textContent = BRAND_DATA.length;
+        // 同步侧栏切换器（与 app.js 共享同一个品牌数组），并重挂以显示新品牌
+        if (window.AO_BRANDS && window.AO_BRANDS.list) {
+          window.AO_BRANDS.list.push({ glyph: b.glyph, name: b.name, meta: cat + ' · ' + area });
+          if (window.mountShell) mountShell('brand');
+        }
+        ids.forEach((id) => (document.getElementById(id).value = ''));
+        history.replaceState(null, '', location.pathname);
+        closeNew();
+        AO.toast('已创建品牌「' + name + '」，已设为当前', 'success');
+        if (window.AO && AO.setBrand) AO.setBrand(i); else { renderDetail(i); syncCards(i); }
+      });
+
+      // 进页时按当前品牌对齐详情（默认第 0 个）
+      const start = curIndex();
+      if (start !== 0) { renderDetail(start); syncCards(start); }
+    })();
+  </script>
+</body>
+</html>
