@@ -16,7 +16,7 @@
   <div class="pl-60">
     <header class="h-16 bg-canvas/85 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center justify-between px-8">
       <h1 class="font-display text-lg font-bold tracking-tighter">品牌档案</h1>
-      <button data-toast="品牌档案已保存（演示）" class="px-4 h-9 rounded-xl bg-brand-gradient text-white text-sm font-semibold shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">保存全部修改</button>
+      <button id="brand-save" data-toast="品牌档案已保存（演示）" class="px-4 h-9 rounded-xl bg-brand-gradient text-white text-sm font-semibold shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">保存全部修改</button>
     </header>
 
     <main class="p-8 mx-auto w-full max-w-[1280px] space-y-6 bg-page-wash">
@@ -396,23 +396,55 @@
         AO.toast(b.textContent.trim() + ' 已' + (on ? '关闭' : '开启') + '监测', on ? 'info' : 'success');
       });
 
-      // 提问样本：改 / 删 / 添加
+      // 提问样本：添加 / 行内编辑 / 保存 / 删除（真正可提交，不只是 toast）
+      const sampleView = (q, tag) =>
+        '<span class="ao-sample-q text-sm flex-1">' + q + '</span>' +
+        '<span class="px-2 h-6 grid place-items-center rounded-lg bg-line/60 text-secondary text-xs">' + (tag || '自定义') + '</span>' +
+        '<span class="px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs">你补充</span>' +
+        '<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">' +
+        '<button class="ao-sample-edit w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-line/60">改</button>' +
+        '<button class="ao-sample-del w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button></div>';
+      const sampleEdit = (val) =>
+        '<input class="ao-sample-input text-sm flex-1 px-2 h-8 rounded-lg border border-primary/40 outline-none focus:ring-2 focus:ring-primary/20" placeholder="输入一个用户可能会问 AI 的问题…" value="' + (val || '').replace(/"/g, '&quot;') + '" />' +
+        '<button class="ao-sample-save shrink-0 px-3 h-8 rounded-lg bg-primary text-white text-xs font-medium transition hover:bg-primary-strong">保存</button>' +
+        '<button class="ao-sample-del w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger shrink-0">删</button>';
+      const toEdit = (li) => {
+        const q = li.querySelector('span.flex-1');
+        const tagSpan = q ? q.nextElementSibling : null;
+        li.dataset.tag = (tagSpan && tagSpan.textContent.trim()) || '自定义';
+        li.innerHTML = sampleEdit(q ? q.textContent : '');
+        li.querySelector('.ao-sample-input').focus();
+      };
+      const toView = (li) => {
+        const inp = li.querySelector('.ao-sample-input'); if (!inp) return;
+        const val = inp.value.trim();
+        if (!val) { AO.toast('请输入问题内容再保存', 'warn'); inp.focus(); return; }
+        li.innerHTML = sampleView(val, li.dataset.tag || '自定义');
+        AO.toast('已保存提问样本', 'success');
+      };
       list.addEventListener('click', (e) => {
         const b = e.target.closest('button'); if (!b) return;
-        const t = b.textContent.trim();
-        if (t === '删') { b.closest('li').remove(); AO.toast('已删除该提问样本', 'info'); }
-        else if (t === '改') { AO.toast('演示版：点击文字即可行内修改', 'info'); }
+        const li = b.closest('li'); const txt = b.textContent.trim();
+        if (b.classList.contains('ao-sample-del') || txt === '删') { li.remove(); AO.toast('已删除该提问样本', 'info'); return; }
+        if (b.classList.contains('ao-sample-save')) { toView(li); return; }
+        if (b.classList.contains('ao-sample-edit') || txt === '改') { toEdit(li); return; }
+      });
+      list.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        const inp = e.target.closest('.ao-sample-input'); if (!inp) return;
+        e.preventDefault(); toView(inp.closest('li'));
       });
       document.getElementById('brand-add-sample').addEventListener('click', () => {
         const li = document.createElement('li');
         li.className = 'flex items-center gap-3 px-6 py-3.5 group';
-        li.innerHTML =
-          '<input class="text-sm flex-1 px-2 h-8 rounded-lg border border-primary/40 outline-none focus:ring-2 focus:ring-primary/20" placeholder="输入一个用户可能会问 AI 的问题…" />' +
-          '<span class="px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs">你补充</span>' +
-          '<div class="flex gap-1"><button class="w-7 h-7 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger">删</button></div>';
+        li.innerHTML = sampleEdit('');
         list.appendChild(li);
-        li.querySelector('input').focus();
-        AO.toast('已新增一条提问样本，输入后点保存', 'success');
+        li.querySelector('.ao-sample-input').focus();
+      });
+      // 顶部「保存全部修改」：先把正在编辑的样本提交，再走全局保存提示
+      const brandSaveBtn = document.getElementById('brand-save');
+      if (brandSaveBtn) brandSaveBtn.addEventListener('click', () => {
+        list.querySelectorAll('.ao-sample-input').forEach((inp) => { if (inp.value.trim()) toView(inp.closest('li')); });
       });
 
       // ——— 新建品牌弹窗 ———
