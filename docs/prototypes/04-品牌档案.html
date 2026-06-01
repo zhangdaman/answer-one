@@ -123,8 +123,8 @@
             <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
           </div>
           <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
-            <dt class="text-sm text-secondary">服务区域</dt>
-            <dd id="bi-region" class="text-sm">城市 · 杭州</dd>
+            <dt class="text-sm text-secondary">所在城市</dt>
+            <dd id="bi-region" class="text-sm">杭州</dd>
             <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
           </div>
           <div class="grid grid-cols-[140px_1fr_auto] items-start gap-4 px-6 py-3.5">
@@ -235,7 +235,7 @@
         <div class="p-6 space-y-4">
           <label class="block">
             <span class="text-sm font-medium text-offblack">品牌名称 <span class="text-danger">*</span></span>
-            <input id="nb-name" type="text" maxlength="20" placeholder="如：茶语·钱江新城店" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+            <input id="nb-name" type="text" maxlength="20" placeholder="如：茶语·杭州二店" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
           </label>
           <label class="block">
             <span class="text-sm font-medium text-offblack">一句话描述</span>
@@ -247,8 +247,8 @@
               <input id="nb-cat" type="text" maxlength="12" placeholder="如：茶饮咖啡" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
             </label>
             <label class="block">
-              <span class="text-sm font-medium text-offblack">服务区域</span>
-              <input id="nb-region" type="text" maxlength="20" placeholder="如：杭州 · 钱江新城" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+              <span class="text-sm font-medium text-offblack">所在城市</span>
+              <input id="nb-region" type="text" maxlength="20" placeholder="如：杭州" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
             </label>
           </div>
           <label class="block">
@@ -273,7 +273,7 @@
       // 多品牌演示数据（与侧栏切换器保持同一套品牌）
       const BRAND_DATA = [
         { glyph: '茶', name: '茶语时光', category: '茶饮咖啡', area: '杭州',
-          desc: '杭州手作鲜奶茶，主打茉莉奶绿', region: '城市 · 杭州',
+          desc: '杭州手作鲜奶茶，主打茉莉奶绿', region: '杭州',
           selling: ['手作鲜奶', '茉莉花茶', '本地首店'], platOn: 12, sampleCount: 12, platOff: [], note: '系统生成 10 条 · 你补充 2 条',
           samples: [
             { q: '杭州有什么好喝的奶茶？', tag: '本地查询', src: '系统' },
@@ -282,7 +282,7 @@
             { q: '逛街累了，附近哪里能坐下喝杯茶？', tag: '场景推荐', src: '系统' },
           ] },
         { glyph: '滨', name: '茶语·滨江店', category: '茶饮咖啡', area: '杭州',
-          desc: '杭州二店，主打办公区现萃茶饮与轻食', region: '城市 · 杭州',
+          desc: '杭州二店，主打办公区现萃茶饮与轻食', region: '杭州',
           selling: ['现萃鲜茶', '办公轻食', '到店自取'], platOn: 10, sampleCount: 8, platOff: ['百度AI·网页版', 'AI抖音·网页版'], note: '系统生成 6 条 · 你补充 2 条',
           samples: [
             { q: '附近有什么好喝的茶饮？', tag: '本地查询', src: '系统' },
@@ -429,7 +429,7 @@
         const name = v('nb-name');
         if (!name) { AO.toast('请先填写品牌名称', 'warn'); document.getElementById('nb-name').focus(); return; }
         const cat = v('nb-cat') || '未分类';
-        const region = v('nb-region') || '未设置服务区域';
+        const region = v('nb-region') || '未设置城市';
         const area = region.split('·').pop().trim() || region;
         const selling = v('nb-selling').split(/[，,、\s]+/).filter(Boolean).slice(0, 3);
         const b = {
