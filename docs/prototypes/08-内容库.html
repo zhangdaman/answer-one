@@ -33,6 +33,12 @@
           <button data-val="视频" class="h-8 px-3 rounded-lg text-sm text-secondary hover:text-offblack transition">视频</button>
         </div>
         <div class="relative">
+          <select id="lib-platform" class="h-10 pl-3.5 pr-9 rounded-lg border border-line bg-surface text-sm appearance-none outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20">
+            <option>全部平台</option><option>小红书</option><option>抖音</option><option>大众点评</option><option>公众号</option><option>知乎</option>
+          </select>
+          <svg viewBox="0 0 24 24" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="relative">
           <select id="lib-status" class="h-10 pl-3.5 pr-9 rounded-lg border border-line bg-surface text-sm appearance-none outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20">
             <option>全部状态</option><option>待发布</option><option>已发布</option>
           </select>
@@ -173,41 +179,57 @@
   <script src="assets/app.js?v=20260529g"></script>
   <script>mountShell('content')</script>
   <script>
-    // ——— 08 内容库 · 演示版筛选（文字 / 图片 / 视频）———
+    // ——— 08 内容库 · 演示版筛选（类型 / 平台 / 状态）———
     (function () {
       const grid = document.getElementById('lib-grid');
       const cards = Array.from(grid.querySelectorAll('article'));
       const countEl = document.getElementById('lib-count');
       const typeWrap = document.getElementById('lib-type');
       const statusSel = document.getElementById('lib-status');
-      let curType = '全部', curStatus = '全部状态';
+      const platSel = document.getElementById('lib-platform');
+      let curType = '全部', curStatus = '全部状态', curPlat = '全部平台';
 
-      // 读取每张卡的类型/状态（从已有内容派生）
-      const meta = cards.map((a) => {
+      // 每张卡的目标发布平台（演示数据，与 07 的 5 平台一致）
+      const PLAT = ['知乎', '小红书', '公众号', '抖音', '知乎', '大众点评'];
+      const PLAT_EN = { '小红书': 'xiaohongshu', '抖音': 'douyin', '大众点评': 'dianping', '公众号': 'gzh', '知乎': 'zhihu' };
+      const TYPE_EN = { '文字': 'text', '图片': 'image', '视频': 'video' };
+
+      // 先采集类型/状态（DOM 重构前），平台取自 PLAT
+      const meta = cards.map((a, i) => {
         const head = a.firstElementChild;
         return {
           el: a,
           type: head.children[0].textContent.trim(),
           status: head.children[1].textContent.includes('已发布') ? '已发布' : '待发布',
+          platform: PLAT[i] || '小红书',
         };
       });
 
-      // 「编辑」入口：按类型 + 序号指向内容详情·编辑页（替代原先统一跳生成页 07）
-      const TYPE_EN = { '文字': 'text', '图片': 'image', '视频': 'video' };
       meta.forEach((m, i) => {
+        // 平台徽标：把「类型 chip」与「平台 chip」并到卡片左上一组
+        const head = m.el.firstElementChild;
+        const typeChip = head.children[0];
+        const left = document.createElement('div');
+        left.className = 'flex items-center gap-1.5';
+        head.insertBefore(left, typeChip);
+        left.appendChild(typeChip);
+        left.insertAdjacentHTML('beforeend',
+          '<span class="inline-flex items-center px-2 h-6 rounded-lg bg-canvas border border-line text-secondary text-xs font-medium">' + m.platform + '</span>');
+        // 「编辑」→ 10 内容详情（带 type + id + platform）
         const edit = m.el.querySelector('a[href="07-内容生成.html"]');
-        if (edit) edit.setAttribute('href', `10-内容详情.html?type=${TYPE_EN[m.type] || 'text'}&id=${i + 1}`);
-        // 「加入分发」带上下文跳 09：?content=ID&title=<标题>，让分发页定位到这条内容
+        if (edit) edit.setAttribute('href', '10-内容详情.html?type=' + (TYPE_EN[m.type] || 'text') + '&id=' + (i + 1) + '&platform=' + (PLAT_EN[m.platform] || 'xiaohongshu'));
+        // 「加入分发」→ 09（带 content + title 定位到这条内容）
         const dist = m.el.querySelector('a[href="09-分发建议.html"]');
         const h3 = m.el.querySelector('h3');
-        if (dist) dist.setAttribute('href', `09-分发建议.html?content=${i + 1}` + (h3 ? `&title=${encodeURIComponent(h3.textContent.trim())}` : ''));
+        if (dist) dist.setAttribute('href', '09-分发建议.html?content=' + (i + 1) + (h3 ? '&title=' + encodeURIComponent(h3.textContent.trim()) : ''));
       });
 
       function apply() {
         let shown = 0, draft = 0, pub = 0;
         meta.forEach((m) => {
           const ok = (curType === '全部' || m.type === curType) &&
-                     (curStatus === '全部状态' || m.status === curStatus);
+                     (curStatus === '全部状态' || m.status === curStatus) &&
+                     (curPlat === '全部平台' || m.platform === curPlat);
           m.el.classList.toggle('hidden', !ok);
           if (ok) { shown++; m.status === '已发布' ? pub++ : draft++; }
         });
@@ -223,6 +245,7 @@
         curType = b.dataset.val; apply();
       });
       statusSel.addEventListener('change', () => { curStatus = statusSel.value; apply(); });
+      platSel.addEventListener('change', () => { curPlat = platSel.value; apply(); });
     })();
   </script>
 </body>

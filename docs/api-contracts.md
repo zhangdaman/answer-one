@@ -83,6 +83,13 @@
   "channels": [{"value": "doubao_web", "platform": "doubao", "device": "web", "label": "豆包·网页版", "access_method": "api", "enabled": true},
                {"value": "baidu_web", "platform": "baidu", "device": "web", "label": "百度AI·网页版", "access_method": "fallback", "enabled": true}],
   "content_types": [{"value": "text", "label": "文字"}, {"value": "image", "label": "图片"}, {"value": "video", "label": "视频"}],
+  "publish_platforms": [
+    {"value": "xiaohongshu", "label": "小红书", "primary_form": "image", "image_ratio": "3:4", "image_max": 9, "title_max": 20, "body_max": 1000, "tag_syntax": "#topic#", "tag_max": 10, "soul": "3:4 竖图 + emoji 标题 + 9 图集，封面定生死"},
+    {"value": "douyin", "label": "抖音", "primary_form": "video", "image_ratio": "9:16", "video_ratio": "9:16", "title_max": 55, "body_max": 2200, "tag_syntax": "#topic", "tag_max": 10, "soul": "竖屏 15–60s，前 3 秒钩子 + 全屏字幕"},
+    {"value": "dianping", "label": "大众点评", "primary_form": "image", "image_ratio": "4:3", "title_max": 30, "body_max": 1000, "tag_syntax": "keyword", "tag_max": 5, "soul": "评分 + 人均 + 推荐菜 + 挂 POI", "verify_required": true},
+    {"value": "gzh", "label": "公众号", "primary_form": "text", "image_ratio": "2.35:1", "video_ratio": "16:9", "title_max": 64, "body_max": null, "tag_syntax": "none", "tag_max": 0, "soul": "2.35:1 头条封面 + 长图文 + 文末关注"},
+    {"value": "zhihu", "label": "知乎", "primary_form": "text", "image_ratio": "16:9", "video_ratio": "16:9", "title_max": 100, "body_max": null, "tag_syntax": "keyword", "tag_max": 5, "soul": "论据 + 数据 + 个人经历四件套"}
+  ],
   "tones": [{"value": "friendly", "label": "亲切"}],
   "image_styles": [{"value": "photo", "label": "写实摄影"}],
   "image_ratios": [{"value": "1:1", "label": "1:1"}],
@@ -405,16 +412,17 @@
 
 **请求体（`params` 按 content_type 取对应键）：**
 ```json
-{"content_type": "image", "count": 4,
+{"target_platform": "xiaohongshu", "content_type": "image", "count": 9,
  "source_question_id": "q_3", "topic": "杭州奶茶推荐",
- "params": {"image_style": "photo", "image_ratio": "1:1"}}
+ "params": {"image_style": "photo"}}
 ```
+> `target_platform`（见 `publish_platform` 枚举 / 字典 `publish_platforms` 预设）决定该内容的**格式预设**——图片比例、单帖图片数、标题 / 正文字数上限、标签语法等由平台预设给出（L1 硬约束，后端按预设套用，前端只读展示），**不需在 `params` 里重复传 ratio / 字数**。
 > `source_question_id`（从诊断缺口进入）与 `topic`（直接生成）至少提供其一。
-> `params`：文字 `{"tone"}`；图片 `{"image_style","image_ratio"}`；视频 `{"video_duration","video_ratio","video_style"}`。
+> `params` 仅保留与平台无关的创意项：文字 `{"tone"}`；图片 `{"image_style"}`；视频 `{"video_style"}`。
 
 **响应（已受理 202）：**
 ```json
-{"code": 200, "message": "success", "data": {"task_id": "gt_88", "status": "queued", "content_type": "image", "count": 4}}
+{"code": 200, "message": "success", "data": {"task_id": "gt_88", "status": "queued", "target_platform": "xiaohongshu", "content_type": "image", "count": 9}}
 ```
 **响应（数量超限 422）：** `{"code": 422, "message": "图片单次最多 4 张", "data": null}`
 
@@ -430,7 +438,7 @@
 > `status` 见 `gen_task_status` 枚举。`succeeded` / `partial` 时 `items` 为已创建的 Content 记录（`publish_status=pending`），结构同 `GET /api/contents/{id}`；`failed` / `partial` 时 `message` 注明失败原因（如内容审核未通过）。
 
 #### Content 实体（多模态 · 按 content_type 取字段）
-- **公共**：`id`、`brand_id`、`title`、`content_type`、`source_question_id`、`publish_status`、`gen_params`、`created_at`、`updated_at`
+- **公共**：`id`、`brand_id`、`title`、`content_type`、`target_platform`（目标发布平台，决定格式预设）、`source_question_id`、`publish_status`、`gen_params`、`created_at`、`updated_at`
 - **文字**（`text`）：`body`、`tags[]`、`tone`、`image_suggestion`（仅文字配图建议）
 - **图片**（`image`）：`image_prompt`（画面描述，可编辑）、`images[]`，每项 `{url, ratio, caption, overlay_text}`
 - **视频**（`video`）：`video` 对象 `{url, cover_url, duration_sec, ratio, style, script[]}`；`script[]` 每项 `{shot, scene, start_sec, end_sec, voiceover, subtitle}`

@@ -31,127 +31,101 @@
       <div class="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 items-start">
         <!-- 左：参数 -->
         <div class="bg-surface border border-line rounded-lg p-5 space-y-5 sticky top-24">
-          <!-- 内容类型：文字 / 图片 / 视频 -->
+          <!-- 目标平台 -->
           <div>
-            <span class="text-sm font-medium">内容类型</span>
-            <div id="gen-type" class="mt-2 grid grid-cols-3 gap-1 p-1 rounded-lg bg-canvas border border-line">
-              <button data-val="text" class="gtype h-9 rounded-lg bg-surface shadow-card text-sm font-medium inline-flex items-center justify-center gap-1.5">
+            <span class="text-sm font-medium">目标平台</span>
+            <p class="text-[11.5px] text-muted mt-0.5 mb-2">不同平台＝AI 取数的信源，格式各不相同</p>
+            <div id="gen-platform" class="grid grid-cols-3 gap-1.5">
+              <button data-val="xhs" class="gp h-9 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary font-medium transition">小红书</button>
+              <button data-val="douyin" class="gp h-9 rounded-lg border border-line text-[13px] text-secondary hover:border-secondary/40 transition">抖音</button>
+              <button data-val="dianping" class="gp h-9 rounded-lg border border-line text-[13px] text-secondary hover:border-secondary/40 transition">大众点评</button>
+              <button data-val="gzh" class="gp h-9 rounded-lg border border-line text-[13px] text-secondary hover:border-secondary/40 transition">公众号</button>
+              <button data-val="zhihu" class="gp h-9 rounded-lg border border-line text-[13px] text-secondary hover:border-secondary/40 transition">知乎</button>
+            </div>
+          </div>
+
+          <!-- 平台规格（L1 硬约束，随平台自动变，只读） -->
+          <div class="rounded-lg bg-canvas border border-line p-3 space-y-2">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">平台规格</div>
+            <div class="flex items-center justify-between text-[12.5px]"><span class="text-secondary">主推形态</span><span id="spec-form" class="font-medium text-offblack">图文</span></div>
+            <div class="flex items-center justify-between text-[12.5px]"><span class="text-secondary">图片比例</span><span id="spec-ratio" class="font-medium text-offblack tabular-nums">3:4</span></div>
+            <div class="flex items-center justify-between text-[12.5px]"><span class="text-secondary">标题字数</span><span id="spec-title" class="font-medium text-offblack tabular-nums">≤20</span></div>
+            <div class="flex items-center justify-between text-[12.5px]"><span class="text-secondary">正文字数</span><span id="spec-body" class="font-medium text-offblack tabular-nums">≤1000</span></div>
+            <div class="flex items-center justify-between text-[12.5px]"><span class="text-secondary">标签语法</span><span id="spec-tag" class="font-medium text-offblack">#话题# ×10</span></div>
+            <p id="spec-warn" class="hidden text-[11px] text-warning">⚠️ 大众点评规格为经验值，落地前需人工核验</p>
+          </div>
+
+          <!-- 灵魂格式（L2 质量提示） -->
+          <div class="rounded-lg bg-primary/5 border border-primary/15 p-3">
+            <div class="text-[11px] font-semibold text-primary mb-1 inline-flex items-center gap-1">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 14.5 9 21 9.5 16 14l1.5 7L12 17.5 6.5 21 8 14 3 9.5 9.5 9z"/></svg>灵魂格式
+            </div>
+            <p id="spec-soul" class="text-[12.5px] text-secondary leading-relaxed">3:4 竖图 + emoji 标题 + 9 图集，第一张封面定生死</p>
+          </div>
+
+          <!-- 内容形态（随平台过滤，默认主推形态） -->
+          <div>
+            <span class="text-sm font-medium">内容形态</span>
+            <div id="gen-type" class="mt-2 flex gap-1 p-1 rounded-lg bg-canvas border border-line">
+              <button data-val="image" class="gtype flex-1 h-9 rounded-lg bg-surface shadow-card text-sm font-medium inline-flex items-center justify-center gap-1.5">
+                <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>图文</button>
+              <button data-val="text" class="gtype flex-1 h-9 rounded-lg text-sm text-secondary hover:text-offblack transition inline-flex items-center justify-center gap-1.5">
                 <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V5h16v2M9 5v14M7 19h4"/></svg>文字</button>
-              <button data-val="image" class="gtype h-9 rounded-lg text-sm text-secondary hover:text-offblack transition inline-flex items-center justify-center gap-1.5">
-                <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>图片</button>
-              <button data-val="video" class="gtype h-9 rounded-lg text-sm text-secondary hover:text-offblack transition inline-flex items-center justify-center gap-1.5">
+              <button data-val="video" class="gtype flex-1 h-9 rounded-lg text-sm text-secondary hover:text-offblack transition inline-flex items-center justify-center gap-1.5">
                 <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/></svg>视频</button>
             </div>
           </div>
 
-          <!-- 文字参数 -->
-          <div id="params-text" class="space-y-5">
-            <div>
-              <span class="text-sm font-medium">调性</span>
-              <div id="gen-tone" class="mt-2 grid grid-cols-2 gap-2">
-                <button data-val="专业" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">专业</button>
-                <button data-val="亲切" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">亲切</button>
-                <button data-val="干货" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">干货</button>
-                <button data-val="故事" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">故事</button>
-              </div>
+          <!-- 调性（文字 / 图文时显示） -->
+          <div id="params-text">
+            <span class="text-sm font-medium">调性</span>
+            <div id="gen-tone" class="mt-2 grid grid-cols-2 gap-2">
+              <button data-val="专业" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">专业</button>
+              <button data-val="亲切" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">亲切</button>
+              <button data-val="干货" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">干货</button>
+              <button data-val="故事" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">故事</button>
             </div>
           </div>
 
-          <!-- 图片参数 -->
-          <div id="params-image" class="space-y-5 hidden">
-            <div>
-              <span class="text-sm font-medium">画面风格</span>
-              <div id="gen-imgstyle" class="mt-2 grid grid-cols-2 gap-2">
-                <button data-val="写实摄影" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">写实摄影</button>
-                <button data-val="小清新" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">小清新</button>
-                <button data-val="手绘插画" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">手绘插画</button>
-                <button data-val="海报排版" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">海报排版</button>
-              </div>
-            </div>
-            <div>
-              <span class="text-sm font-medium">画面比例</span>
-              <div id="gen-imgratio" class="mt-2 grid grid-cols-3 gap-2">
-                <button data-val="1:1" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">1:1</button>
-                <button data-val="3:4" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">3:4</button>
-                <button data-val="16:9" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">16:9</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 视频参数 -->
-          <div id="params-video" class="space-y-5 hidden">
-            <div>
-              <span class="text-sm font-medium">视频时长</span>
-              <div id="gen-viddur" class="mt-2 grid grid-cols-3 gap-2">
-                <button data-val="15s" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">15s</button>
-                <button data-val="30s" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">30s</button>
-                <button data-val="60s" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">60s</button>
-              </div>
-            </div>
-            <div>
-              <span class="text-sm font-medium">画面比例</span>
-              <div id="gen-vidratio" class="mt-2 grid grid-cols-2 gap-2">
-                <button data-val="竖屏 9:16" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">竖屏 9:16</button>
-                <button data-val="横屏 16:9" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">横屏 16:9</button>
-              </div>
-            </div>
-            <div>
-              <span class="text-sm font-medium">风格</span>
-              <div id="gen-vidstyle" class="mt-2 grid grid-cols-2 gap-2">
-                <button data-val="实拍感" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">实拍感</button>
-                <button data-val="卡通动画" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">卡通动画</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 生成数量 -->
-          <div>
-            <span class="text-sm font-medium">生成数量</span>
-            <div class="mt-2 flex items-center gap-3">
-              <button id="gen-minus" class="w-9 h-9 rounded-lg border border-line grid place-items-center text-secondary transition hover:bg-line/50 active:bg-line">−</button>
-              <span id="gen-count" class="font-display text-xl font-bold tracking-tighter w-6 text-center">1</span>
-              <button id="gen-plus" class="w-9 h-9 rounded-lg border border-line grid place-items-center transition hover:bg-line/50 active:bg-line">+</button>
-              <span id="gen-max" class="text-xs text-secondary ml-1">最多 5 篇</span>
+          <!-- 画面风格（图文 / 视频时显示） -->
+          <div id="params-image" class="hidden">
+            <span class="text-sm font-medium">画面风格</span>
+            <div id="gen-imgstyle" class="mt-2 grid grid-cols-2 gap-2">
+              <button data-val="写实摄影" class="h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary">写实摄影</button>
+              <button data-val="小清新" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">小清新</button>
+              <button data-val="手绘插画" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">手绘插画</button>
+              <button data-val="海报排版" class="h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition">海报排版</button>
             </div>
           </div>
 
           <button id="gen-run" class="w-full h-11 rounded-xl bg-brand-gradient text-white text-sm font-semibold inline-flex items-center justify-center gap-2 shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
             <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4M13 3l2.5 6.5L22 12l-6.5 2.5L13 21l-2.5-6.5L4 12l6.5-2.5L13 3Z"/></svg>
-            <span id="gen-run-label">重新生成</span>
+            <span id="gen-run-label">按 <span id="gen-run-plat">小红书</span> 格式生成</span>
           </button>
-          <p id="gen-hint" class="text-xs text-secondary text-center">文字单篇约 1–2 分钟，生成中可离开本页</p>
+          <p id="gen-hint" class="text-xs text-secondary text-center">同一缺口可切换平台分别生成，组成「内容资产包」</p>
         </div>
 
-        <!-- 右：结果 -->
+        <!-- 右：结果（按平台版式渲染） -->
         <div class="bg-surface border border-line rounded-lg">
           <div class="flex items-center justify-between px-6 h-14 border-b border-line">
-            <span class="text-sm text-secondary inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已生成 · <span id="gen-meta">文字 · 亲切</span></span>
-            <span id="gen-result-hint" class="text-xs text-secondary">可直接编辑，满意后入库</span>
+            <span class="text-sm text-secondary inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已生成 · <span id="gen-meta" class="text-offblack font-medium">小红书 · 图文</span></span>
+            <span id="gen-result-hint" class="text-xs text-secondary">按小红书版式预览，可直接编辑</span>
           </div>
 
           <!-- 文字结果 -->
-          <div id="result-text" class="p-6 space-y-5">
+          <div id="result-text" class="p-6 space-y-5 hidden">
             <div>
-              <label class="text-xs text-secondary">标题</label>
-              <input value="杭州奶茶测评：3 家本地人常喝的店"
+              <div class="flex items-center justify-between"><label class="text-xs text-secondary">标题</label><span class="text-[11px] text-muted tabular-nums"><span id="title-count">0</span>/<span id="title-max">20</span></span></div>
+              <input id="gen-title" maxlength="20" value="杭州奶茶天花板🧋茉莉奶绿真奶党狂喜"
                 class="mt-1 w-full text-lg font-display font-bold tracking-tighter px-3 h-11 rounded-lg border border-line outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" />
             </div>
             <div>
               <label class="text-xs text-secondary">正文</label>
-              <div contenteditable="true" class="mt-1 min-h-44 px-3.5 py-3 rounded-lg border border-line text-sm leading-relaxed outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20">
-                <p>在杭州想喝杯靠谱奶茶？这篇帮你挑。</p>
-                <p class="mt-2">第一家是「茶语时光」，主打茉莉奶绿，用的是手作鲜奶而不是奶精，茶香更明显。位置就在市中心，逛街歇脚很方便……</p>
-                <p class="mt-2">如果你也在找「杭州有什么好喝的奶茶」，可以从这家试起。</p>
-              </div>
+              <div id="gen-body" contenteditable="true" class="mt-1 min-h-44 px-3.5 py-3 rounded-lg border border-line text-sm leading-relaxed outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"></div>
             </div>
             <div>
               <label class="text-xs text-secondary">标签</label>
-              <div id="gen-tags" class="mt-1 flex flex-wrap items-center gap-2 px-2 py-2 rounded-lg border border-line">
-                <span class="inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm">#杭州奶茶<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>
-                <span class="inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm">#手作鲜奶<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>
-                <span class="inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm">#茉莉奶绿<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>
-                <input id="gen-tag-input" placeholder="加标签…" class="flex-1 min-w-24 h-7 px-1.5 text-sm outline-none placeholder:text-secondary/60" />
-              </div>
+              <div id="gen-tags" class="mt-1 flex flex-wrap items-center gap-2 px-2 py-2 rounded-lg border border-line"></div>
             </div>
             <div>
               <label class="text-xs text-secondary">配图建议</label>
@@ -162,61 +136,16 @@
             </div>
           </div>
 
-          <!-- 图片结果 -->
-          <div id="result-image" class="p-6 space-y-5 hidden">
+          <!-- 图片结果（网格比例 × 数量随平台变） -->
+          <div id="result-image" class="p-6 space-y-5">
             <div>
               <label class="text-xs text-secondary">画面描述（可编辑，决定出图内容）</label>
               <input value="门口街景中的茶语时光门店，暖色调，真实摄影质感，手作鲜奶茉莉奶绿"
                 class="mt-1 w-full text-sm px-3 h-11 rounded-lg border border-line outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" />
             </div>
-            <div class="grid grid-cols-2 gap-4">
-              <figure class="group relative rounded-lg overflow-hidden border border-line">
-                <div class="aspect-square grid place-items-center" style="background:linear-gradient(135deg,#EFF4FF,#C7D8FF)">
-                  <svg viewBox="0 0 24 24" class="w-9 h-9 text-primary/45" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
-                </div>
-                <span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">AI 生成 · 1:1</span>
-                <div class="absolute inset-0 grid place-items-center gap-2 grid-flow-col bg-black/40 opacity-0 group-hover:opacity-100 transition">
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="download" title="下载"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></button>
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="regen" title="重生成"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                </div>
-                <figcaption class="px-2.5 py-2 text-[11.5px] text-secondary border-t border-hairline">门店招牌 + 门口街景</figcaption>
-              </figure>
-              <figure class="group relative rounded-lg overflow-hidden border border-line">
-                <div class="aspect-square grid place-items-center" style="background:linear-gradient(135deg,#FEF3F2,#FBD9D3)">
-                  <svg viewBox="0 0 24 24" class="w-9 h-9 text-danger/35" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
-                </div>
-                <span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">AI 生成 · 1:1</span>
-                <div class="absolute inset-0 grid place-items-center gap-2 grid-flow-col bg-black/40 opacity-0 group-hover:opacity-100 transition">
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="download" title="下载"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></button>
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="regen" title="重生成"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                </div>
-                <figcaption class="px-2.5 py-2 text-[11.5px] text-secondary border-t border-hairline">茉莉奶绿成品特写</figcaption>
-              </figure>
-              <figure class="group relative rounded-lg overflow-hidden border border-line">
-                <div class="aspect-square grid place-items-center" style="background:linear-gradient(135deg,#ECFDF5,#C7EFD8)">
-                  <svg viewBox="0 0 24 24" class="w-9 h-9 text-success/35" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
-                </div>
-                <span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">AI 生成 · 1:1</span>
-                <div class="absolute inset-0 grid place-items-center gap-2 grid-flow-col bg-black/40 opacity-0 group-hover:opacity-100 transition">
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="download" title="下载"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></button>
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="regen" title="重生成"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                </div>
-                <figcaption class="px-2.5 py-2 text-[11.5px] text-secondary border-t border-hairline">手作鲜奶制作过程</figcaption>
-              </figure>
-              <figure class="group relative rounded-lg overflow-hidden border border-line">
-                <div class="aspect-square grid place-items-center" style="background:linear-gradient(135deg,#FFFBEB,#FCE9B8)">
-                  <svg viewBox="0 0 24 24" class="w-9 h-9 text-warning/40" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
-                </div>
-                <span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">AI 生成 · 1:1</span>
-                <div class="absolute inset-0 grid place-items-center gap-2 grid-flow-col bg-black/40 opacity-0 group-hover:opacity-100 transition">
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="download" title="下载"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></button>
-                  <button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="regen" title="重生成"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                </div>
-                <figcaption class="px-2.5 py-2 text-[11.5px] text-secondary border-t border-hairline">店内环境与座位</figcaption>
-              </figure>
-            </div>
-            <button data-toast="4 张图已开始打包下载（演示）" class="w-full h-10 rounded-lg border border-line text-sm font-medium transition hover:bg-line/40 inline-flex items-center justify-center gap-1.5">
-              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>下载全部
+            <div id="gen-img-grid" class="grid gap-3" style="grid-template-columns:repeat(3,minmax(0,1fr))"></div>
+            <button data-toast="配图已开始打包下载（演示）" class="w-full h-10 rounded-lg border border-line text-sm font-medium transition hover:bg-line/40 inline-flex items-center justify-center gap-1.5">
+              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>下载全部 · <span id="gen-img-count">9 张 · 3:4</span>
             </button>
           </div>
 
@@ -224,9 +153,9 @@
           <div id="result-video" class="p-6 hidden">
             <div class="grid lg:grid-cols-[260px_1fr] gap-6">
               <div>
-                <div class="relative rounded-xl overflow-hidden border border-line" style="aspect-ratio:9/16;background:linear-gradient(160deg,#1E293B,#2563EB)">
+                <div id="gen-vid-cover" class="relative rounded-xl overflow-hidden border border-line" style="aspect-ratio:9/16;background:linear-gradient(160deg,#1E293B,#2563EB)">
                   <div class="absolute inset-0" style="background:radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.18), transparent)"></div>
-                  <span class="absolute top-2.5 left-2.5 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">9:16 · 15s</span>
+                  <span id="gen-vid-badge" class="absolute top-2.5 left-2.5 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">9:16 · 15–60s</span>
                   <button data-toast="播放预览（演示）" data-toast-type="info" class="absolute inset-0 grid place-items-center">
                     <span class="w-14 h-14 rounded-full bg-white/20 ring-1 ring-white/40 backdrop-blur grid place-items-center transition hover:bg-white/30">
                       <svg viewBox="0 0 24 24" class="w-6 h-6 text-white translate-x-0.5" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -243,7 +172,7 @@
                 </div>
               </div>
               <div>
-                <div class="text-[12px] font-semibold text-muted mb-2.5">分镜脚本 · 共 4 镜 / 15 秒</div>
+                <div id="gen-vid-scripthead" class="text-[12px] font-semibold text-muted mb-2.5">分镜脚本 · 共 4 镜 / 15 秒</div>
                 <ol class="space-y-2.5">
                   <li class="flex gap-3 rounded-lg border border-line p-3">
                     <span class="w-6 h-6 shrink-0 rounded-md bg-primary/10 text-primary text-[11px] font-bold grid place-items-center">1</span>
@@ -309,134 +238,248 @@
     })();
   </script>
   <script>
-    // ——— 07 内容生成 · 演示版交互（文字 / 图片 / 视频 三形态）———
+    // ——— 07 内容生成 · 平台驱动（每个发布平台对应不同格式布局）———
     (function () {
-      const state = {
-        type: 'text', tone: '亲切',
-        imgStyle: '写实摄影', imgRatio: '1:1',
-        vidDur: '15s', vidRatio: '竖屏 9:16', vidStyle: '实拍感',
-        count: 1,
-      };
-      const TYPE_CONF = {
-        text:  { label: '文字', max: 5, hint: '文字单篇约 1–2 分钟，生成中可离开本页', rhint: '可直接编辑，满意后入库' },
-        image: { label: '图片', max: 4, hint: '出图约 30 秒 / 张，生成中可离开本页',  rhint: '对画面不满意可单张重生成' },
-        video: { label: '视频', max: 2, hint: '视频约 3–5 分钟 / 条，生成中可离开本页', rhint: '可预览 / 重生成，脚本可编辑' },
-      };
       const $ = (id) => document.getElementById(id);
-      const meta = $('gen-meta'), hint = $('gen-hint'), rhint = $('gen-result-hint'), maxEl = $('gen-max'), countEl = $('gen-count');
 
-      const metaText = () => {
-        if (state.type === 'text')  return `文字 · ${state.tone}`;
-        if (state.type === 'image') return `图片 · ${state.imgStyle} · ${state.imgRatio}`;
-        return `视频 · ${state.vidRatio} · ${state.vidDur}`;
+      // 各平台格式预设：L1 硬约束(比例/字数/标签) + L2 灵魂格式
+      const PLATFORMS = {
+        xhs:      { name: '小红书', forms: ['image', 'text', 'video'], primary: 'image',
+                    imgRatio: '3:4', ratioCSS: '3/4', imgMax: 9, cols: 3,
+                    vidRatioCSS: '9/16', vidBadge: '9:16 · ≤15min',
+                    title: 20, body: 1000, tag: '#话题#', tagMax: 10,
+                    soul: '3:4 竖图 + emoji 标题 + 9 图集，第一张封面定生死' },
+        douyin:   { name: '抖音', forms: ['video', 'image', 'text'], primary: 'video',
+                    imgRatio: '9:16', ratioCSS: '9/16', imgMax: 6, cols: 3,
+                    vidRatioCSS: '9/16', vidBadge: '9:16 · 15–60s',
+                    title: 55, body: 2200, tag: '#话题', tagMax: 10,
+                    soul: '竖屏 15–60s，前 3 秒钩子 + 全屏字幕 + BGM 卡点' },
+        dianping: { name: '大众点评', forms: ['image', 'text'], primary: 'image',
+                    imgRatio: '4:3', ratioCSS: '4/3', imgMax: 6, cols: 3,
+                    title: 30, body: 1000, tag: '关键词', tagMax: 5, warn: true,
+                    soul: '真实探店：评分 + 人均 + 推荐菜 + 环境图，挂 POI 承接「附近 + 品类」搜索' },
+        gzh:      { name: '公众号', forms: ['text', 'image', 'video'], primary: 'text',
+                    imgRatio: '2.35:1', ratioCSS: '2.35/1', imgMax: 1, cols: 1,
+                    vidRatioCSS: '16/9', vidBadge: '16:9 · 1–30min',
+                    title: 64, body: 20000, tag: '无原生标签', tagMax: 0,
+                    soul: '2.35:1 头条封面 + 长图文 + 小标题分段 + 文末关注引导' },
+        zhihu:    { name: '知乎', forms: ['text', 'image', 'video'], primary: 'text',
+                    imgRatio: '16:9', ratioCSS: '16/9', imgMax: 3, cols: 2,
+                    vidRatioCSS: '16/9', vidBadge: '16:9 · 1–10min',
+                    title: 100, body: 0, tag: '关键词', tagMax: 5,
+                    soul: '长答案：论据 + 数据 + 个人经历四件套，正文越长权重越高（甜区内）' },
       };
-      const syncMeta = () => { meta.textContent = metaText(); };
 
-      // —— 内容类型切换：切参数组 + 结果面板 + 文案 + 数量上限 ——
-      const typeWrap = $('gen-type');
-      const setType = (t) => {
-        state.type = t;
-        typeWrap.querySelectorAll('.gtype').forEach((b) => {
-          const on = b.dataset.val === t;
+      // 各平台示例文案（同一选题，按平台口吻/版式分别生成）
+      const DEMO = {
+        xhs:      { title: '杭州奶茶天花板🧋茉莉奶绿真奶党狂喜', tags: ['杭州奶茶', '手作鲜奶', '茉莉奶绿', '探店'],
+                    body: '在杭州想喝杯靠谱奶茶？这家「茶语时光」必须冲！\n🧋主打茉莉奶绿，手作鲜奶不是奶精，茶香超明显\n📍市中心，逛街歇脚刚刚好\n姐妹们冲就完事了～' },
+        douyin:   { title: '在杭州喝了10家奶茶，这家真奶的茉莉奶绿封神', tags: ['杭州奶茶', '探店', '茉莉奶绿'],
+                    body: '前 3 秒钩子台词：「杭州本地人常喝、却很少被推荐的一家」\n全屏字幕逐句跟读 + 卡点 BGM，文案区只放钩子不放正文。' },
+        dianping: { title: '茶语时光｜茉莉奶绿真材实料，逛街歇脚首选', tags: ['茉莉奶绿', '手作鲜奶', '环境好'],
+                    body: '人均 18 元 ｜ 推荐：茉莉奶绿、手作厚乳\n用的是手作鲜奶不是奶精，茶香明显不齁甜；门店在市中心，环境干净适合坐下歇脚。\n（挂门店 POI，承接「附近奶茶」搜索）' },
+        gzh:      { title: '在杭州，怎么挑一杯真材实料的手作奶茶？', tags: [],
+                    body: '## 为什么大多数奶茶喝起来都一个味\n奶精 + 香精的组合，甜度盖过茶香……\n## 手作鲜奶差在哪\n茶语时光用的是当日鲜奶现萃茶汤……\n## 三个方法判断一家店用没用真奶\n看挂壁、看茶香、看价签……\n（文末：关注「茶语时光」，回复"门店"领新人券）' },
+        zhihu:    { title: '杭州有哪些值得喝的手作奶茶店？（附「真奶」判断方法）', tags: ['杭州', '奶茶', '手作鲜奶'],
+                    body: '先给结论：手作鲜奶 + 现萃茶汤，是一杯奶茶好不好喝的关键。\n\n一、为什么真奶重要（数据）：奶精的反式脂肪……\n二、实测对比：我在杭州喝了 8 家……\n三、个人经历：作为在杭州待了 5 年的奶茶党……\n（论据 + 数据 + 个人经历四件套，正文越长权重越高）' },
+      };
+
+      const FORM_LABEL = { text: '文字', image: '图文', video: '视频' };
+      const state = { platform: 'xhs', form: 'image', tone: '亲切', imgStyle: '写实摄影' };
+
+      // —— 图片占位渐变 + 文案（不含靛蓝/紫，遵守品牌色规范）——
+      const GRADS = [
+        'linear-gradient(135deg,#EFF4FF,#C7D8FF)', 'linear-gradient(135deg,#FEF3F2,#FBD9D3)',
+        'linear-gradient(135deg,#ECFDF5,#C7EFD8)', 'linear-gradient(135deg,#FFFBEB,#FCE9B8)',
+        'linear-gradient(135deg,#F0FDFA,#99F6E4)', 'linear-gradient(135deg,#FFF7ED,#FED7AA)',
+      ];
+      const CAPS = ['门店招牌 + 门口街景', '茉莉奶绿成品特写', '手作鲜奶制作过程', '店内环境与座位', '出杯特写 + 价格牌', '人均 + 推荐菜', '排队实拍', '菜单与价格', '顾客好评'];
+
+      function imgFigure(ratioCSS, grad, badge, cap) {
+        return '<figure class="group relative rounded-lg overflow-hidden border border-line">' +
+          '<div class="grid place-items-center" style="aspect-ratio:' + ratioCSS + ';background:' + grad + '">' +
+            '<svg viewBox="0 0 24 24" class="w-8 h-8" style="color:rgba(37,99,235,.4)" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>' +
+          '</div>' +
+          '<span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">' + badge + '</span>' +
+          '<div class="absolute inset-0 grid grid-flow-col gap-2 place-items-center bg-black/40 opacity-0 group-hover:opacity-100 transition">' +
+            '<button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="download" title="下载"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></button>' +
+            '<button class="img-act w-9 h-9 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="regen" title="重生成"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+          '</div>' +
+          (cap ? '<figcaption class="px-2.5 py-2 text-[11.5px] text-secondary border-t border-hairline truncate">' + cap + '</figcaption>' : '') +
+        '</figure>';
+      }
+
+      function buildImages(p) {
+        const grid = $('gen-img-grid');
+        grid.style.gridTemplateColumns = 'repeat(' + p.cols + ',minmax(0,1fr))';
+        let html = '';
+        for (let i = 0; i < p.imgMax; i++) {
+          const cap = p.cols === 1 ? '头条封面 ' + p.imgRatio : CAPS[i % CAPS.length];
+          html += imgFigure(p.ratioCSS, GRADS[i % GRADS.length], 'AI · ' + p.imgRatio, cap);
+        }
+        grid.innerHTML = html;
+        $('gen-img-count').textContent = p.imgMax + ' 张 · ' + p.imgRatio;
+      }
+
+      function buildBody(text) {
+        return text.split('\n').map((line, i) => {
+          line = line.trim();
+          if (!line) return '';
+          if (line.indexOf('##') === 0) return '<p class="font-semibold text-offblack' + (i ? ' mt-3' : '') + '">' + line.replace(/^##\s*/, '') + '</p>';
+          return '<p' + (i ? ' class="mt-2"' : '') + '>' + line + '</p>';
+        }).join('');
+      }
+
+      function renderTags(p) {
+        const box = $('gen-tags');
+        if (p.tagMax === 0) {
+          box.className = 'mt-1 px-3 py-2.5 rounded-lg border border-line';
+          box.innerHTML = '<span class="text-[12.5px] text-secondary">公众号无原生话题标签，靠正文关键词密度 + 文末「关注引导」沉淀</span>';
+          return;
+        }
+        box.className = 'mt-1 flex flex-wrap items-center gap-2 px-2 py-2 rounded-lg border border-line';
+        const words = (DEMO[state.platform].tags || []);
+        const wrap = (w) => p.tag === '#话题#' ? '#' + w + '#' : (p.tag === '#话题' ? '#' + w : w);
+        let html = words.map((w) =>
+          '<span class="inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm">' + wrap(w) +
+          '<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>'
+        ).join('');
+        html += '<input id="gen-tag-input" placeholder="加' + (p.tag === '关键词' ? '关键词' : '标签') + '…" class="flex-1 min-w-24 h-7 px-1.5 text-sm outline-none placeholder:text-secondary/60" />';
+        box.innerHTML = html;
+      }
+
+      function applyText(p) {
+        const d = DEMO[state.platform];
+        const titleEl = $('gen-title');
+        titleEl.maxLength = p.title;
+        titleEl.value = d.title.slice(0, p.title);
+        $('title-max').textContent = p.title;
+        $('title-count').textContent = titleEl.value.length;
+        $('gen-body').innerHTML = buildBody(d.body);
+        renderTags(p);
+      }
+
+      // —— 表单形态：按平台过滤 + 切换显示 ——
+      function setForm(f) {
+        state.form = f;
+        $('gen-type').querySelectorAll('.gtype').forEach((b) => {
+          const on = b.dataset.val === f;
           b.className = on
-            ? 'gtype h-9 rounded-lg bg-surface shadow-card text-sm font-medium inline-flex items-center justify-center gap-1.5'
-            : 'gtype h-9 rounded-lg text-sm text-secondary hover:text-offblack transition inline-flex items-center justify-center gap-1.5';
+            ? 'gtype flex-1 h-9 rounded-lg bg-surface shadow-card text-sm font-medium inline-flex items-center justify-center gap-1.5'
+            : 'gtype flex-1 h-9 rounded-lg text-sm text-secondary hover:text-offblack transition inline-flex items-center justify-center gap-1.5';
         });
-        ['text', 'image', 'video'].forEach((k) => {
-          $('params-' + k).classList.toggle('hidden', k !== t);
-          $('result-' + k).classList.toggle('hidden', k !== t);
+        $('result-text').classList.toggle('hidden', f !== 'text');
+        $('result-image').classList.toggle('hidden', f !== 'image');
+        $('result-video').classList.toggle('hidden', f !== 'video');
+        // 左栏参数组：文字→调性；图文/视频→画面风格
+        $('params-text').classList.toggle('hidden', f !== 'text');
+        $('params-image').classList.toggle('hidden', f === 'text');
+        $('gen-meta').textContent = PLATFORMS[state.platform].name + ' · ' + FORM_LABEL[f];
+      }
+
+      // —— 平台切换：刷新规格 / 灵魂格式 / 形态过滤 / 各形态预览 ——
+      function setPlatform(key) {
+        state.platform = key;
+        const p = PLATFORMS[key];
+        $('gen-platform').querySelectorAll('.gp').forEach((b) => {
+          const on = b.dataset.val === key;
+          b.className = on
+            ? 'gp h-9 rounded-lg border border-primary bg-primary/5 text-[13px] text-primary font-medium transition'
+            : 'gp h-9 rounded-lg border border-line text-[13px] text-secondary hover:border-secondary/40 transition';
         });
-        const conf = TYPE_CONF[t];
-        hint.textContent = conf.hint;
-        rhint.textContent = conf.rhint;
-        if (state.count > conf.max) state.count = conf.max;
-        maxEl.textContent = '最多 ' + conf.max + ' ' + (t === 'video' ? '条' : (t === 'image' ? '张' : '篇'));
-        countEl.textContent = state.count;
-        syncMeta();
-      };
-      typeWrap.addEventListener('click', (e) => {
-        const b = e.target.closest('.gtype'); if (!b) return;
-        setType(b.dataset.val);
+        // 规格面板
+        $('spec-form').textContent = FORM_LABEL[p.primary];
+        $('spec-ratio').textContent = p.imgRatio;
+        $('spec-title').textContent = '≤' + p.title;
+        $('spec-body').textContent = p.body === 0 ? '无上限' : '≤' + p.body;
+        $('spec-tag').textContent = p.tagMax === 0 ? '无原生标签' : p.tag + ' ×' + p.tagMax;
+        $('spec-warn').classList.toggle('hidden', !p.warn);
+        $('spec-soul').textContent = p.soul;
+        $('gen-run-plat').textContent = p.name;
+        $('gen-result-hint').textContent = '按' + p.name + '版式预览，可直接编辑';
+        // 各形态预览内容
+        applyText(p);
+        buildImages(p);
+        $('gen-vid-cover').style.aspectRatio = p.vidRatioCSS || '9/16';
+        if ($('gen-vid-badge')) $('gen-vid-badge').textContent = p.vidBadge || '9:16';
+        // 默认切到该平台主推形态（setForm 会重写形态按钮 className）
+        setForm(p.primary);
+        // 形态过滤：隐藏不支持的形态——必须在 setForm 之后，否则 hidden 类被覆盖
+        $('gen-type').querySelectorAll('.gtype').forEach((b) => {
+          b.classList.toggle('hidden', p.forms.indexOf(b.dataset.val) < 0);
+        });
+      }
+
+      // —— 平台 / 形态点击 ——
+      $('gen-platform').addEventListener('click', (e) => {
+        const b = e.target.closest('.gp'); if (!b) return;
+        setPlatform(b.dataset.val);
+        AO.toast('已切到「' + PLATFORMS[b.dataset.val].name + '」格式', 'info');
+      });
+      $('gen-type').addEventListener('click', (e) => {
+        const b = e.target.closest('.gtype'); if (!b || b.classList.contains('hidden')) return;
+        setForm(b.dataset.val);
       });
 
-      // —— 通用：一组「描边按钮」单选 ——
+      // —— 描边按钮单选（调性 / 画面风格）——
       const bindPills = (wrapId, key) => {
-        const wrap = $(wrapId);
-        wrap.addEventListener('click', (e) => {
+        $(wrapId).addEventListener('click', (e) => {
           const b = e.target.closest('button'); if (!b) return;
-          wrap.querySelectorAll('button').forEach((x) => {
-            x.className = 'h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition';
-          });
+          $(wrapId).querySelectorAll('button').forEach((x) => { x.className = 'h-9 rounded-lg border border-line text-sm text-secondary hover:border-secondary/40 transition'; });
           b.className = 'h-9 rounded-lg border border-primary bg-primary/5 text-sm text-primary';
-          state[key] = b.dataset.val; syncMeta();
+          state[key] = b.dataset.val;
         });
       };
       bindPills('gen-tone', 'tone');
       bindPills('gen-imgstyle', 'imgStyle');
-      bindPills('gen-imgratio', 'imgRatio');
-      bindPills('gen-viddur', 'vidDur');
-      bindPills('gen-vidratio', 'vidRatio');
-      bindPills('gen-vidstyle', 'vidStyle');
 
-      // —— 生成数量（上限随类型）——
-      $('gen-minus').addEventListener('click', () => {
-        if (state.count > 1) { state.count--; countEl.textContent = state.count; } else AO.toast('至少生成 1 份', 'warn');
-      });
-      $('gen-plus').addEventListener('click', () => {
-        const max = TYPE_CONF[state.type].max;
-        if (state.count < max) { state.count++; countEl.textContent = state.count; } else AO.toast('单次最多 ' + max + ' 份', 'warn');
-      });
+      // —— 标题字数计数 ——
+      $('gen-title').addEventListener('input', (e) => { $('title-count').textContent = e.target.value.length; });
 
-      // —— 标签：删除 + 回车添加 ——
-      const tags = $('gen-tags'), tagInput = $('gen-tag-input');
-      tags.addEventListener('click', (e) => {
-        const x = e.target.closest('.tag-del'); if (!x) return;
-        x.closest('span').remove();
-      });
-      tagInput.addEventListener('keydown', (e) => {
+      // —— 标签：删除 + 回车添加（事件委托，兼容平台切换重建）——
+      const tagBox = $('gen-tags');
+      tagBox.addEventListener('click', (e) => { const x = e.target.closest('.tag-del'); if (x) x.closest('span').remove(); });
+      tagBox.addEventListener('keydown', (e) => {
         if (e.key !== 'Enter') return;
+        const inp = e.target.closest('#gen-tag-input'); if (!inp) return;
         e.preventDefault();
-        let v = tagInput.value.trim(); if (!v) return;
-        if (v[0] !== '#') v = '#' + v;
+        let v = inp.value.trim().replace(/^#/, '').replace(/#$/, ''); if (!v) return;
+        const p = PLATFORMS[state.platform];
+        const label = p.tag === '#话题#' ? '#' + v + '#' : (p.tag === '#话题' ? '#' + v : v);
         const span = document.createElement('span');
         span.className = 'inline-flex items-center gap-1 h-7 pl-2.5 pr-1.5 rounded-lg bg-primary/10 text-primary text-sm';
-        span.innerHTML = `${v}<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button>`;
-        tags.insertBefore(span, tagInput);
-        tagInput.value = '';
+        span.innerHTML = label + '<button class="tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button>';
+        tagBox.insertBefore(span, inp);
+        inp.value = '';
       });
 
-      // —— 图片：单张下载 / 重生成（演示）——
+      // —— 图片单张下载 / 重生成 ——
       $('result-image').addEventListener('click', (e) => {
         const b = e.target.closest('.img-act'); if (!b) return;
         AO.toast(b.dataset.act === 'download' ? '该图已开始下载（演示）' : '正在按画面描述重生成这张（演示）', b.dataset.act === 'download' ? 'success' : 'info');
       });
 
-      // —— 重新生成（模拟）——
+      // —— 生成（模拟）——
       const run = $('gen-run'), runLabel = $('gen-run-label');
       run.addEventListener('click', () => {
-        const conf = TYPE_CONF[state.type];
-        const unit = state.type === 'video' ? '条' : (state.type === 'image' ? '张' : '篇');
+        const p = PLATFORMS[state.platform];
         run.disabled = true; run.style.opacity = '0.7';
-        const old = runLabel.textContent; runLabel.textContent = '生成中…';
-        AO.toast(`正在生成 ${state.count} ${unit}${conf.label}（${metaText()}）…`, 'info');
+        const old = runLabel.innerHTML; runLabel.textContent = '生成中…';
+        AO.toast('正在按「' + p.name + '」格式生成' + FORM_LABEL[state.form] + '…', 'info');
         setTimeout(() => {
           run.disabled = false; run.style.opacity = '';
-          runLabel.textContent = old;
-          AO.toast(`已生成 ${state.count} ${unit}${conf.label}（演示）`, 'success');
+          runLabel.innerHTML = old;
+          AO.toast('已生成 · ' + p.name + ' ' + FORM_LABEL[state.form] + '（演示）', 'success');
         }, 1400);
       });
 
-      // —— 丢弃（按当前类型清当前结果）——
+      // —— 丢弃 ——
       $('gen-discard').addEventListener('click', () => {
-        if (state.type === 'text') {
-          const title = $('result-text').querySelector('input');
-          $('result-text').querySelectorAll('.tag-del').forEach((b) => b.closest('span').remove());
-          const body = $('result-text').querySelector('[contenteditable]');
-          if (body) body.innerHTML = '<p class="text-secondary">已丢弃当前草稿，可调整参数后重新生成。</p>';
-          if (title) title.value = '';
-        }
-        AO.toast('已丢弃当前' + TYPE_CONF[state.type].label + '草稿', 'info');
+        AO.toast('已丢弃当前' + PLATFORMS[state.platform].name + FORM_LABEL[state.form] + '草稿', 'info');
       });
+
+      // —— 初始：默认小红书 ——
+      setPlatform('xhs');
     })();
   </script>
 </body>
