@@ -39,6 +39,7 @@
         <a href="#overview" data-spy="overview" class="sectab px-3 h-12 inline-flex items-center text-sm text-primary border-b-2 border-primary font-semibold whitespace-nowrap transition-colors">报告简介</a>
         <a href="#summary" data-spy="summary" class="sectab px-3 h-12 inline-flex items-center text-sm text-secondary border-b-2 border-transparent hover:text-offblack whitespace-nowrap transition-colors">整体表现</a>
         <a href="#citation" data-spy="citation" class="sectab px-3 h-12 inline-flex items-center text-sm text-secondary border-b-2 border-transparent hover:text-offblack whitespace-nowrap transition-colors">上榜要素</a>
+        <a href="#sources" data-spy="sources" class="sectab px-3 h-12 inline-flex items-center text-sm text-secondary border-b-2 border-transparent hover:text-offblack whitespace-nowrap transition-colors">信源分析</a>
         <a href="#competition" data-spy="competition" class="sectab px-3 h-12 inline-flex items-center text-sm text-secondary border-b-2 border-transparent hover:text-offblack whitespace-nowrap transition-colors">竞争位置</a>
         <a href="#visibility" data-spy="visibility" class="sectab px-3 h-12 inline-flex items-center text-sm text-secondary border-b-2 border-transparent hover:text-offblack whitespace-nowrap transition-colors">AI 可见度</a>
         <a href="#platforms" data-spy="platforms" class="sectab px-3 h-12 inline-flex items-center text-sm text-secondary border-b-2 border-transparent hover:text-offblack whitespace-nowrap transition-colors">分平台明细</a>
@@ -105,9 +106,10 @@
         <div class="flex items-center gap-2.5 mb-1.5"><span class="w-1 h-5 rounded-full bg-primary"></span><h2 class="font-display text-lg font-bold tracking-tighter">整体表现</h2></div>
         <p class="text-sm text-secondary italic mb-4">品牌在 AI 生态中的综合占据力分析</p>
         <!-- 6 指标卡 -->
-        <div class="grid grid-cols-3 lg:grid-cols-6 gap-3.5 mb-5">
+        <div class="grid grid-cols-3 lg:grid-cols-7 gap-3.5 mb-5">
           <div class="relative overflow-hidden rounded-lg bg-surface border border-line shadow-card p-4 pb-5"><div class="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">品牌得分</div><div class="mt-2 font-display text-[30px] leading-none font-bold tracking-tighter tabular-nums text-primary">42</div><div class="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-success"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 15 6-6 6 6"/></svg>较上次 +14</div><span class="absolute inset-x-0 bottom-0 h-1 bg-primary"></span></div>
           <div class="relative overflow-hidden rounded-lg bg-surface border border-line shadow-card p-4 pb-5"><div class="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">提及率</div><div class="mt-2 font-display text-[30px] leading-none font-bold tracking-tighter tabular-nums text-primary">30%</div><div class="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-secondary">行业中游</div><span class="absolute inset-x-0 bottom-0 h-1 bg-primary/60"></span></div>
+          <div class="relative overflow-hidden rounded-lg bg-surface border border-line shadow-card p-4 pb-5"><div class="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">首位提及率</div><div class="mt-2 font-display text-[30px] leading-none font-bold tracking-tighter tabular-nums text-primary">9%</div><div class="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-secondary">居首推荐占比</div><span class="absolute inset-x-0 bottom-0 h-1 bg-primary/60"></span></div>
           <div class="relative overflow-hidden rounded-lg bg-surface border border-line shadow-card p-4 pb-5"><div class="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">平均排名</div><div class="mt-2 font-display text-[30px] leading-none font-bold tracking-tighter tabular-nums text-warning">4.2</div><div class="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-warning"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg>排名偏后</div><span class="absolute inset-x-0 bottom-0 h-1 bg-warning"></span></div>
           <div class="relative overflow-hidden rounded-lg bg-surface border border-line shadow-card p-4 pb-5"><div class="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">提及次数</div><div class="mt-2 font-display text-[30px] leading-none font-bold tracking-tighter tabular-nums">21</div><div class="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-secondary">覆盖 4/10 问题</div><span class="absolute inset-x-0 bottom-0 h-1 bg-primary/60"></span></div>
           <div class="relative overflow-hidden rounded-lg bg-surface border border-line shadow-card p-4 pb-5"><div class="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted">正面率</div><div class="mt-2 font-display text-[30px] leading-none font-bold tracking-tighter tabular-nums text-success">60%</div><div class="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-success"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 15 6-6 6 6"/></svg>口碑偏正面</div><span class="absolute inset-x-0 bottom-0 h-1 bg-success"></span></div>
@@ -262,9 +264,58 @@
         </div>
       </section>
 
+      <!-- ============ 信源分析 ============ -->
+      <section id="sources" class="scroll-mt-32">
+        <div class="flex items-center gap-2.5 mb-1.5"><span class="w-1 h-5 rounded-full bg-primary"></span><h2 class="font-display text-lg font-bold tracking-tighter">信源分析 · AI 都从哪里取数</h2></div>
+        <p class="text-sm text-secondary italic mb-4">这些是本次诊断里 AI 回答最常引用的站外来源。想被 AI 引用，就优先去占比高、你还没覆盖的渠道铺内容。</p>
+        <div class="bg-surface border border-line rounded-lg shadow-card overflow-hidden">
+          <div class="flex items-center justify-between px-5 h-13 py-3.5 border-b border-hairline">
+            <h3 class="font-display font-bold tracking-tighter">高频引用来源 Top 5</h3>
+            <span class="text-xs text-secondary">占比 = 被引用次数 / 总引用</span>
+          </div>
+          <ul class="divide-y divide-hairline">
+            <li class="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-canvas">
+              <span class="shrink-0 px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-[11px] font-medium">点评平台</span>
+              <div class="min-w-0 flex-1"><div class="text-sm font-medium text-offblack truncate">杭州奶茶人气榜 Top20</div><div class="text-[11px] text-muted mt-0.5">被 文心·网页版、腾讯元宝·网页版 引用</div></div>
+              <div class="shrink-0 w-32 hidden sm:flex items-center gap-2"><div class="flex-1 h-1.5 rounded-full bg-hairline overflow-hidden"><div class="h-full rounded-full bg-primary" style="width:100%"></div></div><span class="text-xs font-semibold tabular-nums text-offblack w-9 text-right">1.2%</span></div>
+              <button data-toast="演示：跳转原文" data-toast-type="info" class="shrink-0 text-xs text-primary font-medium hover:underline">原文 ↗</button>
+            </li>
+            <li class="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-canvas">
+              <span class="shrink-0 px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-[11px] font-medium">社交媒体</span>
+              <div class="min-w-0 flex-1"><div class="text-sm font-medium text-offblack truncate">杭州必喝奶茶测评合集</div><div class="text-[11px] text-muted mt-0.5">被 豆包·网页版、腾讯元宝·网页版 引用</div></div>
+              <div class="shrink-0 w-32 hidden sm:flex items-center gap-2"><div class="flex-1 h-1.5 rounded-full bg-hairline overflow-hidden"><div class="h-full rounded-full bg-primary" style="width:75%"></div></div><span class="text-xs font-semibold tabular-nums text-offblack w-9 text-right">0.9%</span></div>
+              <button data-toast="演示：跳转原文" data-toast-type="info" class="shrink-0 text-xs text-primary font-medium hover:underline">原文 ↗</button>
+            </li>
+            <li class="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-canvas">
+              <span class="shrink-0 px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-[11px] font-medium">问答社区</span>
+              <div class="min-w-0 flex-1"><div class="text-sm font-medium text-offblack truncate">杭州有哪些值得喝的手作奶茶？</div><div class="text-[11px] text-muted mt-0.5">被 DeepSeek·网页版、KIMI·网页版 引用</div></div>
+              <div class="shrink-0 w-32 hidden sm:flex items-center gap-2"><div class="flex-1 h-1.5 rounded-full bg-hairline overflow-hidden"><div class="h-full rounded-full bg-primary" style="width:58%"></div></div><span class="text-xs font-semibold tabular-nums text-offblack w-9 text-right">0.7%</span></div>
+              <button data-toast="演示：跳转原文" data-toast-type="info" class="shrink-0 text-xs text-primary font-medium hover:underline">原文 ↗</button>
+            </li>
+            <li class="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-canvas">
+              <span class="shrink-0 px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-[11px] font-medium">自媒体</span>
+              <div class="min-w-0 flex-1"><div class="text-sm font-medium text-offblack truncate">杭州探店：本地人常喝的奶茶</div><div class="text-[11px] text-muted mt-0.5">被 豆包·手机版 引用</div></div>
+              <div class="shrink-0 w-32 hidden sm:flex items-center gap-2"><div class="flex-1 h-1.5 rounded-full bg-hairline overflow-hidden"><div class="h-full rounded-full bg-primary" style="width:42%"></div></div><span class="text-xs font-semibold tabular-nums text-offblack w-9 text-right">0.5%</span></div>
+              <button data-toast="演示：跳转原文" data-toast-type="info" class="shrink-0 text-xs text-primary font-medium hover:underline">原文 ↗</button>
+            </li>
+            <li class="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-canvas">
+              <span class="shrink-0 px-2 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-[11px] font-medium">百科</span>
+              <div class="min-w-0 flex-1"><div class="text-sm font-medium text-offblack truncate">茶饮品类百科 · 手作鲜奶茶</div><div class="text-[11px] text-muted mt-0.5">被 百度AI·网页版 引用</div></div>
+              <div class="shrink-0 w-32 hidden sm:flex items-center gap-2"><div class="flex-1 h-1.5 rounded-full bg-hairline overflow-hidden"><div class="h-full rounded-full bg-primary" style="width:33%"></div></div><span class="text-xs font-semibold tabular-nums text-offblack w-9 text-right">0.4%</span></div>
+              <button data-toast="演示：跳转原文" data-toast-type="info" class="shrink-0 text-xs text-primary font-medium hover:underline">原文 ↗</button>
+            </li>
+          </ul>
+        </div>
+        <div class="mt-3 flex items-center gap-2 text-[13px] text-secondary">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16v-4M12 8h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          <span><span class="text-offblack font-medium">大众点评 / 小红书 / 知乎</span> 是当前 AI 取数重镇，</span>
+          <a href="07-内容生成.html?from=diag" class="text-primary font-medium hover:underline">去生成对应内容 →</a>
+        </div>
+      </section>
+
       <!-- ============ 竞争位置 ============ -->
       <section id="competition" class="scroll-mt-32">
-        <div class="flex items-center gap-2.5 mb-1.5"><span class="w-1 h-5 rounded-full bg-primary"></span><h2 class="font-display text-lg font-bold tracking-tighter">品牌竞争位置分布图</h2></div>
+        <div class="flex items-center gap-2.5 mb-1.5"><span class="w-1 h-5 rounded-full bg-primary"></span><h2 class="font-display text-lg font-bold tracking-tighter">品牌竞争位置</h2></div>
         <p class="text-sm text-secondary italic mb-4">散点越靠右上角（提及率高、排名靠前）竞争力越强；圆点大小代表被提及次数，蓝色为你。</p>
         <div class="bg-surface border border-line rounded-lg shadow-card p-6">
           <svg viewBox="0 0 720 360" class="w-full" font-family="Inter, sans-serif">
@@ -294,6 +345,69 @@
               <text x="440" y="80" text-anchor="middle" fill="#2563EB" font-size="12" font-weight="700">茶语时光</text>
             </g>
           </svg>
+        </div>
+
+        <!-- 竞品提及排行榜 -->
+        <div class="bg-surface border border-line rounded-lg shadow-card overflow-hidden mt-4">
+          <div class="flex items-center justify-between px-5 h-13 py-3.5 border-b border-hairline">
+            <h3 class="font-display font-bold tracking-tighter">竞品提及排行榜</h3>
+            <span class="text-xs text-secondary">同赛道 · 按提及率排序</span>
+          </div>
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left text-secondary border-b border-hairline">
+                <th class="font-medium px-5 py-2.5 w-16">排名</th>
+                <th class="font-medium px-4 py-2.5">品牌</th>
+                <th class="font-medium px-4 py-2.5 w-28 text-right">提及率</th>
+                <th class="font-medium px-4 py-2.5 w-28 text-right">首位提及率</th>
+                <th class="font-medium px-4 py-2.5 w-24 text-right">正面率</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-hairline">
+              <tr class="transition-colors hover:bg-canvas">
+                <td class="px-5 py-3"><span class="w-6 h-6 grid place-items-center rounded-md bg-canvas text-secondary text-xs font-bold tabular-nums ring-1 ring-line">1</span></td>
+                <td class="px-4 py-3 font-medium">喜茶</td>
+                <td class="px-4 py-3 text-right tabular-nums">45%</td>
+                <td class="px-4 py-3 text-right tabular-nums">18%</td>
+                <td class="px-4 py-3 text-right tabular-nums text-success">72%</td>
+              </tr>
+              <tr class="transition-colors hover:bg-canvas">
+                <td class="px-5 py-3"><span class="w-6 h-6 grid place-items-center rounded-md bg-canvas text-secondary text-xs font-bold tabular-nums ring-1 ring-line">2</span></td>
+                <td class="px-4 py-3 font-medium">蜜雪冰城</td>
+                <td class="px-4 py-3 text-right tabular-nums">40%</td>
+                <td class="px-4 py-3 text-right tabular-nums">15%</td>
+                <td class="px-4 py-3 text-right tabular-nums text-success">66%</td>
+              </tr>
+              <tr class="transition-colors hover:bg-canvas">
+                <td class="px-5 py-3"><span class="w-6 h-6 grid place-items-center rounded-md bg-canvas text-secondary text-xs font-bold tabular-nums ring-1 ring-line">3</span></td>
+                <td class="px-4 py-3 font-medium">茶颜悦色</td>
+                <td class="px-4 py-3 text-right tabular-nums">35%</td>
+                <td class="px-4 py-3 text-right tabular-nums">11%</td>
+                <td class="px-4 py-3 text-right tabular-nums text-success">70%</td>
+              </tr>
+              <tr class="bg-primary/5">
+                <td class="px-5 py-3"><span class="w-6 h-6 grid place-items-center rounded-md bg-primary/10 text-primary text-xs font-bold tabular-nums ring-1 ring-primary/20">4</span></td>
+                <td class="px-4 py-3 font-semibold text-primary">茶语时光 <span class="ml-1 inline-flex items-center px-1.5 h-5 rounded bg-primary/10 text-primary text-[10px] font-medium align-middle">当前品牌</span></td>
+                <td class="px-4 py-3 text-right tabular-nums font-semibold text-primary">30%</td>
+                <td class="px-4 py-3 text-right tabular-nums font-semibold text-primary">9%</td>
+                <td class="px-4 py-3 text-right tabular-nums font-semibold text-success">60%</td>
+              </tr>
+              <tr class="transition-colors hover:bg-canvas">
+                <td class="px-5 py-3"><span class="w-6 h-6 grid place-items-center rounded-md bg-canvas text-secondary text-xs font-bold tabular-nums ring-1 ring-line">5</span></td>
+                <td class="px-4 py-3 font-medium">古茗</td>
+                <td class="px-4 py-3 text-right tabular-nums">24%</td>
+                <td class="px-4 py-3 text-right tabular-nums">6%</td>
+                <td class="px-4 py-3 text-right tabular-nums text-success">58%</td>
+              </tr>
+              <tr class="transition-colors hover:bg-canvas">
+                <td class="px-5 py-3"><span class="w-6 h-6 grid place-items-center rounded-md bg-canvas text-secondary text-xs font-bold tabular-nums ring-1 ring-line">6</span></td>
+                <td class="px-4 py-3 font-medium">沪上阿姨</td>
+                <td class="px-4 py-3 text-right tabular-nums">14%</td>
+                <td class="px-4 py-3 text-right tabular-nums">3%</td>
+                <td class="px-4 py-3 text-right tabular-nums text-success">55%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 

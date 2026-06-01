@@ -165,13 +165,13 @@
 **响应（成功 200）：**
 ```json
 {"code": 200, "message": "success", "data": {"items": [
-  {"id": "b_001", "user_id": "u_001", "name": "茶语时光", "slogan": "武林商圈手作鲜奶茶",
-   "industry": "tea_coffee", "region_type": "district", "region_value": "杭州·武林商圈",
+  {"id": "b_001", "user_id": "u_001", "name": "茶语时光", "slogan": "杭州手作鲜奶茶",
+   "industry": "tea_coffee", "region_type": "city", "region_value": "杭州",
    "selling_points": ["手作鲜奶", "本地门店"],
    "target_channels": ["qwen_mobile", "qwen_web", "doubao_mobile", "doubao_web", "deepseek_mobile", "deepseek_web", "yuanbao_mobile", "yuanbao_web", "wenxin_web", "kimi_web", "baidu_web", "douyin_web"],
    "is_current": true, "created_at": "2026-05-20T09:00:00Z"},
-  {"id": "b_002", "user_id": "u_001", "name": "茶语·滨江店", "slogan": "滨江写字楼通勤鲜奶茶",
-   "industry": "tea_coffee", "region_type": "district", "region_value": "杭州·滨江",
+  {"id": "b_002", "user_id": "u_001", "name": "茶语·滨江店", "slogan": "写字楼通勤鲜奶茶",
+   "industry": "tea_coffee", "region_type": "city", "region_value": "杭州",
    "selling_points": ["写字楼自提", "现做现送"],
    "target_channels": ["qwen_web", "doubao_web", "deepseek_web", "wenxin_web", "kimi_web"],
    "is_current": false, "created_at": "2026-05-26T14:00:00Z"}
@@ -184,8 +184,8 @@
 
 **请求体：**
 ```json
-{"name": "茶语·滨江店", "slogan": "滨江写字楼通勤鲜奶茶", "industry": "tea_coffee",
- "region_type": "district", "region_value": "杭州·滨江",
+{"name": "茶语·滨江店", "slogan": "写字楼通勤鲜奶茶", "industry": "tea_coffee",
+ "region_type": "city", "region_value": "杭州",
  "selling_points": ["写字楼自提", "现做现送"],
  "target_channels": ["qwen_web", "doubao_web", "deepseek_web", "wenxin_web", "kimi_web"]}
 ```
@@ -223,7 +223,7 @@
 **响应（成功 200）：**
 ```json
 {"code": 200, "message": "success", "data": {"items": [
-  {"id": "qs_01", "text": "武林商圈有什么好喝的奶茶", "type": "local", "source": "system"},
+  {"id": "qs_01", "text": "杭州有什么好喝的奶茶", "type": "local", "source": "system"},
   {"id": "qs_02", "text": "手作奶茶哪家用真奶", "type": "comparison", "source": "user"}
 ]}}
 ```
@@ -256,7 +256,7 @@
 **请求体：**
 ```json
 {"channels": ["qwen_mobile", "qwen_web", "doubao_mobile", "doubao_web", "deepseek_mobile", "deepseek_web", "yuanbao_mobile", "yuanbao_web", "wenxin_web", "kimi_web", "baidu_web", "douyin_web"],
- "questions": [{"text": "武林商圈有什么好喝的奶茶", "type": "local"}]}
+ "questions": [{"text": "杭州有什么好喝的奶茶", "type": "local"}]}
 ```
 **响应（成功 200）：**
 ```json
@@ -299,9 +299,10 @@
 ```
 
 #### GET /api/diagnoses/{id}
-诊断报告详情（06）。包含总分、三项指标、上榜要素与可见度漏斗、平台明细、缺口、问题清单。
+诊断报告详情（06）。包含总分、四项指标（含首位提及率）、上榜要素与可见度漏斗、信源分析、竞品对标、平台明细、缺口、问题清单。
 
 > `citation_funnel`（被检索→被引用→优先推荐漏斗）与 `citation_factors`（5 个上榜要素评分）为 V1 报告打分模型，依据公开 GEO 研究，见数据契约 PRD §9.2。`citation_factors[].level` 取值 `weak / medium / strong`。
+> `competitors[]` 竞品对标排行（`is_current=true` 为当前品牌，前端高亮）、`sources[]` 信源分析（AI 引用的站外来源 + `cite_share` 被引用占比 + `source_type` 见 §9.3）均见 PRD §9.2。
 
 **响应（成功 200）：**
 ```json
@@ -312,6 +313,7 @@
   "score_total": 42,
   "score_delta": 14,
   "metric_mention_rate": 0.30,
+  "metric_first_mention_rate": 0.09,
   "metric_avg_position": 4.2,
   "metric_positive_rate": 0.60,
   "citation_funnel": {"retrieved_rate": 0.45, "cited_rate": 0.30, "top3_rate": 0.12, "retrieved_to_cited": 0.67, "cited_to_top3": 0.40},
@@ -323,6 +325,21 @@
     {"key": "third_party", "name": "第三方提及", "level": "weak", "score": 28, "impact": "站外 6.5×", "note": "口碑集中在自有渠道，站外沉淀少",
      "breakdown": {"self": 0.62, "third_party_owned": 0.28, "third_party_organic": 0.10}}
   ],
+  "competitors": [
+    {"name": "喜茶", "is_current": false, "mention_rate": 0.45, "first_mention_rate": 0.18, "positive_rate": 0.72},
+    {"name": "蜜雪冰城", "is_current": false, "mention_rate": 0.40, "first_mention_rate": 0.15, "positive_rate": 0.66},
+    {"name": "茶颜悦色", "is_current": false, "mention_rate": 0.35, "first_mention_rate": 0.11, "positive_rate": 0.70},
+    {"name": "茶语时光", "is_current": true, "mention_rate": 0.30, "first_mention_rate": 0.09, "positive_rate": 0.60},
+    {"name": "古茗", "is_current": false, "mention_rate": 0.24, "first_mention_rate": 0.06, "positive_rate": 0.58},
+    {"name": "沪上阿姨", "is_current": false, "mention_rate": 0.14, "first_mention_rate": 0.03, "positive_rate": 0.55}
+  ],
+  "sources": [
+    {"title": "杭州奶茶人气榜 Top20", "url": "https://www.dianping.com/...", "source_type": "点评平台", "platforms": ["wenxin_web", "yuanbao_web"], "cite_share": 0.12},
+    {"title": "杭州必喝奶茶测评合集", "url": "https://www.xiaohongshu.com/...", "source_type": "社交媒体", "platforms": ["doubao_web", "yuanbao_web"], "cite_share": 0.09},
+    {"title": "杭州有哪些值得喝的手作奶茶？", "url": "https://www.zhihu.com/...", "source_type": "问答社区", "platforms": ["deepseek_web", "kimi_web"], "cite_share": 0.07},
+    {"title": "杭州探店：本地人常喝的奶茶", "url": "https://www.douyin.com/...", "source_type": "自媒体", "platforms": ["doubao_mobile"], "cite_share": 0.05},
+    {"title": "茶饮品类百科 · 手作鲜奶茶", "url": "https://baike.baidu.com/...", "source_type": "百科", "platforms": ["baidu_web"], "cite_share": 0.04}
+  ],
   "created_at": "2026-05-29T14:20:00Z", "finished_at": "2026-05-29T14:24:00Z",
   "channel_breakdown": [
     {"channel": "wenxin_web", "platform": "wenxin", "device": "web", "mention_rate": 0.52, "mention_count": 5, "avg_position": 3.1, "positive_rate": 0.8, "source_method": "api"},
@@ -331,10 +348,10 @@
     {"channel": "baidu_web", "platform": "baidu", "device": "web", "mention_rate": 0.15, "mention_count": 1, "avg_position": 5.5, "positive_rate": 0.5, "source_method": "fallback"}
   ],
   "questions": [
-    {"id": "q_1", "text": "武林商圈有什么好喝的奶茶", "type": "local", "source": "system"}
+    {"id": "q_1", "text": "杭州有什么好喝的奶茶", "type": "local", "source": "system"}
   ],
   "gaps": [
-    {"question_id": "q_3", "text": "武林商圈奶茶推荐", "zero_mention_channels": ["doubao_mobile", "qwen_mobile"]}
+    {"question_id": "q_3", "text": "杭州奶茶推荐", "zero_mention_channels": ["doubao_mobile", "qwen_mobile"]}
   ]
 }}
 ```
@@ -389,7 +406,7 @@
 **请求体（`params` 按 content_type 取对应键）：**
 ```json
 {"content_type": "image", "count": 4,
- "source_question_id": "q_3", "topic": "武林商圈奶茶推荐",
+ "source_question_id": "q_3", "topic": "杭州奶茶推荐",
  "params": {"image_style": "photo", "image_ratio": "1:1"}}
 ```
 > `source_question_id`（从诊断缺口进入）与 `topic`（直接生成）至少提供其一。
@@ -421,9 +438,9 @@
 **单条 data 示例（图片）：**
 ```json
 {"id": "c_21", "brand_id": "b_001", "title": "茶语时光门店组图", "content_type": "image",
- "image_prompt": "武林路街景中的茶语时光门店，暖色调，真实摄影质感",
+ "image_prompt": "门口街景中的茶语时光门店，暖色调，真实摄影质感",
  "images": [
-   {"url": "https://cdn.example.com/c_21_1.jpg", "ratio": "1:1", "caption": "门店招牌 + 武林路街景", "overlay_text": ""},
+   {"url": "https://cdn.example.com/c_21_1.jpg", "ratio": "1:1", "caption": "门店招牌 + 门口街景", "overlay_text": ""},
    {"url": "https://cdn.example.com/c_21_2.jpg", "ratio": "1:1", "caption": "茉莉奶绿成品特写", "overlay_text": "真奶手作"}
  ],
  "gen_params": {"content_type": "image", "image_style": "photo", "image_ratio": "1:1", "count": 4},
@@ -432,11 +449,11 @@
 ```
 **单条 data 示例（视频）：**
 ```json
-{"id": "c_22", "brand_id": "b_001", "title": "逛街歇脚，武林路探店", "content_type": "video",
+{"id": "c_22", "brand_id": "b_001", "title": "逛街歇脚，门店探店", "content_type": "video",
  "video": {"url": "https://cdn.example.com/c_22.mp4", "cover_url": "https://cdn.example.com/c_22_cover.jpg",
    "duration_sec": 15, "ratio": "9:16", "style": "live",
    "script": [
-     {"shot": 1, "scene": "武林路街景推进到门店招牌", "start_sec": 0, "end_sec": 3, "voiceover": "逛武林商圈，喝杯靠谱的。", "subtitle": ""},
+     {"shot": 1, "scene": "门口街景推进到门店招牌", "start_sec": 0, "end_sec": 3, "voiceover": "逛街喝杯靠谱的。", "subtitle": ""},
      {"shot": 2, "scene": "手作鲜奶倒入茉莉茶汤特写", "start_sec": 3, "end_sec": 8, "voiceover": "茶语时光，用的是手作鲜奶。", "subtitle": ""}
    ]},
  "gen_params": {"content_type": "video", "video_duration": "15", "video_ratio": "9:16", "video_style": "live"},
@@ -451,11 +468,11 @@
 **响应（成功 200）：**
 ```json
 {"code": 200, "message": "success", "data": {"items": [
-  {"id": "c_11", "title": "武林商圈奶茶测评：3 家本地人常喝的店", "content_type": "text",
-   "publish_status": "pending", "summary": "逛武林商圈想喝杯靠谱奶茶？这篇帮你挑……", "updated_at": "2026-05-29T00:00:00Z"},
+  {"id": "c_11", "title": "杭州奶茶测评：3 家本地人常喝的店", "content_type": "text",
+   "publish_status": "pending", "summary": "在杭州想喝杯靠谱奶茶？这篇帮你挑……", "updated_at": "2026-05-29T00:00:00Z"},
   {"id": "c_21", "title": "茶语时光门店组图", "content_type": "image",
    "publish_status": "published", "cover_url": "https://cdn.example.com/c_21_1.jpg", "image_count": 4, "updated_at": "2026-05-28T00:00:00Z"},
-  {"id": "c_22", "title": "逛街歇脚，武林路探店", "content_type": "video",
+  {"id": "c_22", "title": "逛街歇脚，门店探店", "content_type": "video",
    "publish_status": "pending", "cover_url": "https://cdn.example.com/c_22_cover.jpg", "duration_sec": 15, "ratio": "9:16", "updated_at": "2026-05-27T00:00:00Z"}
 ], "total": 6, "page": 1, "page_size": 20}}
 ```
@@ -492,7 +509,7 @@
   "platform_suggestions": [
     {"platform": "知乎", "priority": 1, "title_suggestion": "杭州手作奶茶哪家用真奶？实测对比",
      "tag_suggestion": ["杭州奶茶", "测评"], "cover_suggestion": "门店实拍 + 对比图"},
-    {"platform": "小红书", "priority": 2, "title_suggestion": "武林商圈奶茶测评｜3 家本地人常喝",
+    {"platform": "小红书", "priority": 2, "title_suggestion": "杭州奶茶测评｜3 家本地人常喝",
      "tag_suggestion": ["杭州探店", "奶茶"], "cover_suggestion": "成品九宫格"}
   ],
   "publish_order": "先发知乎建立权威，再发小红书引流",
@@ -549,7 +566,7 @@
     {"channel": "doubao_mobile", "platform": "doubao", "device": "mobile", "mention_rate": 0.12},
     {"channel": "douyin_web", "platform": "douyin", "device": "web", "mention_rate": 0.06}
   ],
-  "gaps": {"count": 4, "samples": ["武林商圈奶茶推荐", "手作奶茶用真奶"]},
+  "gaps": {"count": 4, "samples": ["杭州奶茶推荐", "手作奶茶用真奶"]},
   "next_step": {"cta_text": "去补齐缺口", "target": "content_generate", "source_question_id": "q_3"}
 }}
 ```
