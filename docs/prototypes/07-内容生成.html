@@ -18,8 +18,6 @@
       <h1 class="font-display text-lg font-bold tracking-tighter">内容生成</h1>
     </header>
 
-    <div id="ao-flow-rail"></div>
-
     <main class="p-8 mx-auto w-full max-w-[1280px] bg-page-wash">
       <!-- ============ 生成区（选题 + 平台多选 + 一键生成）============ -->
       <section class="bg-surface border border-line rounded-2xl shadow-card p-5 mb-5">
@@ -40,13 +38,7 @@
         </div>
 
         <div class="mt-4 flex items-center gap-3 flex-wrap">
-          <span class="text-[13px] text-secondary shrink-0">调性</span>
-          <div id="gen-tone" class="flex gap-1.5">
-            <button data-val="专业" class="tn">专业</button>
-            <button data-val="亲切" class="tn">亲切</button>
-            <button data-val="干货" class="tn">干货</button>
-            <button data-val="故事" class="tn">故事</button>
-          </div>
+          <p class="text-[12px] text-muted inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>语气按平台自动适配，生成后可直接改文案</p>
           <button id="gen-run" class="ml-auto h-11 px-6 rounded-xl bg-brand-gradient text-white text-sm font-semibold inline-flex items-center gap-2 shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
             <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4M13 3l2.5 6.5L22 12l-6.5 2.5L13 21l-2.5-6.5L4 12l6.5-2.5L13 3Z"/></svg>
             一键生成<span id="gen-run-n" class="opacity-85"></span>
@@ -88,7 +80,7 @@
     </main>
   </div>
 
-  <script src="assets/app.js?v=20260529g"></script>
+  <script src="assets/app.js?v=20260529h"></script>
   <script>
     mountShell('gen');
   </script>
@@ -123,7 +115,7 @@
       const GRADS = ['linear-gradient(135deg,#EFF4FF,#C7D8FF)', 'linear-gradient(135deg,#FEF3F2,#FBD9D3)', 'linear-gradient(135deg,#ECFDF5,#C7EFD8)', 'linear-gradient(135deg,#FFFBEB,#FCE9B8)', 'linear-gradient(135deg,#F0FDFA,#99F6E4)', 'linear-gradient(135deg,#FFF7ED,#FED7AA)'];
       const CAPS = ['门店招牌 + 门口街景', '茉莉奶绿成品特写', '手作鲜奶制作过程', '店内环境与座位', '出杯特写 + 价格牌', '人均 + 推荐菜'];
 
-      const state = { topic: '', tone: '亲切', platforms: ['xiaohongshu', 'dianping'], active: null };
+      const state = { topic: '', platforms: ['xiaohongshu', 'dianping'], active: null };
 
       // —— 平台多选 chip 渲染 ——
       function paintPicks() {
@@ -135,13 +127,6 @@
         });
         $('gen-run-n').textContent = state.platforms.length ? ' · ' + state.platforms.length + ' 个平台' : '';
       }
-      function paintTone() {
-        $('gen-tone').querySelectorAll('.tn').forEach((b) => {
-          const on = b.dataset.val === state.tone;
-          b.className = 'tn h-8 px-3 rounded-lg border text-[13px] transition ' + (on ? 'border-primary bg-primary/5 text-primary' : 'border-line text-secondary hover:border-secondary/40');
-        });
-      }
-
       // —— 媒体区（按平台主推形态）——
       function imgFigure(ratioCSS, grad, badge, cap) {
         return '<figure class="group relative rounded-lg overflow-hidden border border-line">' +
@@ -252,7 +237,6 @@
         else state.platforms.push(k);
         paintPicks();
       });
-      $('gen-tone').addEventListener('click', (e) => { const b = e.target.closest('.tn'); if (!b) return; state.tone = b.dataset.val; paintTone(); });
       $('gen-run').addEventListener('click', generate);
       $('result-tabs').addEventListener('click', (e) => { const b = e.target.closest('.rtab'); if (b) setActive(b.dataset.plat); });
 
@@ -288,7 +272,6 @@
       }
 
       paintPicks();
-      paintTone();
       show('empty');
     })();
   </script>

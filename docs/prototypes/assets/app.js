@@ -1,11 +1,9 @@
 // 首答 AnswerOne — 原型共享外壳（固定侧边栏注入）
 // 仅供内页（工作台/品牌档案/诊断/内容库/分发）调用：mountShell('home')
 (function () {
-  // 工作台首页（总览，置顶，不编号）
-  const NAV_OVERVIEW = { key: 'home', label: '工作台首页', href: '03-工作台首页.html' };
-
-  // 主流程：①→⑤ 一条龙。侧栏「主流程」分组与顶部进度条共用这份顺序。
-  const FLOW = [
+  // 侧栏功能项：可顺序走、也可单独点用——不强加固定编号步骤
+  const NAV_ITEMS = [
+    { key: 'home', label: '工作台首页', href: '03-工作台首页.html' },
     { key: 'brand', label: '品牌档案', href: '04-品牌档案.html' },
     { key: 'diag', label: '内容诊断', href: '05-诊断列表.html' },
     { key: 'gen', label: '内容生成', href: '07-内容生成.html' },
@@ -13,17 +11,13 @@
     { key: 'dist', label: '分发计划', href: '09-分发建议.html' },
   ];
 
-  // 顶部进度条「下一步」目标（含「开始诊断」与「末步复诊」的语义）
-  const RAIL_NEXT = [
-    { label: '内容诊断', href: '05-诊断列表.html?new=1' },
-    { label: '内容生成', href: '07-内容生成.html' },
-    { label: '内容库', href: '08-内容库.html' },
-    { label: '分发计划', href: '09-分发建议.html' },
-    { label: '复诊 · 重新诊断', href: '05-诊断列表.html?new=1', loop: true },
-  ];
-
   const ICONS = {
     home: '<path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/>',
+    brand: '<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9.5h5M8 13.5h8"/>',
+    diag: '<path d="M3 12h4l2 6 4-15 2 9h6"/>',
+    gen: '<path d="M5 3v4M3 5h4M6 17v4m-2-2h4M13 3l2.5 6.5L22 12l-6.5 2.5L13 21l-2.5-6.5L4 12l6.5-2.5L13 3Z"/>',
+    content: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+    dist: '<path d="M4 12 20 5l-4 15-4-7-8-1Z"/>',
     help: '<circle cx="12" cy="12" r="8.2"/><path d="M9.6 9.6a2.4 2.4 0 1 1 3.1 2.3c-.7.3-1.2.9-1.2 1.6M12 16.6h.01"/>',
   };
 
@@ -48,26 +42,6 @@
     return (
       `<a href="${item.href}" aria-current="${isActive ? 'page' : 'false'}" class="${base} ${state}">` +
       `<svg viewBox="0 0 24 24" class="w-[18px] h-[18px] shrink-0 ${isActive ? 'opacity-100' : 'opacity-70'}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[item.key]}</svg>` +
-      `<span>${item.label}</span></a>`
-    );
-  }
-
-  // 主流程步骤项：用编号徽标代替图标，凸显「这是一条有序流程」
-  function flowItem(item, idx, active) {
-    const isActive = item.key === active;
-    const base =
-      'group relative flex items-center gap-3 pl-3 pr-3 h-10 rounded-lg text-[13.5px] transition-colors outline-none ' +
-      'focus-visible:ring-2 focus-visible:ring-primary/40';
-    const state = isActive
-      ? 'bg-brand-gradient text-white font-semibold shadow-brand'
-      : 'text-secondary hover:bg-primary/[0.06] hover:text-primary active:bg-primary/10';
-    // 徽标底色用内联样式：避开 Play CDN 对「仅 JS 注入的动态 bg-」不生成的坑
-    const badge = isActive
-      ? 'background:rgba(255,255,255,.22);color:#fff'
-      : 'background:#EFF4FF;color:#2563EB';
-    return (
-      `<a href="${item.href}" aria-current="${isActive ? 'page' : 'false'}" class="${base} ${state}">` +
-      `<span class="w-[22px] h-[22px] shrink-0 grid place-items-center rounded-full text-[12px] font-bold tabular-nums" style="${badge}">${idx}</span>` +
       `<span>${item.label}</span></a>`
     );
   }
@@ -150,14 +124,9 @@
   </div>
   ${brandSwitcherHTML()}
   <nav class="flex-1 px-3 py-4 overflow-y-auto">
+    <div class="px-4 mb-2 text-[10.5px] font-semibold tracking-[0.16em] uppercase text-muted">工作区</div>
     <div class="space-y-0.5">
-      ${navItem(NAV_OVERVIEW, active)}
-    </div>
-    <div class="px-4 mt-5 mb-2 flex items-center gap-2 text-[10.5px] font-semibold tracking-[0.16em] uppercase text-muted">
-      <span>主流程</span><span class="h-px flex-1 bg-hairline"></span>
-    </div>
-    <div class="space-y-0.5">
-      ${FLOW.map((it, i) => flowItem(it, i + 1, active)).join('')}
+      ${NAV_ITEMS.map((i) => navItem(i, active)).join('')}
     </div>
     <div class="px-4 mt-6 mb-2 text-[10.5px] font-semibold tracking-[0.16em] uppercase text-muted">工具</div>
     <a href="#" class="group flex items-center gap-3 pl-4 pr-3 h-10 rounded-lg text-[13.5px] text-secondary hover:bg-line/50 hover:text-offblack transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
@@ -181,48 +150,9 @@
 </aside>`;
   }
 
-  // ——— 顶部「主流程进度条」：把分散的页面串成一条带前进/后退的旅程 ———
-  // 页面只需在内容顶部放 <div id="ao-flow-rail"></div>，mountShell 会按当前步骤填充。
-  function railHTML(active) {
-    const idx = FLOW.findIndex((f) => f.key === active); // 0-based；总览页 = -1
-    if (idx < 0) return '';
-    const total = FLOW.length;
-    const cur = idx + 1;
-    const segs = FLOW.map((_, i) => {
-      const fill = i <= idx
-        ? 'background:linear-gradient(135deg,#1D4ED8,#2563EB 55%,#0EA5E9)'
-        : 'background:#E7EAF3';
-      return `<span class="h-1.5 rounded-full" style="width:30px;${fill}"></span>`;
-    }).join('');
-    const prev = idx > 0 ? FLOW[idx - 1] : null;
-    const next = RAIL_NEXT[idx];
-    const prevBtn = prev
-      ? `<a href="${prev.href}" class="hidden sm:inline-flex items-center gap-1 h-9 px-3 rounded-lg text-[12.5px] text-secondary hover:text-primary hover:bg-primary/[0.06] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary/30">` +
-        `<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>${prev.label}</a>`
-      : '';
-    const nextIcon = next.loop
-      ? '<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.3M21 4v5h-5"/></svg>'
-      : '<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
-    return `
-  <div class="mx-auto w-full max-w-[1280px] px-8 pt-5">
-    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border border-line bg-surface px-5 py-3 shadow-card">
-      <div class="min-w-0">
-        <div class="flex items-center gap-1.5">${segs}</div>
-        <div class="mt-1.5 text-[12px] text-secondary">主流程 · 第 <b class="text-primary font-semibold tabular-nums">${cur}</b> / ${total} 步 · <span class="font-medium text-offblack">${FLOW[idx].label}</span></div>
-      </div>
-      <div class="ml-auto flex items-center gap-1.5">
-        ${prevBtn}
-        <a href="${next.href}" class="inline-flex items-center gap-1.5 h-9 px-4 rounded-xl text-[13px] font-semibold text-white shadow-brand outline-none focus-visible:ring-2 focus-visible:ring-primary/40" style="background:#2563EB">${next.loop ? '' : '下一步：'}${next.label}${nextIcon}</a>
-      </div>
-    </div>
-  </div>`;
-  }
-
   window.mountShell = function (activeKey) {
     const root = document.getElementById('sidebar-root');
     if (root) root.innerHTML = sidebarHTML(activeKey);
-    const railHost = document.getElementById('ao-flow-rail');
-    if (railHost) railHost.innerHTML = railHTML(activeKey);
   };
 
   // ——— 演示版交互工具：轻量 toast 提示 ———
