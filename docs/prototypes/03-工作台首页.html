@@ -37,12 +37,12 @@
           <div class="flex-1 min-w-0">
             <div class="flex flex-wrap items-center gap-2 mb-3.5">
               <span class="inline-flex items-center gap-1.5 px-2.5 h-7 rounded-full bg-white/15 ring-1 ring-white/20 backdrop-blur text-[11px] font-medium">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>本期监测 12 个平台·端
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>本期监测 8 个平台
               </span>
               <span class="inline-flex items-center px-2.5 h-7 rounded-full bg-white/15 ring-1 ring-white/20 backdrop-blur text-[11px] font-medium">较上次 ↑ 14</span>
             </div>
             <h2 class="font-display text-[28px] lg:text-[32px] font-extrabold tracking-tighter leading-tight">你好，<span id="hero-greeting-name">茶语时光</span></h2>
-            <p class="mt-2.5 text-[15px] leading-relaxed text-white/80 max-w-lg">在豆包·手机版、千问·手机版的本地查询里，AI 还几乎搜不到你。先补齐高频缺口，再复诊一次看看变化。</p>
+            <p class="mt-2.5 text-[15px] leading-relaxed text-white/80 max-w-lg">在豆包、千问的本地查询里，AI 还几乎搜不到你。先补齐高频缺口，再复诊一次看看变化。</p>
             <div class="mt-5 flex flex-wrap items-center gap-3">
               <a href="06-诊断详情.html" class="h-10 px-4 rounded-xl bg-white text-primary-strong text-sm font-semibold inline-flex items-center gap-1.5 shadow-lg shadow-black/10 hover:shadow-xl hover:-translate-y-0.5 transition outline-none focus-visible:ring-2 focus-visible:ring-white/60">查看完整报告<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 6 6 6-6 6"/></svg></a>
               <a href="07-内容生成.html?from=diag" class="h-10 px-4 rounded-xl bg-white/15 text-white text-sm font-semibold inline-flex items-center gap-1.5 ring-1 ring-white/25 backdrop-blur hover:bg-white/25 transition outline-none focus-visible:ring-2 focus-visible:ring-white/50">去补齐缺口</a>
@@ -121,8 +121,8 @@
         <section class="lg:col-span-2 relative overflow-hidden rounded-xl bg-surface border border-line shadow-card p-6">
           <div class="flex items-center justify-between mb-5">
             <div>
-              <h3 class="font-display text-[17px] font-bold tracking-tighter">各平台·端可见度</h3>
-              <p class="text-xs text-secondary mt-0.5">你在 12 个平台·端本地问答中被提及的比例</p>
+              <h3 class="font-display text-[17px] font-bold tracking-tighter">各平台可见度</h3>
+              <p class="text-xs text-secondary mt-0.5">你在 8 个平台本地问答中被提及的比例</p>
             </div>
             <a href="06-诊断详情.html" class="text-xs text-primary font-medium inline-flex items-center gap-0.5 hover:gap-1 transition-all">完整报告<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>
           </div>
@@ -161,7 +161,7 @@
       if (!s.hasBrand)
         r = { title: '先完善品牌档案', desc: '填好品牌基本信息，才能开始诊断', href: '04-品牌档案.html', cta: '去完善' };
       else if (!s.diagnosed)
-        r = { title: '开始首次内容诊断', desc: '看看 12 个 AI 平台·端里，用户能不能搜到你', href: '05-诊断列表.html?new=1', cta: '开始诊断' };
+        r = { title: '开始首次内容诊断', desc: '看看 8 个 AI 平台里，用户能不能搜到你', href: '05-诊断列表.html?new=1', cta: '开始诊断' };
       else if (s.gaps > 0)
         r = { title: '补齐 ' + s.gaps + ' 个「0 提及」缺口', desc: '已完成诊断 · 这些高频问题 AI 还没提到你，优先补内容', href: '07-内容生成.html?from=diag', cta: '去生成内容' };
       else if (s.hasContent && !s.distributed)
@@ -189,20 +189,16 @@
         nameEl.textContent = window.AO_BRANDS.list[window.AO_BRANDS.current].name;
       document.addEventListener('ao:brandchange', function (e) { if (nameEl) nameEl.textContent = e.detail.brand.name; });
     })();
-    // 各平台·端可见度（按表现分档着色：强=翠绿 / 中=品牌蓝 / 弱=琥珀）
+    // 各平台可见度（按表现分档着色：强=翠绿 / 中=品牌蓝 / 弱=琥珀）
     const PLATFORMS = [
-      { name: '文心·网页版', v: 52 },
-      { name: '千问·网页版', v: 46 },
-      { name: '豆包·网页版', v: 40 },
-      { name: 'DeepSeek·网页版', v: 34 },
-      { name: 'KIMI·网页版', v: 28 },
-      { name: '千问·手机版', v: 24 },
-      { name: 'DeepSeek·手机版', v: 20 },
-      { name: '腾讯元宝·网页版', v: 18 },
-      { name: '百度AI·网页版', v: 15 },
-      { name: '豆包·手机版', v: 12 },
-      { name: '腾讯元宝·手机版', v: 9 },
-      { name: 'AI抖音·网页版', v: 6 },
+      { name: '文心', v: 52 },
+      { name: '千问', v: 46 },
+      { name: '豆包', v: 40 },
+      { name: 'DeepSeek', v: 34 },
+      { name: 'KIMI', v: 28 },
+      { name: '腾讯元宝', v: 18 },
+      { name: '百度AI', v: 15 },
+      { name: 'AI抖音', v: 6 },
     ];
     function fillClass(v) {
       if (v >= 45) return 'bg-gradient-to-r from-emerald-400 to-teal-500';

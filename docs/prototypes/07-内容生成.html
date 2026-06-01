@@ -19,8 +19,8 @@
     </header>
 
     <main class="p-8 mx-auto w-full max-w-[1280px] bg-page-wash">
-      <!-- ============ 生成区（选题 + 平台多选 + 一键生成）============ -->
-      <section class="bg-surface border border-line rounded-2xl shadow-card p-5 mb-5">
+      <!-- ============ 第 1 步 · 配置（选题 + 平台多选 + 一键生成）============ -->
+      <section id="gen-config" class="bg-surface border border-line rounded-2xl shadow-card p-5 mb-5">
         <div class="flex items-center gap-2 mb-1.5">
           <span class="text-sm font-medium">选题</span>
           <span id="gen-from" class="hidden text-[11.5px] text-primary">· 来自诊断缺口 <a href="06-诊断详情.html" class="underline underline-offset-2">返回报告</a></span>
@@ -28,7 +28,7 @@
         <input id="gen-topic" placeholder="想补什么内容？例如：杭州手作奶茶哪家用真奶" value="杭州手作奶茶哪家用真奶"
           class="w-full px-3.5 h-11 rounded-lg border border-line text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" />
 
-        <div class="mt-4 mb-2 text-sm font-medium">发布平台 <span class="text-[11.5px] text-muted font-normal">· 可多选，AI 按各平台格式各出一版（＝信源里 AI 取数的平台）</span></div>
+        <div class="mt-4 mb-2 text-sm font-medium">发布平台 <span class="text-[11.5px] text-muted font-normal">· 可多选（＝信源里 AI 取数的平台）</span></div>
         <div id="gen-platform-pick" class="flex flex-wrap gap-2">
           <button data-val="xiaohongshu" class="gp"></button>
           <button data-val="dianping" class="gp"></button>
@@ -36,6 +36,9 @@
           <button data-val="gzh" class="gp"></button>
           <button data-val="zhihu" class="gp"></button>
         </div>
+
+        <div class="mt-4 mb-2 text-sm font-medium">每个平台的形态 <span class="text-[11.5px] text-muted font-normal">· 默认主推，可改成 图文 / 视频 / 文字</span></div>
+        <div id="gen-form-pick" class="space-y-2"></div>
 
         <div class="mt-4 flex items-center gap-3 flex-wrap">
           <p class="text-[12px] text-muted inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>语气按平台自动适配，生成后可直接改文案</p>
@@ -46,14 +49,22 @@
         </div>
       </section>
 
+      <!-- 已配置·折叠条（生成后显示；点「重新设置」回到第 1 步）-->
+      <div id="gen-config-bar" class="hidden items-center gap-3 bg-surface border border-line rounded-xl shadow-card px-4 py-2.5 mb-5">
+        <span class="text-[11px] font-semibold px-2 h-5 grid place-items-center rounded bg-success/10 text-success shrink-0">第 2 步</span>
+        <span class="text-[13px] text-offblack font-medium truncate min-w-0">选题「<span id="bar-topic">…</span>」</span>
+        <span class="text-[12px] text-secondary shrink-0">· <span id="bar-n">0</span> 个平台</span>
+        <button id="gen-reset" class="ml-auto shrink-0 h-8 px-3 rounded-lg border border-line text-[12.5px] font-medium text-secondary transition hover:text-primary hover:border-primary/40 inline-flex items-center gap-1"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>重新设置</button>
+      </div>
+
       <!-- ============ 结果区 · 三态 ============ -->
       <!-- 空状态 -->
       <section id="gen-empty" class="bg-surface border border-line rounded-2xl shadow-card p-12 text-center">
         <div class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 text-primary grid place-items-center mb-4">
           <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 2.5 14H11l-1 7 10.5-11H13l0-7Z"/></svg>
         </div>
-        <div class="font-display font-bold text-lg tracking-tight">选好平台，点「一键生成」</div>
-        <p class="text-sm text-secondary mt-2 max-w-md mx-auto leading-relaxed">AI 会按每个平台的格式<b class="text-offblack font-medium">各出一版</b>——小红书出 3:4 九图 + emoji 标题、知乎出长答案、公众号出长图文……一次生成，多平台直接可用。</p>
+        <div class="font-display font-bold text-lg tracking-tight">选好平台与形态，点「一键生成」</div>
+        <p class="text-sm text-secondary mt-2 max-w-md mx-auto leading-relaxed">每个平台<b class="text-offblack font-medium">单独选形态</b>（图文 / 视频 / 文字），AI 按各平台格式各出一版——小红书 3:4 图集、抖音竖屏视频、知乎长答案……一次生成，多平台直接可用。</p>
       </section>
 
       <!-- 生成中 -->
@@ -91,11 +102,11 @@
 
       // 平台格式预设：L1 比例/字数/标签 + L2 灵魂格式（与 08/10 一致）
       const PLATFORMS = {
-        xiaohongshu: { name: '小红书', primary: 'image', ratioCSS: '3/4', imgRatio: '3:4', cols: 3, panelImgs: 6, vidRatioCSS: '9/16', vidBadge: '9:16 · ≤15min', title: 20, body: 1000, tag: '#话题#', tagMax: 10, soul: '3:4 竖图 + emoji 标题 + 9 图集，第一张封面定生死' },
-        douyin:      { name: '抖音', primary: 'video', ratioCSS: '9/16', imgRatio: '9:16', cols: 3, panelImgs: 3, vidRatioCSS: '9/16', vidBadge: '9:16 · 15–60s', title: 55, body: 2200, tag: '#话题', tagMax: 10, soul: '竖屏 15–60s，前 3 秒钩子 + 全屏字幕 + BGM 卡点' },
-        dianping:    { name: '大众点评', primary: 'image', ratioCSS: '4/3', imgRatio: '4:3', cols: 3, panelImgs: 4, title: 30, body: 1000, tag: '关键词', tagMax: 5, warn: true, soul: '真实探店：评分 + 人均 + 推荐菜 + 环境图，挂 POI 承接「附近 + 品类」搜索' },
-        gzh:         { name: '公众号', primary: 'text', ratioCSS: '2.35/1', imgRatio: '2.35:1', cols: 1, panelImgs: 1, vidRatioCSS: '16/9', vidBadge: '16:9 · 1–30min', title: 64, body: 0, tag: '无原生标签', tagMax: 0, soul: '2.35:1 头条封面 + 长图文 + 小标题分段 + 文末关注引导' },
-        zhihu:       { name: '知乎', primary: 'text', ratioCSS: '16/9', imgRatio: '16:9', cols: 2, panelImgs: 2, vidRatioCSS: '16/9', vidBadge: '16:9 · 1–10min', title: 100, body: 0, tag: '关键词', tagMax: 5, soul: '长答案：论据 + 数据 + 个人经历四件套，正文越长权重越高（甜区内）' },
+        xiaohongshu: { name: '小红书', primary: 'image', forms: ['image', 'video'], ratioCSS: '3/4', imgRatio: '3:4', cols: 3, panelImgs: 6, vidRatioCSS: '9/16', vidBadge: '9:16 · ≤15min', title: 20, body: 1000, tag: '#话题#', tagMax: 10, soul: '3:4 竖图 + emoji 标题 + 9 图集，第一张封面定生死' },
+        douyin:      { name: '抖音', primary: 'video', forms: ['video', 'image'], ratioCSS: '9/16', imgRatio: '9:16', cols: 3, panelImgs: 3, vidRatioCSS: '9/16', vidBadge: '9:16 · 15–60s', title: 55, body: 2200, tag: '#话题', tagMax: 10, soul: '竖屏 15–60s，前 3 秒钩子 + 全屏字幕 + BGM 卡点' },
+        dianping:    { name: '大众点评', primary: 'image', forms: ['image', 'text'], ratioCSS: '4/3', imgRatio: '4:3', cols: 3, panelImgs: 4, title: 30, body: 1000, tag: '关键词', tagMax: 5, warn: true, soul: '真实探店：评分 + 人均 + 推荐菜 + 环境图，挂 POI 承接「附近 + 品类」搜索' },
+        gzh:         { name: '公众号', primary: 'image', forms: ['image', 'text'], ratioCSS: '2.35/1', imgRatio: '2.35:1', cols: 1, panelImgs: 1, vidRatioCSS: '16/9', vidBadge: '16:9 · 1–30min', title: 64, body: 0, tag: '无原生标签', tagMax: 0, soul: '2.35:1 头条封面 + 长图文 + 小标题分段 + 文末关注引导' },
+        zhihu:       { name: '知乎', primary: 'text', forms: ['text', 'image'], ratioCSS: '16/9', imgRatio: '16:9', cols: 2, panelImgs: 2, vidRatioCSS: '16/9', vidBadge: '16:9 · 1–10min', title: 100, body: 0, tag: '关键词', tagMax: 5, soul: '长答案：论据 + 数据 + 个人经历四件套，正文越长权重越高（甜区内）' },
       };
       const DEMO = {
         xiaohongshu: { title: '杭州奶茶天花板🧋茉莉奶绿真奶党狂喜', tags: ['杭州奶茶', '手作鲜奶', '茉莉奶绿', '探店'],
@@ -111,11 +122,21 @@
       };
       const FORM_LABEL = { text: '文字', image: '图文', video: '视频' };
       const ORDER = ['xiaohongshu', 'dianping', 'douyin', 'gzh', 'zhihu'];
+      // 当某平台改成「非主推形态」时，用通用形态化的灵魂提示 + 正文骨架（演示）
+      const FORM_SOUL = {
+        image: '图集思路：第一张封面定生死，多图把卖点和场景讲清楚',
+        video: '竖屏短视频：前 3 秒钩子 + 全屏字幕 + BGM 卡点',
+        text:  '长文思路：论据 + 数据 + 细节，正文关键词密度撑搜索权重',
+      };
+      const FORM_BODY = {
+        video: '【前 3 秒钩子】「本地人常喝、却很少被推荐的一家」\n【中段】手作鲜奶 vs 奶精的差别 + 出杯特写\n【结尾】门店位置 + 到店引导\n（全屏字幕逐句跟读 + 卡点 BGM）',
+        text:  '先给结论：手作鲜奶 + 现萃茶汤，是一杯奶茶好不好喝的关键。\n一、为什么真奶重要（数据支撑）\n二、实测对比：杭州 8 家横评\n三、个人经历与判断方法\n（论据 + 数据 + 细节，正文越充实权重越高）',
+      };
 
       const GRADS = ['linear-gradient(135deg,#EFF4FF,#C7D8FF)', 'linear-gradient(135deg,#FEF3F2,#FBD9D3)', 'linear-gradient(135deg,#ECFDF5,#C7EFD8)', 'linear-gradient(135deg,#FFFBEB,#FCE9B8)', 'linear-gradient(135deg,#F0FDFA,#99F6E4)', 'linear-gradient(135deg,#FFF7ED,#FED7AA)'];
       const CAPS = ['门店招牌 + 门口街景', '茉莉奶绿成品特写', '手作鲜奶制作过程', '店内环境与座位', '出杯特写 + 价格牌', '人均 + 推荐菜'];
 
-      const state = { topic: '', platforms: ['xiaohongshu', 'dianping'], active: null };
+      const state = { topic: '', platforms: ['xiaohongshu', 'dianping'], forms: {}, active: null };
 
       // —— 平台多选 chip 渲染 ——
       function paintPicks() {
@@ -127,37 +148,53 @@
         });
         $('gen-run-n').textContent = state.platforms.length ? ' · ' + state.platforms.length + ' 个平台' : '';
       }
-      // —— 媒体区（按平台主推形态）——
-      function imgFigure(ratioCSS, grad, badge, cap) {
-        return '<figure class="group relative rounded-lg overflow-hidden border border-line">' +
+      // —— 每个平台的形态选择（默认主推，可改）——
+      function paintForms() {
+        const host = $('gen-form-pick');
+        const sel = ORDER.filter((k) => state.platforms.indexOf(k) >= 0);
+        if (!sel.length) { host.innerHTML = '<div class="text-[12px] text-muted">先在上面选至少 1 个平台</div>'; return; }
+        host.innerHTML = sel.map((k) => {
+          const p = PLATFORMS[k], cur = state.forms[k] || p.primary;
+          const segs = p.forms.map((f) => '<button class="fseg h-7 px-2.5 rounded-md text-[12px] font-medium transition ' + (f === cur ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:bg-line/60') + '" data-plat="' + k + '" data-form="' + f + '">' + FORM_LABEL[f] + '</button>').join('');
+          const changed = cur !== p.primary;
+          return '<div class="flex items-center gap-3">' +
+            '<span class="text-[13px] text-offblack w-16 shrink-0">' + p.name + '</span>' +
+            '<div class="inline-flex items-center gap-0.5 p-0.5 rounded-lg bg-line/40 border border-line">' + segs + '</div>' +
+            '<span class="text-[11px] ' + (changed ? 'text-primary' : 'text-muted') + '">' + (changed ? '已改' : '主推') + '</span>' +
+          '</div>';
+        }).join('');
+      }
+      // —— 媒体区（按各平台所选形态）——
+      function imgFigure(ratioCSS, grad) {
+        return '<figure class="group relative rounded-md overflow-hidden border border-line shrink-0" style="width:92px">' +
           '<div class="grid place-items-center" style="aspect-ratio:' + ratioCSS + ';background:' + grad + '">' +
-            '<svg viewBox="0 0 24 24" class="w-7 h-7" style="color:rgba(37,99,235,.4)" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>' +
+            '<svg viewBox="0 0 24 24" class="w-5 h-5" style="color:rgba(37,99,235,.4)" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>' +
           '</div>' +
-          '<span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">' + badge + '</span>' +
-          '<div class="absolute inset-0 grid grid-flow-col gap-2 place-items-center bg-black/40 opacity-0 group-hover:opacity-100 transition">' +
-            '<button class="img-act w-8 h-8 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="download" title="下载"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></button>' +
-            '<button class="img-act w-8 h-8 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="regen" title="重生成"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+          '<div class="absolute inset-0 grid grid-flow-col gap-1.5 place-items-center bg-black/40 opacity-0 group-hover:opacity-100 transition">' +
+            '<button class="img-act w-7 h-7 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="download" title="下载"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></button>' +
+            '<button class="img-act w-7 h-7 rounded-full bg-white/90 text-offblack grid place-items-center shadow-card hover:bg-white" data-act="regen" title="重生成"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
           '</div>' +
-          '<figcaption class="px-2.5 py-1.5 text-[11px] text-secondary border-t border-hairline truncate">' + cap + '</figcaption>' +
         '</figure>';
       }
-      function media(key, p) {
-        if (p.primary === 'image') {
-          let figs = '';
-          for (let i = 0; i < p.panelImgs; i++) figs += imgFigure(p.ratioCSS, GRADS[i % GRADS.length], 'AI · ' + p.imgRatio, CAPS[i % CAPS.length]);
-          return '<div class="grid gap-3 mb-4" style="grid-template-columns:repeat(' + p.cols + ',minmax(0,1fr))">' + figs + '</div>';
-        }
-        if (p.primary === 'video') {
-          return '<div class="mb-4 relative rounded-xl overflow-hidden border border-line" style="max-width:208px;aspect-ratio:' + p.vidRatioCSS + ';background:linear-gradient(160deg,#1E293B,#2563EB)">' +
+      function media(key, p, form) {
+        if (form === 'video') {
+          const vr = p.vidRatioCSS || '9/16', vb = p.vidBadge || '竖屏短视频';
+          return '<div class="mb-4 relative rounded-xl overflow-hidden border border-line" style="max-width:208px;aspect-ratio:' + vr + ';background:linear-gradient(160deg,#1E293B,#2563EB)">' +
             '<div class="absolute inset-0" style="background:radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.18), transparent)"></div>' +
-            '<span class="absolute top-2.5 left-2.5 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">' + p.vidBadge + '</span>' +
+            '<span class="absolute top-2.5 left-2.5 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">' + vb + '</span>' +
             '<button data-toast="播放预览（演示）" data-toast-type="info" class="absolute inset-0 grid place-items-center"><span class="w-12 h-12 rounded-full bg-white/20 ring-1 ring-white/40 backdrop-blur grid place-items-center"><svg viewBox="0 0 24 24" class="w-5 h-5 text-white translate-x-0.5" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></button>' +
           '</div>';
         }
-        if (key === 'gzh') {
-          return '<div class="mb-4 rounded-lg overflow-hidden border border-line grid place-items-center" style="aspect-ratio:2.35/1;background:linear-gradient(135deg,#EFF4FF,#C7D8FF)"><span class="text-[11px] text-primary/70">头条封面 2.35:1</span></div>';
+        if (form === 'text') {
+          return '<div class="mb-4 inline-flex items-center gap-1.5 text-[12px] text-muted px-3 py-2 rounded-lg border border-dashed border-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>纯文字内容 · 靠正文关键词密度，无需配图</div>';
         }
-        return '';
+        if (key === 'gzh') {
+          return '<div class="mb-4 rounded-lg overflow-hidden border border-line grid place-items-center" style="max-width:260px;aspect-ratio:2.35/1;background:linear-gradient(135deg,#EFF4FF,#C7D8FF)"><span class="text-[11px] text-primary/70">头条封面 ' + p.imgRatio + '</span></div>';
+        }
+        let figs = '';
+        for (let i = 0; i < p.panelImgs; i++) figs += imgFigure(p.ratioCSS, GRADS[i % GRADS.length]);
+        return '<div class="flex flex-wrap gap-2">' + figs + '</div>' +
+          '<div class="text-[11px] text-muted mt-1.5 mb-4">共 ' + p.panelImgs + ' 张 · ' + p.imgRatio + '，悬停单张可下载 / 重生成</div>';
       }
 
       function buildBody(text) {
@@ -176,13 +213,17 @@
           '<input class="rp-tag-input flex-1 min-w-20 h-7 px-1.5 text-sm outline-none placeholder:text-secondary/60" placeholder="加' + (p.tag === '关键词' ? '关键词' : '标签') + '…" /></div>';
       }
 
-      function panelHTML(key) {
+      function panelHTML(key, form) {
         const p = PLATFORMS[key], d = DEMO[key];
-        const spec = [FORM_LABEL[p.primary] + '主推', '图片 ' + p.imgRatio, '标题≤' + p.title, (p.body === 0 ? '正文无上限' : '正文≤' + p.body), (p.tagMax ? '标签 ' + p.tag + '×' + p.tagMax : '无原生标签')].join(' · ');
+        const isImg = form === 'image', isVid = form === 'video';
+        const fmt = isImg ? (FORM_LABEL[form] + ' ' + p.imgRatio) : isVid ? (FORM_LABEL[form] + ' ' + (p.vidBadge || '竖屏')) : FORM_LABEL[form];
+        const spec = [fmt, '标题≤' + p.title, (p.body === 0 ? '正文无上限' : '正文≤' + p.body), (p.tagMax ? '标签 ' + p.tag + '×' + p.tagMax : '无原生标签')].join(' · ');
+        const soul = form === p.primary ? p.soul : (FORM_SOUL[form] || p.soul);
+        const bodyText = form === p.primary ? d.body : (FORM_BODY[form] || d.body);
         return '<div class="px-6 py-5">' +
           '<div class="text-[11.5px] text-muted">' + spec + (p.warn ? ' <span class="text-warning">· ⚠️经验值待核验</span>' : '') + '</div>' +
-          '<p class="flex items-start gap-1.5 text-[12.5px] text-primary mt-1 mb-4"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 14.5 9 21 9.5 16 14l1.5 7L12 17.5 6.5 21 8 14 3 9.5 9.5 9z"/></svg><span class="text-secondary">' + p.soul + '</span></p>' +
-          media(key, p) +
+          '<p class="flex items-start gap-1.5 text-[12.5px] text-primary mt-1 mb-4"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 14.5 9 21 9.5 16 14l1.5 7L12 17.5 6.5 21 8 14 3 9.5 9.5 9z"/></svg><span class="text-secondary">' + soul + '</span></p>' +
+          media(key, p, form) +
           '<div class="flex items-center justify-between"><label class="text-xs text-secondary">标题</label><span class="text-[11px] text-muted tabular-nums"><span class="rp-tc">' + d.title.length + '</span>/' + p.title + '</span></div>' +
           '<input maxlength="' + p.title + '" value="' + d.title + '" class="rp-title mt-1 mb-4 w-full text-base font-display font-bold tracking-tight px-3 h-11 rounded-lg border border-line outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" />' +
           '<label class="text-xs text-secondary">正文</label>' +
@@ -196,8 +237,9 @@
       }
 
       function tabBtn(key, on) {
+        const f = state.forms[key] || PLATFORMS[key].primary;
         return '<button class="rtab h-9 px-3 rounded-lg text-[13px] font-medium whitespace-nowrap transition ' +
-          (on ? 'bg-primary/10 text-primary' : 'text-secondary hover:bg-line/50') + '" data-plat="' + key + '">' + PLATFORMS[key].name + '</button>';
+          (on ? 'bg-primary/10 text-primary' : 'text-secondary hover:bg-line/50') + '" data-plat="' + key + '">' + PLATFORMS[key].name + '<span class="ml-1 opacity-60 text-[11px]">' + FORM_LABEL[f] + '</span></button>';
       }
       function setActive(key) {
         state.active = key;
@@ -208,21 +250,29 @@
         $('result-panels').querySelectorAll('.result-panel').forEach((d) => d.classList.toggle('hidden', d.dataset.plat !== key));
       }
 
+      // 三态即两步：'config'=第1步(配置)；'loading'/'result'=第2步(配置折叠为条)
       function show(stateName) {
-        $('gen-empty').classList.toggle('hidden', stateName !== 'empty');
+        const isConfig = stateName === 'config';
+        $('gen-config').classList.toggle('hidden', !isConfig);
+        const bar = $('gen-config-bar');
+        bar.classList.toggle('hidden', isConfig);
+        bar.classList.toggle('flex', !isConfig);
+        $('gen-empty').classList.toggle('hidden', !isConfig);
         $('gen-loading').classList.toggle('hidden', stateName !== 'loading');
         $('gen-result').classList.toggle('hidden', stateName !== 'result');
       }
 
       function buildResult(sel) {
         $('result-tabs').innerHTML = sel.map((k, i) => tabBtn(k, i === 0)).join('');
-        $('result-panels').innerHTML = sel.map((k, i) => '<div class="result-panel' + (i ? ' hidden' : '') + '" data-plat="' + k + '">' + panelHTML(k) + '</div>').join('');
+        $('result-panels').innerHTML = sel.map((k, i) => { const f = state.forms[k] || PLATFORMS[k].primary; return '<div class="result-panel' + (i ? ' hidden' : '') + '" data-plat="' + k + '">' + panelHTML(k, f) + '</div>'; }).join('');
         state.active = sel[0];
       }
 
       function generate() {
         const sel = ORDER.filter((k) => state.platforms.indexOf(k) >= 0);
         if (!sel.length) { AO.toast('至少选 1 个发布平台', 'warn'); return; }
+        $('bar-topic').textContent = $('gen-topic').value.trim() || '（未填选题）';
+        $('bar-n').textContent = sel.length;
         show('loading');
         $('loading-text').textContent = '正在为 ' + sel.length + ' 个平台各生成一版…';
         $('loading-pills').innerHTML = sel.map((k) => '<span class="px-2.5 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium">' + PLATFORMS[k].name + '</span>').join('');
@@ -233,11 +283,12 @@
       $('gen-platform-pick').addEventListener('click', (e) => {
         const b = e.target.closest('.gp'); if (!b) return;
         const k = b.dataset.val, idx = state.platforms.indexOf(k);
-        if (idx >= 0) { if (state.platforms.length === 1) { AO.toast('至少保留 1 个平台', 'warn'); return; } state.platforms.splice(idx, 1); }
-        else state.platforms.push(k);
-        paintPicks();
+        if (idx >= 0) { if (state.platforms.length === 1) { AO.toast('至少保留 1 个平台', 'warn'); return; } state.platforms.splice(idx, 1); delete state.forms[k]; }
+        else { state.platforms.push(k); state.forms[k] = PLATFORMS[k].primary; }
+        paintPicks(); paintForms();
       });
       $('gen-run').addEventListener('click', generate);
+      $('gen-form-pick').addEventListener('click', (e) => { const b = e.target.closest('.fseg'); if (!b) return; state.forms[b.dataset.plat] = b.dataset.form; paintForms(); });
       $('result-tabs').addEventListener('click', (e) => { const b = e.target.closest('.rtab'); if (b) setActive(b.dataset.plat); });
 
       // 结果面板内编辑（委托：标题计数 / 标签增删 / 图片操作）
@@ -270,9 +321,18 @@
         const gap = q.get('gap');
         if (gap) $('gen-topic').value = gap;
       }
+      // 从诊断「按方案生成」带入推荐平台，预选好（端不区分，发布平台另算）
+      const platsParam = q.get('platforms');
+      if (platsParam) {
+        const valid = platsParam.split(',').filter((k) => PLATFORMS[k]);
+        if (valid.length) state.platforms = valid;
+      }
+      $('gen-reset').addEventListener('click', () => show('config'));
 
+      state.platforms.forEach((k) => { if (!state.forms[k]) state.forms[k] = PLATFORMS[k].primary; });
       paintPicks();
-      show('empty');
+      paintForms();
+      show('config');
     })();
   </script>
 </body>

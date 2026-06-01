@@ -22,7 +22,7 @@
     </header>
 
     <main class="p-8 mx-auto w-full max-w-[1280px] space-y-5 bg-page-wash">
-      <p class="text-sm text-secondary">每次诊断会向你选定的 12 个平台·端（同一平台的手机版 / 网页版分开统计）、各提 10 个本地问题，统计你被提及的情况。</p>
+      <p class="text-sm text-secondary">每次诊断会向你选定的 8 个 AI 平台、各提 10 个本地问题，统计你被提及的情况。</p>
 
       <div class="bg-surface border border-line rounded-lg overflow-hidden">
         <table class="w-full text-sm">
@@ -93,27 +93,23 @@
       <!-- 总进度 -->
       <div class="mt-5">
         <div class="flex items-center justify-between text-sm">
-          <span class="text-secondary">正在询问 <span id="prog-current" class="text-offblack font-medium">豆包·手机版</span> · 第 <span id="prog-q">3</span> / 10 个问题</span>
+          <span class="text-secondary">正在询问 <span id="prog-current" class="text-offblack font-medium">豆包</span> · 第 <span id="prog-q">3</span> / 10 个问题</span>
           <span id="prog-pct" class="font-display font-bold tracking-tighter">19%</span>
         </div>
         <div class="mt-2 h-2 rounded-full bg-line overflow-hidden"><div id="prog-bar" class="h-full w-[19%] bg-brand-gradient rounded-full"></div></div>
-        <div class="mt-1 text-xs text-secondary">平台·端进度 <span id="prog-done">2</span> / <span id="prog-total">12</span></div>
+        <div class="mt-1 text-xs text-secondary">平台进度 <span id="prog-done">1</span> / <span id="prog-total">8</span></div>
       </div>
 
-      <!-- 平台·端清单 -->
+      <!-- 平台清单 -->
       <ul id="prog-list" class="mt-5 space-y-1.5 text-sm max-h-[244px] overflow-y-auto pr-1">
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-success/5"><svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0 text-success" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg><span class="flex-1">千问·手机版</span><span class="text-xs text-secondary">完成</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-success/5"><svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0 text-success" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg><span class="flex-1">千问·网页版</span><span class="text-xs text-secondary">完成</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-primary/5"><span class="w-4 h-4 shrink-0 rounded-full border-2 border-primary border-t-transparent animate-spin"></span><span class="flex-1 font-medium">豆包·手机版</span><span class="text-xs text-primary">询问中 3/10</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">豆包·网页版</span><span class="text-xs text-secondary">等待</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">DeepSeek·手机版</span><span class="text-xs text-secondary">等待</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">DeepSeek·网页版</span><span class="text-xs text-secondary">等待</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">腾讯元宝·手机版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">腾讯元宝·网页版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">文心·网页版</span><span class="text-xs text-secondary">等待</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">KIMI·网页版</span><span class="text-xs text-secondary">等待</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">百度AI·网页版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
-        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">AI抖音·网页版</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-success/5"><svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0 text-success" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg><span class="flex-1">千问</span><span class="text-xs text-secondary">完成</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-primary/5"><span class="w-4 h-4 shrink-0 rounded-full border-2 border-primary border-t-transparent animate-spin"></span><span class="flex-1 font-medium">豆包</span><span class="text-xs text-primary">询问中 3/10</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">DeepSeek</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">腾讯元宝</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">文心</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-line ml-1.5 mr-1"></span><span class="flex-1 text-secondary">KIMI</span><span class="text-xs text-secondary">等待</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">百度AI</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
+        <li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full bg-warning ml-1.5 mr-1"></span><span class="flex-1 text-secondary">AI抖音</span><span class="text-xs text-warning">等待 · 备用算法</span></li>
       </ul>
 
       <div class="mt-6 flex gap-2.5">
@@ -123,30 +119,30 @@
     </div>
   </div>
 
-  <!-- 新建诊断 · 设置弹层（先选平台·端，再开始） -->
+  <!-- 新建诊断 · 设置弹层（先选平台，再开始） -->
   <div id="diag-setup-modal" class="hidden fixed inset-0 z-30 grid place-items-center px-4">
     <div class="absolute inset-0 bg-offblack/50 backdrop-blur-sm" onclick="AODiag.closeSetup()"></div>
     <div class="relative w-full max-w-[480px] bg-surface rounded-2xl border border-line shadow-elevated p-7">
       <div class="flex items-start justify-between">
         <div>
           <h3 class="font-display text-lg font-bold tracking-tighter">新建诊断</h3>
-          <p class="text-sm text-secondary mt-0.5">品牌「茶语时光」· 每个平台·端各提 10 个本地问题</p>
+          <p class="text-sm text-secondary mt-0.5">品牌「茶语时光」· 每个平台各提 10 个本地问题</p>
         </div>
         <button onclick="AODiag.closeSetup()" class="w-8 h-8 grid place-items-center rounded-lg text-secondary hover:bg-line/60 transition">✕</button>
       </div>
 
       <div class="mt-5">
         <div class="flex items-center justify-between">
-          <span class="text-sm font-medium">选择诊断平台·端</span>
+          <span class="text-sm font-medium">选择诊断平台</span>
           <button onclick="AODiag.selectAll()" class="text-xs text-primary hover:underline">全选</button>
         </div>
         <div id="setup-channel-grid" class="mt-2.5 grid grid-cols-3 gap-2"></div>
-        <p class="mt-2.5 text-xs text-secondary">同一平台的手机版 / 网页版联网来源不同，结果会有差异；无公开 API 的平台自动走备用算法估算。</p>
+        <p class="mt-2.5 text-xs text-secondary">无公开 API 的平台自动走备用算法估算，其余走官方 API。</p>
       </div>
 
       <div class="mt-6 flex gap-2.5">
         <button onclick="AODiag.closeSetup()" class="flex-1 h-10 rounded-lg border border-line text-sm font-medium transition hover:bg-line/50 active:bg-line outline-none focus-visible:ring-2 focus-visible:ring-primary/30">取消</button>
-        <button onclick="AODiag.confirmStart()" class="flex-[1.4] h-10 rounded-lg bg-brand-gradient text-white text-sm font-semibold shadow-brand transition hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">开始诊断 · 已选 <span id="setup-go-count">12</span> 个平台·端</button>
+        <button onclick="AODiag.confirmStart()" class="flex-[1.4] h-10 rounded-lg bg-brand-gradient text-white text-sm font-semibold shadow-brand transition hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">开始诊断 · 已选 <span id="setup-go-count">8</span> 个平台</button>
       </div>
     </div>
   </div>
@@ -154,16 +150,14 @@
   <script src="assets/app.js?v=20260529h"></script>
   <script>
     mountShell('diag');
-    // 诊断流程（演示）：开始 → 先在「设置」里选平台·端 → 确认后从头开始跑；列表行与进度弹层始终自洽
+    // 诊断流程（演示）：开始 → 先在「设置」里选平台 → 确认后从头开始跑；列表行与进度弹层始终自洽
     (function () {
       const $ = (id) => document.getElementById(id);
       const CHANNELS = [
-        { name: '千问·手机版', api: true }, { name: '千问·网页版', api: true },
-        { name: '豆包·手机版', api: true }, { name: '豆包·网页版', api: true },
-        { name: 'DeepSeek·手机版', api: true }, { name: 'DeepSeek·网页版', api: true },
-        { name: '腾讯元宝·手机版', api: false }, { name: '腾讯元宝·网页版', api: false },
-        { name: '文心·网页版', api: true }, { name: 'KIMI·网页版', api: true },
-        { name: '百度AI·网页版', api: false }, { name: 'AI抖音·网页版', api: false },
+        { name: '千问', api: true }, { name: '豆包', api: true },
+        { name: 'DeepSeek', api: true }, { name: '腾讯元宝', api: false },
+        { name: '文心', api: true }, { name: 'KIMI', api: true },
+        { name: '百度AI', api: false }, { name: 'AI抖音', api: false },
       ];
       const sel = new Set(CHANNELS.map((_, i) => i)); // 默认全选
 
@@ -205,12 +199,12 @@
         start() { this.openSetup(); },
         confirmStart() {
           const list = CHANNELS.filter((_, i) => sel.has(i));
-          if (!list.length) { AO.toast('至少选择一个平台·端', 'warn'); return; }
+          if (!list.length) { AO.toast('至少选择一个平台', 'warn'); return; }
           this.closeSetup();
           this.resetProgress(list);
           this.setRunning();
           this.open();
-          AO.toast('诊断已开始 · ' + list.length + ' 个平台·端（演示）', 'success');
+          AO.toast('诊断已开始 · ' + list.length + ' 个平台（演示）', 'success');
         },
         view() { this.open(); },
         cancel() { this.close(); this.setCanceled(); AO.toast('已取消本次诊断（演示）', 'info'); },

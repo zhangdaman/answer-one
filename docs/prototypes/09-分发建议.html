@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    tr.row-link { cursor: pointer; }
+    tr.row-link:hover { background: rgba(37,99,235,0.04); }
+  </style>
 </head>
 <body class="font-sans bg-canvas text-offblack antialiased">
   <div id="sidebar-root"></div>
@@ -53,7 +57,7 @@
               <th class="font-medium px-4 py-3 w-20">优先级</th>
               <th class="font-medium px-4 py-3">标题改写 / 标签</th>
               <th class="font-medium px-4 py-3 w-44">首图建议</th>
-              <th class="font-medium px-4 py-3 w-40 text-right">操作</th>
+              <th class="font-medium px-4 py-3 w-60 text-right">操作</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-line align-top">
@@ -67,8 +71,8 @@
               <td class="px-4 py-4 text-secondary text-xs">茉莉奶绿成品九宫格第一张，强出镜</td>
               <td class="px-4 py-4">
                 <div class="flex items-center justify-end gap-2">
-                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
-                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
+                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 shrink-0 whitespace-nowrap transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
+                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer shrink-0 whitespace-nowrap"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
                 </div>
               </td>
             </tr>
@@ -82,8 +86,8 @@
               <td class="px-4 py-4 text-secondary text-xs">门店招牌 + 门口街景</td>
               <td class="px-4 py-4">
                 <div class="flex items-center justify-end gap-2">
-                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
-                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
+                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 shrink-0 whitespace-nowrap transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
+                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer shrink-0 whitespace-nowrap"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
                 </div>
               </td>
             </tr>
@@ -97,8 +101,8 @@
               <td class="px-4 py-4 text-secondary text-xs">出杯特写 + 价格牌</td>
               <td class="px-4 py-4">
                 <div class="flex items-center justify-end gap-2">
-                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
-                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
+                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 shrink-0 whitespace-nowrap transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
+                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer shrink-0 whitespace-nowrap"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
                 </div>
               </td>
             </tr>
@@ -122,7 +126,7 @@
               <th class="font-medium px-4 py-3 w-20">优先级</th>
               <th class="font-medium px-4 py-3">标题改写 / 标签</th>
               <th class="font-medium px-4 py-3 w-44">首图建议</th>
-              <th class="font-medium px-4 py-3 w-40 text-right">操作</th>
+              <th class="font-medium px-4 py-3 w-60 text-right">操作</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-line align-top">
@@ -136,8 +140,8 @@
               <td class="px-4 py-4 text-secondary text-xs">制作过程分步图</td>
               <td class="px-4 py-4">
                 <div class="flex items-center justify-end gap-2">
-                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
-                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer"><input type="checkbox" checked class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
+                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 shrink-0 whitespace-nowrap transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
+                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer shrink-0 whitespace-nowrap"><input type="checkbox" checked class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
                 </div>
               </td>
             </tr>
@@ -151,8 +155,8 @@
               <td class="px-4 py-4 text-secondary text-xs">门店环境横图</td>
               <td class="px-4 py-4">
                 <div class="flex items-center justify-end gap-2">
-                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
-                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
+                  <button data-toast="文案已复制到剪贴板" class="px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 shrink-0 whitespace-nowrap transition hover:bg-line/50 active:bg-line"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button>
+                  <label class="inline-flex items-center gap-1.5 text-xs text-secondary cursor-pointer shrink-0 whitespace-nowrap"><input type="checkbox" class="w-4 h-4 rounded border-line text-primary focus:ring-primary/30">已发</label>
                 </div>
               </td>
             </tr>
@@ -204,6 +208,41 @@
         if (window.AO) AO.toast(box.checked ? '已标记为「已发布」' : '已取消发布标记', box.checked ? 'success' : 'info');
       });
     });
+  </script>
+  <script>
+    // 分发计划：每行 = 内容 × 推荐平台，点进「内容详情」（按该平台格式完整展示多图/长文）
+    (function () {
+      const PLAT_EN = { '小红书': 'xiaohongshu', '抖音': 'douyin', '大众点评': 'dianping', '公众号': 'gzh', '知乎': 'zhihu' };
+      const TYPE_EN = { '图文': 'image', '图片': 'image', '视频': 'video', '问答': 'text', '文字': 'text' };
+      document.querySelectorAll('main section').forEach((sec) => {
+        const h2 = sec.querySelector('h2'); if (!h2) return;
+        const chip = h2.previousElementSibling;
+        const type = TYPE_EN[chip ? chip.textContent.trim() : ''] || 'text';
+        const title = h2.textContent.trim();
+        sec.querySelectorAll('tbody tr').forEach((tr) => {
+          const platName = tr.querySelector('td') ? tr.querySelector('td').textContent.trim() : '';
+          const platKey = PLAT_EN[platName] || 'xiaohongshu';
+          const href = '10-内容详情.html?type=' + type + '&platform=' + platKey + '&title=' + encodeURIComponent(title);
+          tr.dataset.href = href;
+          tr.classList.add('row-link', 'transition-colors');
+          // 「操作」列最左插入显式「详情」入口
+          const actWrap = tr.querySelector('td:last-child .flex');
+          if (actWrap) {
+            const a = document.createElement('a');
+            a.href = href;
+            a.className = 'px-2.5 h-8 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1 shrink-0 whitespace-nowrap transition hover:bg-line/50 active:bg-line';
+            a.innerHTML = '<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>详情';
+            actWrap.insertBefore(a, actWrap.firstChild);
+          }
+        });
+      });
+      // 整行点击 → 详情（点操作按钮/链接/勾选不触发）
+      document.querySelector('main').addEventListener('click', (e) => {
+        if (e.target.closest('a, button, input, label, select')) return;
+        const tr = e.target.closest('tr.row-link');
+        if (tr && tr.dataset.href) location.href = tr.dataset.href;
+      });
+    })();
   </script>
 </body>
 </html>

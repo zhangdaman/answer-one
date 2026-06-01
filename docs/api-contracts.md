@@ -61,8 +61,7 @@
 | publish_status | `pending`→待发布 / `published`→已发布 |
 | source_method | `api`→官方 API / `fallback`→无 API 备用算法 |
 | platform | `qwen`→千问 / `baidu`→百度AI / `doubao`→豆包 / `yuanbao`→腾讯元宝 / `douyin`→AI抖音 / `kimi`→KIMI / `deepseek`→DeepSeek / `wenxin`→文心 |
-| device | `mobile`→手机版 / `web`→网页版 |
-| channel | 平台·端组合 `<platform>_<device>`，V1 共 12 个：`qwen_mobile`/`qwen_web`/`doubao_mobile`/`doubao_web`/`deepseek_mobile`/`deepseek_web`/`yuanbao_mobile`/`yuanbao_web`/`wenxin_web`/`kimi_web`/`baidu_web`/`douyin_web`（同一平台的手机版 / 网页版联网来源不同，分开统计） |
+| ~~device / channel~~ | 已废弃 · 诊断改按 `platform`（8 个）统计，不区分手机 / 网页端（走平台官方 API，API 不区分端） |
 | industry | `catering`→餐饮 / `tea_coffee`→茶饮咖啡 / `bakery`→烘焙甜点 / `beauty_hair`→美容美发 / `nail_lash`→美甲美睫 / `fitness`→健身瑜伽 / `pet`→宠物服务 / `housekeeping`→家政保洁 / `home_decor`→装修家居 / `auto`→汽车服务 / `dental_medical_beauty`→口腔医美 / `wedding_photo`→婚纱摄影 / `maternity`→母婴月子 / `entertainment`→休闲娱乐 / `education`→本地教培 |
 
 ---
@@ -79,9 +78,8 @@
 {"code": 200, "message": "success", "data": {
   "industries": [{"value": "tea_coffee", "label": "茶饮咖啡（奶茶 / 咖啡）"}],
   "platforms": [{"value": "qwen", "label": "千问"}, {"value": "doubao", "label": "豆包"}],
-  "devices": [{"value": "mobile", "label": "手机版"}, {"value": "web", "label": "网页版"}],
-  "channels": [{"value": "doubao_web", "platform": "doubao", "device": "web", "label": "豆包·网页版", "access_method": "api", "enabled": true},
-               {"value": "baidu_web", "platform": "baidu", "device": "web", "label": "百度AI·网页版", "access_method": "fallback", "enabled": true}],
+  "channels": [{"value": "doubao", "platform": "doubao", "label": "豆包", "access_method": "api", "enabled": true},
+               {"value": "baidu", "platform": "baidu", "label": "百度AI", "access_method": "fallback", "enabled": true}],
   "content_types": [{"value": "text", "label": "文字"}, {"value": "image", "label": "图片"}, {"value": "video", "label": "视频"}],
   "publish_platforms": [
     {"value": "xiaohongshu", "label": "小红书", "primary_form": "image", "image_ratio": "3:4", "image_max": 9, "title_max": 20, "body_max": 1000, "tag_syntax": "#topic#", "tag_max": 10, "soul": "3:4 竖图 + emoji 标题 + 9 图集，封面定生死"},
@@ -175,12 +173,12 @@
   {"id": "b_001", "user_id": "u_001", "name": "茶语时光", "slogan": "杭州手作鲜奶茶",
    "industry": "tea_coffee", "region_type": "city", "region_value": "杭州",
    "selling_points": ["手作鲜奶", "本地门店"],
-   "target_channels": ["qwen_mobile", "qwen_web", "doubao_mobile", "doubao_web", "deepseek_mobile", "deepseek_web", "yuanbao_mobile", "yuanbao_web", "wenxin_web", "kimi_web", "baidu_web", "douyin_web"],
+   "target_channels": ["qwen", "doubao", "deepseek", "yuanbao", "wenxin", "kimi", "baidu", "douyin"],
    "is_current": true, "created_at": "2026-05-20T09:00:00Z"},
   {"id": "b_002", "user_id": "u_001", "name": "茶语·滨江店", "slogan": "写字楼通勤鲜奶茶",
    "industry": "tea_coffee", "region_type": "city", "region_value": "杭州",
    "selling_points": ["写字楼自提", "现做现送"],
-   "target_channels": ["qwen_web", "doubao_web", "deepseek_web", "wenxin_web", "kimi_web"],
+   "target_channels": ["qwen", "doubao", "deepseek", "wenxin", "kimi"],
    "is_current": false, "created_at": "2026-05-26T14:00:00Z"}
 ]}}
 ```
@@ -194,7 +192,7 @@
 {"name": "茶语·滨江店", "slogan": "写字楼通勤鲜奶茶", "industry": "tea_coffee",
  "region_type": "city", "region_value": "杭州",
  "selling_points": ["写字楼自提", "现做现送"],
- "target_channels": ["qwen_web", "doubao_web", "deepseek_web", "wenxin_web", "kimi_web"]}
+ "target_channels": ["qwen", "doubao", "deepseek", "wenxin", "kimi"]}
 ```
 **响应（成功 200）：** 单个品牌对象（同 `GET /api/brands` 的 item）。
 **响应（参数错误 400）：** `{"code": 400, "message": "name 不能为空", "data": null}`
@@ -262,7 +260,7 @@
 
 **请求体：**
 ```json
-{"channels": ["qwen_mobile", "qwen_web", "doubao_mobile", "doubao_web", "deepseek_mobile", "deepseek_web", "yuanbao_mobile", "yuanbao_web", "wenxin_web", "kimi_web", "baidu_web", "douyin_web"],
+{"channels": ["qwen", "doubao", "deepseek", "yuanbao", "wenxin", "kimi", "baidu", "douyin"],
  "questions": [{"text": "杭州有什么好喝的奶茶", "type": "local"}]}
 ```
 **响应（成功 200）：**
@@ -271,7 +269,7 @@
 ```
 **响应（平台为空 422）：**
 ```json
-{"code": 422, "message": "至少选择一个目标 AI 平台·端", "data": null}
+{"code": 422, "message": "至少选择一个目标 AI 平台", "data": null}
 ```
 
 #### GET /api/diagnoses
@@ -294,13 +292,13 @@
 ```json
 {"code": 200, "message": "success", "data": {
   "status": "running", "progress": "3/10",
-  "channel_progress": {"done": 2, "total": 12},
+  "channel_progress": {"done": 1, "total": 8},
   "channels": [
-    {"channel": "qwen_mobile", "platform": "qwen", "device": "mobile", "status": "done", "progress": "10/10", "source_method": "api"},
-    {"channel": "qwen_web", "platform": "qwen", "device": "web", "status": "done", "progress": "10/10", "source_method": "api"},
-    {"channel": "doubao_mobile", "platform": "doubao", "device": "mobile", "status": "running", "progress": "3/10", "source_method": "api"},
-    {"channel": "baidu_web", "platform": "baidu", "device": "web", "status": "waiting", "progress": "0/10", "source_method": "fallback"},
-    {"channel": "douyin_web", "platform": "douyin", "device": "web", "status": "waiting", "progress": "0/10", "source_method": "fallback"}
+    {"platform": "qwen", "status": "done", "progress": "10/10", "source_method": "api"},
+    {"platform": "doubao", "status": "running", "progress": "3/10", "source_method": "api"},
+    {"platform": "deepseek", "status": "waiting", "progress": "0/10", "source_method": "api"},
+    {"platform": "baidu", "status": "waiting", "progress": "0/10", "source_method": "fallback"},
+    {"platform": "douyin", "status": "waiting", "progress": "0/10", "source_method": "fallback"}
   ]
 }}
 ```
@@ -315,7 +313,7 @@
 ```json
 {"code": 200, "message": "success", "data": {
   "id": "d_42", "brand_id": "b_001", "status": "completed",
-  "channels": ["qwen_mobile", "qwen_web", "doubao_mobile", "doubao_web", "deepseek_mobile", "deepseek_web", "yuanbao_mobile", "yuanbao_web", "wenxin_web", "kimi_web", "baidu_web", "douyin_web"],
+  "channels": ["qwen", "doubao", "deepseek", "yuanbao", "wenxin", "kimi", "baidu", "douyin"],
   "progress": "10/10",
   "score_total": 42,
   "score_delta": 14,
@@ -341,39 +339,39 @@
     {"name": "沪上阿姨", "is_current": false, "mention_rate": 0.14, "first_mention_rate": 0.03, "positive_rate": 0.55}
   ],
   "sources": [
-    {"title": "杭州奶茶人气榜 Top20", "url": "https://www.dianping.com/...", "source_type": "点评平台", "platforms": ["wenxin_web", "yuanbao_web"], "cite_share": 0.12},
-    {"title": "杭州必喝奶茶测评合集", "url": "https://www.xiaohongshu.com/...", "source_type": "社交媒体", "platforms": ["doubao_web", "yuanbao_web"], "cite_share": 0.09},
-    {"title": "杭州有哪些值得喝的手作奶茶？", "url": "https://www.zhihu.com/...", "source_type": "问答社区", "platforms": ["deepseek_web", "kimi_web"], "cite_share": 0.07},
-    {"title": "杭州探店：本地人常喝的奶茶", "url": "https://www.douyin.com/...", "source_type": "自媒体", "platforms": ["doubao_mobile"], "cite_share": 0.05},
-    {"title": "茶饮品类百科 · 手作鲜奶茶", "url": "https://baike.baidu.com/...", "source_type": "百科", "platforms": ["baidu_web"], "cite_share": 0.04}
+    {"title": "杭州奶茶人气榜 Top20", "url": "https://www.dianping.com/...", "source_type": "点评平台", "platforms": ["wenxin", "yuanbao"], "cite_share": 0.12},
+    {"title": "杭州必喝奶茶测评合集", "url": "https://www.xiaohongshu.com/...", "source_type": "社交媒体", "platforms": ["doubao", "yuanbao"], "cite_share": 0.09},
+    {"title": "杭州有哪些值得喝的手作奶茶？", "url": "https://www.zhihu.com/...", "source_type": "问答社区", "platforms": ["deepseek", "kimi"], "cite_share": 0.07},
+    {"title": "杭州探店：本地人常喝的奶茶", "url": "https://www.douyin.com/...", "source_type": "自媒体", "platforms": ["doubao"], "cite_share": 0.05},
+    {"title": "茶饮品类百科 · 手作鲜奶茶", "url": "https://baike.baidu.com/...", "source_type": "百科", "platforms": ["baidu"], "cite_share": 0.04}
   ],
   "created_at": "2026-05-29T14:20:00Z", "finished_at": "2026-05-29T14:24:00Z",
   "channel_breakdown": [
-    {"channel": "wenxin_web", "platform": "wenxin", "device": "web", "mention_rate": 0.52, "mention_count": 5, "avg_position": 3.1, "positive_rate": 0.8, "source_method": "api"},
-    {"channel": "doubao_web", "platform": "doubao", "device": "web", "mention_rate": 0.40, "mention_count": 4, "avg_position": 4.5, "positive_rate": 0.6, "source_method": "api"},
-    {"channel": "doubao_mobile", "platform": "doubao", "device": "mobile", "mention_rate": 0.12, "mention_count": 1, "avg_position": 6.0, "positive_rate": 0.5, "source_method": "api"},
-    {"channel": "baidu_web", "platform": "baidu", "device": "web", "mention_rate": 0.15, "mention_count": 1, "avg_position": 5.5, "positive_rate": 0.5, "source_method": "fallback"}
+    {"platform": "wenxin", "mention_rate": 0.52, "mention_count": 5, "avg_position": 3.1, "positive_rate": 0.8, "source_method": "api"},
+    {"platform": "doubao", "mention_rate": 0.40, "mention_count": 4, "avg_position": 4.5, "positive_rate": 0.6, "source_method": "api"},
+    {"platform": "deepseek", "mention_rate": 0.34, "mention_count": 3, "avg_position": 3.5, "positive_rate": 0.67, "source_method": "api"},
+    {"platform": "baidu", "mention_rate": 0.15, "mention_count": 1, "avg_position": 5.5, "positive_rate": 0.5, "source_method": "fallback"}
   ],
   "questions": [
     {"id": "q_1", "text": "杭州有什么好喝的奶茶", "type": "local", "source": "system"}
   ],
   "gaps": [
-    {"question_id": "q_3", "text": "杭州奶茶推荐", "zero_mention_channels": ["doubao_mobile", "qwen_mobile"]}
+    {"question_id": "q_3", "text": "杭州奶茶推荐", "zero_mention_channels": ["doubao", "qwen"]}
   ]
 }}
 ```
 **响应（不存在 404）：** `{"code": 404, "message": "诊断不存在", "data": null}`
 
 #### GET /api/diagnoses/{id}/mentions
-提及结果明细（问题 × 平台·端），用于报告热力图与各平台·端回答摘录。
+提及结果明细（问题 × 平台），用于报告热力图与各平台回答摘录。
 
 **Query（可选）：** `channel`、`question_id`、`page`、`page_size`
 **响应（成功 200）：**
 ```json
 {"code": 200, "message": "success", "data": {"items": [
-  {"id": "m_1", "question_id": "q_1", "channel": "wenxin_web", "platform": "wenxin", "device": "web", "mentioned": true, "position": 2,
+  {"id": "m_1", "question_id": "q_1", "platform": "wenxin", "mentioned": true, "position": 2,
    "sentiment": "positive", "answer_excerpt": "本地比较推荐的有茶语时光……", "source_method": "api"},
-  {"id": "m_2", "question_id": "q_3", "channel": "doubao_mobile", "platform": "doubao", "device": "mobile", "mentioned": false, "position": null,
+  {"id": "m_2", "question_id": "q_3", "platform": "doubao", "mentioned": false, "position": null,
    "sentiment": "neutral", "answer_excerpt": "附近奶茶店有 A、B、C……", "source_method": "api"}
 ], "total": 120, "page": 1, "page_size": 50}}
 ```
@@ -561,18 +559,18 @@
   "last_diagnosis": {
     "id": "d_42", "score_total": 42, "score_delta": 14,
     "metric_mention_rate": 0.30, "metric_avg_position": 4.2, "metric_positive_rate": 0.60,
-    "monitored_channels_count": 12, "created_at": "2026-05-29T14:20:00Z"
+    "monitored_channels_count": 8, "created_at": "2026-05-29T14:20:00Z"
   },
   "stats": {
     "diagnoses_count": 1, "last_diagnosis_at": "2026-05-29T14:20:00Z",
     "contents_count": 3, "contents_pending_count": 3, "published_count": 0
   },
   "channel_visibility": [
-    {"channel": "wenxin_web", "platform": "wenxin", "device": "web", "mention_rate": 0.52},
-    {"channel": "qwen_web", "platform": "qwen", "device": "web", "mention_rate": 0.46},
-    {"channel": "doubao_web", "platform": "doubao", "device": "web", "mention_rate": 0.40},
-    {"channel": "doubao_mobile", "platform": "doubao", "device": "mobile", "mention_rate": 0.12},
-    {"channel": "douyin_web", "platform": "douyin", "device": "web", "mention_rate": 0.06}
+    {"platform": "wenxin", "mention_rate": 0.52},
+    {"platform": "qwen", "mention_rate": 0.46},
+    {"platform": "doubao", "mention_rate": 0.40},
+    {"platform": "deepseek", "mention_rate": 0.34},
+    {"platform": "douyin", "mention_rate": 0.06}
   ],
   "gaps": {"count": 4, "samples": ["杭州奶茶推荐", "手作奶茶用真奶"]},
   "next_step": {"cta_text": "去补齐缺口", "target": "content_generate", "source_question_id": "q_3"}

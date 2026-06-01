@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    #lib-grid article { cursor: pointer; }
+    #lib-grid article:hover h3 { color: #2563EB; }
+  </style>
 </head>
 <body class="font-sans bg-canvas text-offblack antialiased">
   <div id="sidebar-root"></div>
@@ -213,9 +217,11 @@
         left.appendChild(typeChip);
         left.insertAdjacentHTML('beforeend',
           '<span class="inline-flex items-center px-2 h-6 rounded-lg bg-canvas border border-line text-secondary text-xs font-medium">' + m.platform + '</span>');
-        // 「编辑」→ 10 内容详情（带 type + id + platform）
+        // 详情链接 → 10 内容详情（带 type + id + platform）
+        const detailHref = '10-内容详情.html?type=' + (TYPE_EN[m.type] || 'text') + '&id=' + (i + 1) + '&platform=' + (PLAT_EN[m.platform] || 'xiaohongshu');
         const edit = m.el.querySelector('a[href="07-内容生成.html"]');
-        if (edit) edit.setAttribute('href', '10-内容详情.html?type=' + (TYPE_EN[m.type] || 'text') + '&id=' + (i + 1) + '&platform=' + (PLAT_EN[m.platform] || 'xiaohongshu'));
+        if (edit) edit.setAttribute('href', detailHref);
+        m.el.dataset.href = detailHref; // 整卡可点 → 详情
         // 「加入分发」→ 09（带 content + title 定位到这条内容）
         const dist = m.el.querySelector('a[href="09-分发建议.html"]');
         const h3 = m.el.querySelector('h3');
@@ -244,6 +250,13 @@
       });
       statusSel.addEventListener('change', () => { curStatus = statusSel.value; apply(); });
       platSel.addEventListener('change', () => { curPlat = platSel.value; apply(); });
+
+      // 整卡点击 → 内容详情（点底部按钮/链接/表单控件不触发）
+      grid.addEventListener('click', (e) => {
+        if (e.target.closest('a, button, input, label, select')) return;
+        const art = e.target.closest('article');
+        if (art && art.dataset.href) location.href = art.dataset.href;
+      });
     })();
   </script>
 </body>
