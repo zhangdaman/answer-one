@@ -14,9 +14,8 @@
   <div id="sidebar-root"></div>
 
   <div class="pl-60">
-    <header class="h-16 bg-canvas/85 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center justify-between px-8">
+    <header class="h-16 bg-canvas/85 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center px-8">
       <h1 class="font-display text-lg font-bold tracking-tighter">品牌档案</h1>
-      <button id="brand-save" data-toast="品牌档案已保存（演示）" class="px-4 h-9 rounded-xl bg-brand-gradient text-white text-sm font-semibold shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">保存全部修改</button>
     </header>
 
     <main class="p-8 mx-auto w-full max-w-[1280px] space-y-6 bg-page-wash">
@@ -110,22 +109,22 @@
           <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
             <dt class="text-sm text-secondary">品牌名称</dt>
             <dd id="bi-name" class="text-sm font-medium">茶语时光</dd>
-            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+            <button class="text-xs text-primary hover:underline">编辑</button>
           </div>
           <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
             <dt class="text-sm text-secondary">一句话描述</dt>
             <dd id="bi-desc" class="text-sm">杭州手作鲜奶茶，主打茉莉奶绿</dd>
-            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+            <button class="text-xs text-primary hover:underline">编辑</button>
           </div>
           <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
             <dt class="text-sm text-secondary">行业 / 品类</dt>
             <dd id="bi-cat" class="text-sm">茶饮咖啡</dd>
-            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+            <button class="text-xs text-primary hover:underline">编辑</button>
           </div>
           <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
             <dt class="text-sm text-secondary">所在城市</dt>
             <dd id="bi-region" class="text-sm">杭州</dd>
-            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+            <button class="text-xs text-primary hover:underline">编辑</button>
           </div>
           <div class="grid grid-cols-[140px_1fr_auto] items-start gap-4 px-6 py-3.5">
             <dt class="text-sm text-secondary pt-1">关键卖点</dt>
@@ -134,7 +133,7 @@
               <span class="px-2.5 h-7 grid place-items-center rounded-lg bg-primary/10 text-primary text-sm">茉莉花茶</span>
               <span class="px-2.5 h-7 grid place-items-center rounded-lg bg-primary/10 text-primary text-sm">本地首店</span>
             </dd>
-            <button data-toast="演示版：可行内编辑，改完点右上角「保存全部修改」" data-toast-type="info" class="text-xs text-primary hover:underline">编辑</button>
+            <button class="text-xs text-primary hover:underline">编辑</button>
           </div>
         </dl>
       </section>
@@ -233,10 +232,6 @@
             <span class="text-sm font-medium text-offblack">品牌名称 <span class="text-danger">*</span></span>
             <input id="nb-name" type="text" maxlength="20" placeholder="如：茶语·杭州二店" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
           </label>
-          <label class="block">
-            <span class="text-sm font-medium text-offblack">一句话描述</span>
-            <input id="nb-desc" type="text" maxlength="40" placeholder="一句话说清你的招牌与特色" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
-          </label>
           <div class="grid grid-cols-2 gap-4">
             <div class="block">
               <span class="text-sm font-medium text-offblack">行业 / 品类</span>
@@ -255,10 +250,6 @@
               </div>
             </div>
           </div>
-          <label class="block">
-            <span class="text-sm font-medium text-offblack">关键卖点 <span class="text-muted font-normal">（逗号分隔，最多 3 个）</span></span>
-            <input id="nb-selling" type="text" placeholder="如：手作鲜奶, 现萃茶, 到店自取" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
-          </label>
           <div class="block">
             <span class="text-sm font-medium text-offblack">目标 AI 平台 <span class="text-muted font-normal">（默认全选，可取消）</span></span>
             <div id="nb-platforms" class="mt-1.5 flex flex-wrap gap-1.5">
@@ -283,7 +274,7 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260529h"></script>
+  <script src="assets/app.js?v=20260602j"></script>
   <script>mountShell('brand')</script>
   <script>
     // ——— 04 品牌档案 · 演示版交互（含多品牌切换 / 新建）———
@@ -360,6 +351,7 @@
         list.innerHTML = b.samples.length
           ? b.samples.map(sampleLi).join('')
           : '<li class="px-6 text-center text-sm text-muted" style="padding-top:1.75rem;padding-bottom:1.75rem">还没有提问样本，系统会自动生成，你也可以点「添加提问」先补一条</li>';
+        if (typeof resetBiEdit === 'function') resetBiEdit();
       }
 
       // 品牌卡内 HTML（新建时复用，类名与静态卡保持一致以躲开 Play CDN 动态类陷阱）
@@ -404,6 +396,64 @@
       });
       // 侧栏切换器广播 → 档案详情同步（不重复弹 toast，toast 由发起方负责）
       document.addEventListener('ao:brandchange', (e) => { renderDetail(e.detail.index); syncCards(e.detail.index); });
+
+      // ——— 基础信息：真·行内编辑（名称 / 一句话描述 / 行业品类 / 城市 / 卖点）———
+      const BI_FIELDS = [
+        { dd: 'bi-name', key: 'name', label: '品牌名称', kind: 'text' },
+        { dd: 'bi-desc', key: 'desc', label: '一句话描述', kind: 'text' },
+        { dd: 'bi-cat', key: 'category', label: '行业 / 品类', kind: 'text' },
+        { dd: 'bi-region', key: 'region', label: '所在城市', kind: 'text' },
+        { dd: 'bi-selling', key: 'selling', label: '关键卖点', kind: 'tags' },
+      ];
+      const escA = (s) => String(s == null ? '' : s).replace(/"/g, '&quot;');
+      const isPlaceholder = (s) => /待.*补充|待在档案补充/.test(String(s || ''));
+      const biTagChip = (s) => '<span data-tag="' + escA(s) + '" class="inline-flex items-center gap-1 px-2.5 h-7 rounded-lg bg-primary/10 text-primary text-sm">' + s + '<button class="bi-tag-del w-4 h-4 grid place-items-center rounded hover:bg-primary/20">×</button></span>';
+      const biState = {};
+      function resetBiEdit() { BI_FIELDS.forEach((f) => { const o = biState[f.dd]; if (o) { o.editing = false; o.btn.textContent = '编辑'; } }); }
+      function enterBiEdit(f) {
+        const b = BRAND_DATA[curIndex()], dd = document.getElementById(f.dd);
+        if (f.kind === 'text') {
+          let v = b[f.key]; if (isPlaceholder(v)) v = '';
+          dd.innerHTML = '<input class="w-full h-9 px-2.5 rounded-lg border border-primary bg-surface text-sm outline-none focus:ring-2 focus:ring-primary/20" value="' + escA(v) + '" placeholder="' + escA(f.label) + '" />';
+          const inp = dd.querySelector('input'); inp.focus();
+          inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); biState[f.dd].btn.click(); } });
+        } else {
+          const arr = (b.selling || []).filter((s) => !isPlaceholder(s));
+          dd.innerHTML = arr.map(biTagChip).join('') + '<input class="bi-tag-input h-7 px-1.5 text-sm outline-none placeholder:text-secondary/60 flex-1 min-w-24" placeholder="加卖点，回车…" />';
+          const ti = dd.querySelector('.bi-tag-input'); if (ti) ti.focus();
+        }
+      }
+      function saveBiEdit(f) {
+        const i = curIndex(), dd = document.getElementById(f.dd);
+        if (f.kind === 'text') {
+          const t = ((dd.querySelector('input') || {}).value || '').trim();
+          BRAND_DATA[i][f.key] = t || ('（待在档案补充' + (f.key === 'desc' ? '一句话描述' : f.label) + '）');
+        } else {
+          const tags = [...dd.querySelectorAll('[data-tag]')].map((s) => s.getAttribute('data-tag').trim()).filter(Boolean).slice(0, 6);
+          BRAND_DATA[i].selling = tags.length ? tags : ['待在档案补充卖点'];
+        }
+        renderDetail(i); syncCards(i);
+        if (window.AO) AO.toast('已更新「' + f.label + '」', 'success');
+      }
+      BI_FIELDS.forEach((f) => {
+        const dd = document.getElementById(f.dd); if (!dd) return;
+        const btn = dd.parentElement.querySelector('button'); if (!btn) return;
+        btn.removeAttribute('data-toast'); btn.removeAttribute('data-toast-type');
+        biState[f.dd] = { btn, editing: false };
+        btn.addEventListener('click', () => {
+          const o = biState[f.dd];
+          if (!o.editing) { enterBiEdit(f); btn.textContent = '保存'; o.editing = true; }
+          else saveBiEdit(f); // renderDetail → resetBiEdit 复位按钮
+        });
+        if (f.kind === 'tags') {
+          dd.addEventListener('click', (e) => { const x = e.target.closest('.bi-tag-del'); if (x) x.closest('[data-tag]').remove(); });
+          dd.addEventListener('keydown', (e) => {
+            const ti = e.target.closest('.bi-tag-input'); if (!ti || e.key !== 'Enter') return;
+            e.preventDefault(); const v = ti.value.trim().replace(/^#/, ''); if (!v) return;
+            ti.insertAdjacentHTML('beforebegin', biTagChip(v)); ti.value = '';
+          });
+        }
+      });
 
       // 目标平台开关 + 计数（手动点单个平台）
       wrap.addEventListener('click', (e) => {
@@ -459,15 +509,11 @@
         list.appendChild(li);
         li.querySelector('.ao-sample-input').focus();
       });
-      // 顶部「保存全部修改」：先把正在编辑的样本提交，再走全局保存提示
-      const brandSaveBtn = document.getElementById('brand-save');
-      if (brandSaveBtn) brandSaveBtn.addEventListener('click', () => {
-        list.querySelectorAll('.ao-sample-input').forEach((inp) => { if (inp.value.trim()) toView(inp.closest('li')); });
-      });
+      // 注：基础信息、提问样本、目标平台均为「就地即时保存」，无需顶部全局保存按钮。
 
       // ——— 新建品牌弹窗 ———
       const modal = document.getElementById('newbrand-modal');
-      const ids = ['nb-name', 'nb-desc', 'nb-cat', 'nb-region', 'nb-selling'];
+      const ids = ['nb-name', 'nb-cat', 'nb-region'];
       const openNew = () => {
         modal.classList.remove('hidden');
         document.querySelectorAll('#nb-platforms .nb-plat').forEach((p) => { p.className = 'nb-plat h-8 px-3 rounded-lg border border-primary bg-primary/5 text-[12.5px] text-primary transition'; });
@@ -511,12 +557,11 @@
         const cat = v('nb-cat') || '未分类';
         const region = v('nb-region') || '未设置城市';
         const area = region.split('·').pop().trim() || region;
-        const selling = v('nb-selling').split(/[，,、\s]+/).filter(Boolean).slice(0, 3);
         const offPlats = [...document.querySelectorAll('#nb-platforms .nb-plat')].filter((p) => !p.classList.contains('border-primary')).map((p) => p.dataset.p);
         const b = {
           glyph: name.slice(0, 1), name, category: cat, area,
-          desc: v('nb-desc') || '（待补充一句话描述）', region,
-          selling: selling.length ? selling : ['待补充卖点'], platOn: 8 - offPlats.length, sampleCount: 0, platOff: offPlats,
+          desc: '（待在档案补充一句话描述）', region,
+          selling: ['待在档案补充卖点'], platOn: 8 - offPlats.length, sampleCount: 0, platOff: offPlats,
           note: '系统将自动生成提问样本', samples: [],
         };
         const i = BRAND_DATA.length;

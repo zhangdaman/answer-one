@@ -22,7 +22,7 @@
     </header>
 
     <main class="p-8 mx-auto w-full max-w-[1280px] space-y-5 bg-page-wash">
-      <p class="text-sm text-secondary">每次诊断会向你选定的 8 个 AI 平台、各提 10 个本地问题，统计你被提及的情况。</p>
+      <p class="text-sm text-secondary">每次诊断会向你选定的 AI 平台、各提一组本地问题（开始前可查看 / 修改），统计你被提及的情况。</p>
 
       <div class="bg-surface border border-line rounded-lg overflow-hidden">
         <table class="w-full text-sm">
@@ -93,7 +93,7 @@
       <!-- 总进度 -->
       <div class="mt-5">
         <div class="flex items-center justify-between text-sm">
-          <span class="text-secondary">正在询问 <span id="prog-current" class="text-offblack font-medium">豆包</span> · 第 <span id="prog-q">3</span> / 10 个问题</span>
+          <span class="text-secondary">正在询问 <span id="prog-current" class="text-offblack font-medium">豆包</span> · 第 <span id="prog-q">3</span> / <span id="prog-qtotal">10</span> 个问题</span>
           <span id="prog-pct" class="font-display font-bold tracking-tighter">19%</span>
         </div>
         <div class="mt-2 h-2 rounded-full bg-line overflow-hidden"><div id="prog-bar" class="h-full w-[19%] bg-brand-gradient rounded-full"></div></div>
@@ -122,13 +122,23 @@
   <!-- 新建诊断 · 设置弹层（先选平台，再开始） -->
   <div id="diag-setup-modal" class="hidden fixed inset-0 z-30 grid place-items-center px-4">
     <div class="absolute inset-0 bg-offblack/50 backdrop-blur-sm" onclick="AODiag.closeSetup()"></div>
-    <div class="relative w-full max-w-[480px] bg-surface rounded-2xl border border-line shadow-elevated p-7">
+    <div class="relative w-full max-w-[680px] bg-surface rounded-2xl border border-line shadow-elevated p-7">
       <div class="flex items-start justify-between">
         <div>
           <h3 class="font-display text-lg font-bold tracking-tighter">新建诊断</h3>
-          <p class="text-sm text-secondary mt-0.5">品牌「茶语时光」· 每个平台各提 10 个本地问题</p>
+          <p class="text-sm text-secondary mt-0.5">品牌「茶语时光」· 下面这些问题会拿去问每个平台</p>
         </div>
         <button onclick="AODiag.closeSetup()" class="w-8 h-8 grid place-items-center rounded-lg text-secondary hover:bg-line/60 transition">✕</button>
+      </div>
+
+      <!-- 提问样本（开始前可查看 / 修改）-->
+      <div class="mt-5">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium">提问样本 <span class="text-xs text-secondary font-normal">· 按你的客户真实搜法改</span></span>
+          <span class="text-xs text-secondary"><span id="setup-q-count">10</span> 个问题</span>
+        </div>
+        <div id="setup-q-list" class="mt-2.5 grid grid-cols-2 gap-2 max-h-[232px] overflow-y-auto pr-1"></div>
+        <button onclick="AODiag.addQuestion()" class="mt-2 text-xs text-primary hover:underline inline-flex items-center gap-1"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>加一个问题</button>
       </div>
 
       <div class="mt-5">
@@ -147,7 +157,7 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260529h"></script>
+  <script src="assets/app.js?v=20260602j"></script>
   <script>
     mountShell('diag');
     // 诊断流程（演示）：开始 → 先在「设置」里选平台 → 确认后从头开始跑；列表行与进度弹层始终自洽
@@ -169,30 +179,41 @@
       function renderChips() { $('setup-channel-grid').innerHTML = CHANNELS.map((c, i) => chipHTML(c, i, sel.has(i))).join(''); }
       function refreshCount() { $('setup-go-count').textContent = sel.size; }
 
+      // 提问样本（演示默认；开始前可查看 / 修改 / 增删）
+      const QUESTIONS = ['杭州奶茶推荐', '杭州手作奶茶哪家好', '杭州茉莉奶绿哪家好喝', '杭州市中心奶茶店推荐', '杭州用真奶的奶茶店', '逛街累了杭州哪喝奶茶', '杭州好喝的网红奶茶', '杭州适合坐下喝的奶茶店', '杭州性价比高的奶茶', '杭州手作鲜奶茶推荐'];
+      function renderQuestions() {
+        $('setup-q-list').innerHTML = QUESTIONS.map((q, i) =>
+          `<div class="flex items-center gap-2"><input data-q="${i}" value="${q.replace(/"/g, '&quot;')}" class="flex-1 min-w-0 h-9 px-2.5 rounded-lg border border-line text-[13px] outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20" placeholder="输入一个本地问题…" /><button data-qdel="${i}" class="w-7 h-7 shrink-0 grid place-items-center rounded-lg text-secondary hover:bg-danger/10 hover:text-danger transition" title="删除">✕</button></div>`
+        ).join('');
+        $('setup-q-count').textContent = QUESTIONS.length;
+      }
+
       const AODiag = {
         open() { $('diag-modal').classList.remove('hidden'); },
         close() { $('diag-modal').classList.add('hidden'); },
-        openSetup() { sel.clear(); CHANNELS.forEach((_, i) => sel.add(i)); renderChips(); refreshCount(); $('diag-setup-modal').classList.remove('hidden'); },
+        openSetup() { sel.clear(); CHANNELS.forEach((_, i) => sel.add(i)); renderChips(); refreshCount(); renderQuestions(); $('diag-setup-modal').classList.remove('hidden'); },
         closeSetup() { $('diag-setup-modal').classList.add('hidden'); },
         toggle(i) { sel.has(i) ? sel.delete(i) : sel.add(i); renderChips(); refreshCount(); },
         selectAll() { CHANNELS.forEach((_, i) => sel.add(i)); renderChips(); refreshCount(); },
-        setRunning() {
-          $('running-status').innerHTML = '<span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-primary/10 text-primary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>进行中 · 询问中 1/10</span>';
+        addQuestion() { QUESTIONS.push(''); renderQuestions(); const last = $('setup-q-list').querySelector('[data-q="' + (QUESTIONS.length - 1) + '"]'); if (last) last.focus(); },
+        setRunning(qCount) {
+          $('running-status').innerHTML = '<span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-primary/10 text-primary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>进行中 · 询问中 1/' + qCount + '</span>';
           $('running-action').innerHTML = '<button onclick="AODiag.view()" class="text-xs text-primary hover:underline">查看进度</button>';
         },
         setCanceled() {
           $('running-status').innerHTML = '<span class="inline-flex items-center gap-1.5 px-2.5 h-6 rounded-lg bg-danger/10 text-danger text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-danger"></span>已取消</span>';
           $('running-action').innerHTML = '<button onclick="AODiag.start()" class="text-xs text-primary hover:underline">重新诊断</button>';
         },
-        resetProgress(list) {
+        resetProgress(list, qCount) {
           $('prog-current').textContent = list[0].name;
           $('prog-q').textContent = '1';
+          $('prog-qtotal').textContent = qCount;
           $('prog-pct').textContent = '1%';
           $('prog-bar').style.width = '1%';
           $('prog-done').textContent = '0';
           $('prog-total').textContent = list.length;
           $('prog-list').innerHTML = list.map((c, i) => i === 0
-            ? `<li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-primary/5"><span class="w-4 h-4 shrink-0 rounded-full border-2 border-primary border-t-transparent animate-spin"></span><span class="flex-1 font-medium">${c.name}</span><span class="text-xs text-primary">询问中 1/10</span></li>`
+            ? `<li class="flex items-center gap-2.5 px-3 h-9 rounded-lg bg-primary/5"><span class="w-4 h-4 shrink-0 rounded-full border-2 border-primary border-t-transparent animate-spin"></span><span class="flex-1 font-medium">${c.name}</span><span class="text-xs text-primary">询问中 1/${qCount}</span></li>`
             : `<li class="flex items-center gap-2.5 px-3 h-9 rounded-lg"><span class="w-1.5 h-1.5 shrink-0 rounded-full ${c.api ? 'bg-line' : 'bg-warning'} ml-1.5 mr-1"></span><span class="flex-1 text-secondary">${c.name}</span><span class="text-xs ${c.api ? 'text-secondary' : 'text-warning'}">${c.api ? '等待' : '等待 · 备用算法'}</span></li>`
           ).join('');
         },
@@ -200,11 +221,13 @@
         confirmStart() {
           const list = CHANNELS.filter((_, i) => sel.has(i));
           if (!list.length) { AO.toast('至少选择一个平台', 'warn'); return; }
+          const qCount = QUESTIONS.filter((q) => q.trim()).length;
+          if (!qCount) { AO.toast('至少保留 1 个问题', 'warn'); return; }
           this.closeSetup();
-          this.resetProgress(list);
-          this.setRunning();
+          this.resetProgress(list, qCount);
+          this.setRunning(qCount);
           this.open();
-          AO.toast('诊断已开始 · ' + list.length + ' 个平台（演示）', 'success');
+          AO.toast('诊断已开始 · ' + qCount + ' 个问题 × ' + list.length + ' 个平台（演示）', 'success');
         },
         view() { this.open(); },
         cancel() { this.close(); this.setCanceled(); AO.toast('已取消本次诊断（演示）', 'info'); },
@@ -215,6 +238,14 @@
       $('setup-channel-grid').addEventListener('click', function (e) {
         const b = e.target.closest('[data-ch]');
         if (b) AODiag.toggle(Number(b.dataset.ch));
+      });
+      $('setup-q-list').addEventListener('input', function (e) {
+        const el = e.target.closest('[data-q]'); if (el) QUESTIONS[Number(el.dataset.q)] = el.value;
+      });
+      $('setup-q-list').addEventListener('click', function (e) {
+        const b = e.target.closest('[data-qdel]'); if (!b) return;
+        if (QUESTIONS.length <= 1) { AO.toast('至少保留 1 个问题', 'warn'); return; }
+        QUESTIONS.splice(Number(b.dataset.qdel), 1); renderQuestions();
       });
 
       // 从工作台「开始新诊断」带 ?new=1 进入：直接弹出设置框，省去再点一次

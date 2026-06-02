@@ -39,34 +39,43 @@
         </div>
         <div class="relative">
           <select id="lib-status" class="h-10 pl-3.5 pr-9 rounded-lg border border-line bg-surface text-sm appearance-none outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20">
-            <option>全部状态</option><option>待发布</option><option>已发布</option>
+            <option>全部状态</option><option>草稿</option><option>已发布</option>
           </select>
           <svg viewBox="0 0 24 24" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
         </div>
-        <span id="lib-count" class="ml-auto text-sm text-secondary">共 6 条 · 待发布 4 · 已发布 2</span>
+        <div class="ml-auto flex items-center gap-2.5">
+          <span class="text-[12px] text-secondary shrink-0">发布进度</span>
+          <div class="w-24 h-1.5 rounded-full bg-line overflow-hidden" title="已发布 / 全部"><div id="lib-prog" class="h-full bg-success rounded-full transition-all" style="width:25%"></div></div>
+          <span id="lib-count" class="text-sm text-secondary tabular-nums shrink-0">共 8 条 · 草稿 6 · 已发布 2</span>
+        </div>
       </div>
 
-      <!-- 发布指引：建议顺序 + 7 天复诊（原「分发计划」并入内容库）-->
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
-        <span class="inline-flex items-center gap-2 text-[13px] text-offblack">
-          <span class="px-2 h-6 grid place-items-center rounded-lg bg-brand-gradient text-white text-[11px] font-medium shadow-brand shrink-0">建议顺序</span>
-          先发<b class="font-semibold">知乎</b>建权威 → 再发<b class="font-semibold">小红书</b>引流 → 最后<b class="font-semibold">大众点评</b>承接本地搜索
-        </span>
-        <span class="hidden md:block w-px h-5 bg-line"></span>
-        <span class="inline-flex items-center gap-1.5 text-[13px] text-secondary">
-          <svg viewBox="0 0 24 24" class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          发布后 7 天回来复诊，看 AI 有没有开始提到你
-        </span>
-        <a href="05-诊断列表.html?new=1" class="ml-auto shrink-0 h-8 px-3 rounded-lg border border-line text-[12.5px] font-medium text-secondary inline-flex items-center gap-1 transition hover:text-primary hover:border-primary/40">去复诊<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>
+      <!-- 发布指引：顺序(带依据) + 发布状态说明 + 7 天复诊（原「分发计划」并入）-->
+      <div class="rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <span class="px-2 h-6 grid place-items-center rounded-lg bg-brand-gradient text-white text-[11px] font-medium shadow-brand shrink-0">建议发布顺序</span>
+          <span class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-offblack">
+            <span>知乎 <span class="text-[11px] text-secondary">建权威</span></span>
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-muted shrink-0" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+            <span>小红书 <span class="text-[11px] text-secondary">引流</span></span>
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-muted shrink-0" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+            <span>大众点评 <span class="text-[11px] text-secondary">本地承接</span></span>
+          </span>
+          <a href="05-诊断列表.html?new=1" class="ml-auto shrink-0 h-8 px-3 rounded-lg border border-line text-[12.5px] font-medium text-secondary inline-flex items-center gap-1 transition hover:text-primary hover:border-primary/40">7 天后去复诊<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>
+        </div>
+        <p class="text-[11.5px] text-muted mt-2 leading-relaxed">
+          <b class="font-medium text-secondary">顺序依据</b>：各平台在 AI 回答里的角色（建权威→引流→接本地搜索）＋你的诊断信源——这类问题 AI 主要从 <b class="font-medium text-secondary">知乎 / 小红书</b> 取数，所以优先补；正式版按你的诊断自动排序。
+          <br><b class="font-medium text-secondary">发布状态</b>：首答不替你发——你去平台发完，回来点卡片上的「标记已发」，下面进度与状态就会更新。
+        </p>
       </div>
 
       <!-- 内容卡网格：响应式 1/2/3/4 列 -->
       <div id="lib-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-        <!-- 1 · 文字 · 待发布 -->
+        <!-- 1 · 文字 · 草稿 -->
         <article class="group bg-surface border border-line rounded-xl p-5 flex flex-col transition-all duration-200 hover:border-primary/40 hover:shadow-elevated hover:-translate-y-0.5">
           <div class="flex items-center justify-between">
             <span class="inline-flex items-center gap-1 pl-1.5 pr-2 h-6 rounded-lg bg-primary/10 text-primary text-xs font-medium"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V5h16v2M9 5v14M7 19h4"/></svg>文字</span>
-            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-warning/10 text-warning text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>待发布</span>
+            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-offblack/5 text-secondary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>草稿</span>
           </div>
           <h3 class="mt-3 font-medium leading-snug">杭州奶茶测评：3 家本地人常喝的店</h3>
           <p class="mt-1.5 text-sm text-secondary line-clamp-2 flex-1">在杭州想喝杯靠谱奶茶？这篇帮你挑，第一家就是茶语时光……</p>
@@ -100,11 +109,11 @@
           </div>
         </article>
 
-        <!-- 3 · 文字 · 待发布 -->
+        <!-- 3 · 文字 · 草稿 -->
         <article class="group bg-surface border border-line rounded-xl p-5 flex flex-col transition-all duration-200 hover:border-primary/40 hover:shadow-elevated hover:-translate-y-0.5">
           <div class="flex items-center justify-between">
             <span class="inline-flex items-center gap-1 pl-1.5 pr-2 h-6 rounded-lg bg-primary/10 text-primary text-xs font-medium"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V5h16v2M9 5v14M7 19h4"/></svg>文字</span>
-            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-warning/10 text-warning text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>待发布</span>
+            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-offblack/5 text-secondary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>草稿</span>
           </div>
           <h3 class="mt-3 font-medium leading-snug">杭州手作奶茶哪家用真奶？实测对比</h3>
           <p class="mt-1.5 text-sm text-secondary line-clamp-2 flex-1">真奶和奶精到底差在哪，实测几家杭州的店，给出对比……</p>
@@ -117,11 +126,11 @@
           </div>
         </article>
 
-        <!-- 4 · 视频 · 待发布 -->
+        <!-- 4 · 视频 · 草稿 -->
         <article class="group bg-surface border border-line rounded-xl p-5 flex flex-col transition-all duration-200 hover:border-primary/40 hover:shadow-elevated hover:-translate-y-0.5">
           <div class="flex items-center justify-between">
             <span class="inline-flex items-center gap-1 pl-1.5 pr-2 h-6 rounded-lg bg-offblack/5 text-offblack text-xs font-medium"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/></svg>视频</span>
-            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-warning/10 text-warning text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>待发布</span>
+            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-offblack/5 text-secondary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>草稿</span>
           </div>
           <div class="mt-3 relative rounded-lg overflow-hidden border border-hairline aspect-video" style="background:linear-gradient(160deg,#1E293B,#2563EB)">
             <div class="absolute inset-0" style="background:radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.16), transparent)"></div>
@@ -165,11 +174,11 @@
           </div>
         </article>
 
-        <!-- 6 · 图片 · 待发布 -->
+        <!-- 6 · 图片 · 草稿 -->
         <article class="group bg-surface border border-line rounded-xl p-5 flex flex-col transition-all duration-200 hover:border-primary/40 hover:shadow-elevated hover:-translate-y-0.5">
           <div class="flex items-center justify-between">
             <span class="inline-flex items-center gap-1 pl-1.5 pr-2 h-6 rounded-lg bg-accent/10 text-accent text-xs font-medium"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>图片</span>
-            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-warning/10 text-warning text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>待发布</span>
+            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-offblack/5 text-secondary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>草稿</span>
           </div>
           <div class="mt-3 relative rounded-lg overflow-hidden border border-hairline aspect-video grid place-items-center" style="background:linear-gradient(135deg,#ECFDF5,#C7EFD8)">
             <svg viewBox="0 0 24 24" class="w-8 h-8 text-success/40" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
@@ -185,11 +194,54 @@
             </div>
           </div>
         </article>
+
+        <!-- 草稿 1 · 图片（自动保存自内容生成）-->
+        <article class="group bg-surface border border-line rounded-xl p-5 flex flex-col transition-all duration-200 hover:border-primary/40 hover:shadow-elevated hover:-translate-y-0.5">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1 pl-1.5 pr-2 h-6 rounded-lg bg-accent/10 text-accent text-xs font-medium"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>图片</span>
+            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-offblack/5 text-secondary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>草稿</span>
+          </div>
+          <div class="mt-3 relative rounded-lg overflow-hidden border border-hairline aspect-video grid place-items-center" style="background:linear-gradient(135deg,#EFF4FF,#C7D8FF)">
+            <svg viewBox="0 0 24 24" class="w-8 h-8 text-primary/40" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+            <span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">6 张 · 3:4</span>
+          </div>
+          <h3 class="mt-3 font-medium leading-snug">杭州奶茶天花板🧋茉莉奶绿真奶党狂喜</h3>
+          <p class="mt-1.5 text-sm text-secondary line-clamp-2 flex-1">刚由内容生成自动存草稿：小红书图文版，封面 + 9 图集，第一张定生死……</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="text-xs text-secondary">刚刚 · 自动保存</span>
+            <div class="flex gap-1.5">
+              <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 草稿 2 · 视频（自动保存自内容生成）-->
+        <article class="group bg-surface border border-line rounded-xl p-5 flex flex-col transition-all duration-200 hover:border-primary/40 hover:shadow-elevated hover:-translate-y-0.5">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1 pl-1.5 pr-2 h-6 rounded-lg bg-offblack/5 text-offblack text-xs font-medium"><svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/></svg>视频</span>
+            <span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-offblack/5 text-secondary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>草稿</span>
+          </div>
+          <div class="mt-3 relative rounded-lg overflow-hidden border border-hairline aspect-video" style="background:linear-gradient(160deg,#1E293B,#2563EB)">
+            <div class="absolute inset-0" style="background:radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.16), transparent)"></div>
+            <span class="absolute top-2 left-2 px-1.5 h-5 grid place-items-center rounded bg-black/40 text-white text-[10px] font-medium backdrop-blur">15–60s · 竖屏</span>
+            <div class="absolute inset-0 grid place-items-center"><span class="w-11 h-11 rounded-full bg-white/20 ring-1 ring-white/40 backdrop-blur grid place-items-center"><svg viewBox="0 0 24 24" class="w-5 h-5 text-white translate-x-0.5" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+          </div>
+          <h3 class="mt-3 font-medium leading-snug">在杭州喝了 10 家奶茶，这家真奶封神</h3>
+          <p class="mt-1.5 text-sm text-secondary line-clamp-2 flex-1">刚由内容生成自动存草稿：抖音竖屏脚本，前 3 秒钩子 + 全屏字幕……</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="text-xs text-secondary">刚刚 · 自动保存</span>
+            <div class="flex gap-1.5">
+              <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
+            </div>
+          </div>
+        </article>
       </div>
     </main>
   </div>
 
-  <script src="assets/app.js?v=20260529h"></script>
+  <script src="assets/app.js?v=20260602j"></script>
   <script>mountShell('content')</script>
   <script>
     // ——— 08 内容库 · 演示版筛选（类型 / 平台 / 状态）———
@@ -203,40 +255,44 @@
       let curType = '全部', curStatus = '全部状态', curPlat = '全部平台';
 
       // 每张卡的目标发布平台（演示数据，与 07 的 5 平台一致）
-      const PLAT = ['知乎', '小红书', '公众号', '抖音', '知乎', '大众点评'];
+      const PLAT = ['知乎', '小红书', '公众号', '抖音', '知乎', '大众点评', '小红书', '抖音'];
       const PLAT_EN = { '小红书': 'xiaohongshu', '抖音': 'douyin', '大众点评': 'dianping', '公众号': 'gzh', '知乎': 'zhihu' };
       const TYPE_EN = { '文字': 'text', '图片': 'image', '视频': 'video' };
 
       // 先采集类型/状态（DOM 重构前），平台取自 PLAT
       const meta = cards.map((a, i) => {
         const head = a.firstElementChild;
+        const st = head.children[1].textContent;
         return {
           el: a,
           type: head.children[0].textContent.trim(),
-          status: head.children[1].textContent.includes('已发布') ? '已发布' : '待发布',
+          status: st.includes('已发布') ? '已发布' : '草稿',
           platform: PLAT[i] || '小红书',
         };
       });
 
-      // —— 发布状态：状态 chip + 「标记已发」开关 + 计数联动 ——
+      // —— 两态：草稿箱（未发布）⇄ 已发布（chip + 卡片按钮 + 计数联动）——
       const CHIP = {
-        '待发布': '<span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-warning/10 text-warning text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>待发布</span>',
+        '草稿': '<span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-offblack/5 text-secondary text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>草稿</span>',
         '已发布': '<span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-success/10 text-success text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已发布</span>',
       };
-      function setPubBtn(btn, pub) {
-        btn.innerHTML = pub
-          ? '<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 mr-0.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>已发布'
-          : '标记已发';
-        btn.className = 'lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg text-xs font-medium transition ' +
-          (pub ? 'bg-success/10 text-success hover:bg-success/15' : 'bg-primary/10 text-primary hover:bg-primary/15');
-        btn.title = pub ? '点击撤销发布标记' : '发到该平台后点此标记';
+      const NEXT = { '草稿': '已发布', '已发布': '草稿' };
+      const ACT = {
+        '草稿': { html: '标记已发', cls: 'bg-success/10 text-success hover:bg-success/15', title: '发到平台后点此标记已发' },
+        '已发布': { html: '<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 mr-0.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>已发布', cls: 'border border-success/40 text-success hover:bg-success/10', title: '点击移回草稿箱' },
+      };
+      function setActionBtn(btn, status) {
+        const c = ACT[status] || ACT['草稿'];
+        btn.innerHTML = c.html;
+        btn.className = 'lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg text-xs font-medium transition ' + c.cls;
+        btn.title = c.title;
       }
-      function togglePub(m) {
-        const pub = m.status !== '已发布';
-        m.status = pub ? '已发布' : '待发布';
-        m.el.firstElementChild.children[1].outerHTML = CHIP[m.status];
-        const btn = m.el.querySelector('.lib-pub'); if (btn) setPubBtn(btn, pub);
-        if (window.AO) AO.toast(pub ? '已标记为「已发布」' : '已取消发布标记', pub ? 'success' : 'info');
+      function advance(m) {
+        const next = NEXT[m.status] || '已发布';
+        m.status = next;
+        m.el.firstElementChild.children[1].outerHTML = CHIP[next];
+        const btn = m.el.querySelector('.lib-pub'); if (btn) setActionBtn(btn, next);
+        if (window.AO) AO.toast(next === '已发布' ? '已标记为「已发布」' : '已移回草稿箱', next === '已发布' ? 'success' : 'info');
         apply();
       }
 
@@ -250,26 +306,33 @@
         left.appendChild(typeChip);
         left.insertAdjacentHTML('beforeend',
           '<span class="inline-flex items-center px-2 h-6 rounded-lg bg-canvas border border-line text-secondary text-xs font-medium">' + m.platform + '</span>');
-        // 详情链接 → 10 内容详情（带 type + id + platform）
-        const detailHref = '10-内容详情.html?type=' + (TYPE_EN[m.type] || 'text') + '&id=' + (i + 1) + '&platform=' + (PLAT_EN[m.platform] || 'xiaohongshu');
+        // 详情链接 → 10 内容详情（带 type + id + platform + title）
+        const h3 = m.el.querySelector('h3');
+        const ttl = h3 ? '&title=' + encodeURIComponent(h3.textContent.trim()) : '';
+        const detailHref = '10-内容详情.html?type=' + (TYPE_EN[m.type] || 'text') + '&id=' + (i + 1) + '&platform=' + (PLAT_EN[m.platform] || 'xiaohongshu') + ttl;
         const edit = m.el.querySelector('a[href="07-内容生成.html"]');
         if (edit) edit.setAttribute('href', detailHref);
         m.el.dataset.href = detailHref; // 整卡可点 → 详情
-        // 「标记已发」开关：按当前状态初始化
-        const pubBtn = m.el.querySelector('.lib-pub');
-        if (pubBtn) setPubBtn(pubBtn, m.status === '已发布');
+        // 卡片操作按钮：按状态显示 确认 / 标记已发 / 已发布
+        const actBtn = m.el.querySelector('.lib-pub');
+        if (actBtn) setActionBtn(actBtn, m.status);
+        // 注入「删除」（两步确认防误删）
+        if (actBtn && actBtn.parentElement) actBtn.parentElement.insertAdjacentHTML('beforeend',
+          '<button class="lib-del w-8 h-8 grid place-items-center rounded-lg border border-line text-secondary transition hover:bg-danger/10 hover:text-danger hover:border-danger/40" title="删除"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>');
       });
 
       function apply() {
-        let shown = 0, draft = 0, pub = 0;
+        let shown = 0, dft = 0, pub = 0;
         meta.forEach((m) => {
           const ok = (curType === '全部' || m.type === curType) &&
                      (curStatus === '全部状态' || m.status === curStatus) &&
                      (curPlat === '全部平台' || m.platform === curPlat);
           m.el.classList.toggle('hidden', !ok);
-          if (ok) { shown++; m.status === '已发布' ? pub++ : draft++; }
+          if (ok) { shown++; if (m.status === '已发布') pub++; else dft++; }
         });
-        countEl.textContent = `共 ${shown} 条 · 待发布 ${draft} · 已发布 ${pub}`;
+        countEl.textContent = '共 ' + shown + ' 条 · 草稿 ' + dft + ' · 已发布 ' + pub;
+        const prog = document.getElementById('lib-prog');
+        if (prog) { const tot = dft + pub; prog.style.width = (tot ? Math.round((pub / tot) * 100) : 0) + '%'; }
       }
 
       typeWrap.addEventListener('click', (e) => {
@@ -283,14 +346,36 @@
       statusSel.addEventListener('change', () => { curStatus = statusSel.value; apply(); });
       platSel.addEventListener('change', () => { curPlat = platSel.value; apply(); });
 
-      // 卡片交互：「标记已发」切换；点空白处 → 内容详情（其它按钮/链接不触发）
+      // 卡片交互：操作按钮（确认 / 标记已发）推进状态；点空白处 → 内容详情
       grid.addEventListener('click', (e) => {
-        const pubBtn = e.target.closest('.lib-pub');
-        if (pubBtn) { const m = meta.find((x) => x.el === pubBtn.closest('article')); if (m) togglePub(m); return; }
+        const delBtn = e.target.closest('.lib-del');
+        if (delBtn) {
+          if (delBtn.dataset.armed !== '1') {
+            delBtn.dataset.armed = '1'; delBtn.title = '再点一次确认删除';
+            delBtn.style.color = '#DC2626'; delBtn.style.background = 'rgba(220,38,38,.08)'; delBtn.style.borderColor = 'rgba(220,38,38,.4)';
+            setTimeout(() => { if (!delBtn.isConnected) return; delBtn.dataset.armed = ''; delBtn.title = '删除'; delBtn.style.color = ''; delBtn.style.background = ''; delBtn.style.borderColor = ''; }, 2600);
+            return;
+          }
+          const art = delBtn.closest('article');
+          const idx = meta.findIndex((x) => x.el === art);
+          if (idx >= 0) meta.splice(idx, 1);
+          if (art) art.remove();
+          apply();
+          if (window.AO) AO.toast('已删除该内容（演示）', 'info');
+          return;
+        }
+        const actBtn = e.target.closest('.lib-pub');
+        if (actBtn) { const m = meta.find((x) => x.el === actBtn.closest('article')); if (m) advance(m); return; }
         if (e.target.closest('a, button, input, label, select')) return;
         const art = e.target.closest('article');
         if (art && art.dataset.href) location.href = art.dataset.href;
       });
+
+      // 从 07「去内容库」带入 ?status=草稿，自动切到草稿箱视图
+      const q = new URLSearchParams(location.search);
+      const qs = q.get('status');
+      if (qs && ['草稿', '已发布'].includes(qs)) { curStatus = qs; statusSel.value = qs; }
+      apply();
     })();
   </script>
 </body>

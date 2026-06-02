@@ -17,7 +17,7 @@
     gen: '<path d="M5 3v4M3 5h4M6 17v4m-2-2h4M13 3l2.5 6.5L22 12l-6.5 2.5L13 21l-2.5-6.5L4 12l6.5-2.5L13 3Z"/>',
     content: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
     dist: '<path d="M4 12 20 5l-4 15-4-7-8-1Z"/>',
-    help: '<circle cx="12" cy="12" r="8.2"/><path d="M9.6 9.6a2.4 2.4 0 1 1 3.1 2.3c-.7.3-1.2.9-1.2 1.6M12 16.6h.01"/>',
+    help: '<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
   };
 
   // 演示版「旅程状态」：首页据此推荐唯一下一步（静态原型，写死一种典型态）
@@ -127,11 +127,9 @@
     <div class="space-y-0.5">
       ${NAV_ITEMS.map((i) => navItem(i, active)).join('')}
     </div>
-    <div class="px-4 mt-6 mb-2 text-[10.5px] font-semibold tracking-[0.16em] uppercase text-muted">工具</div>
-    <a href="#" class="group flex items-center gap-3 pl-4 pr-3 h-10 rounded-lg text-[13.5px] text-secondary hover:bg-line/50 hover:text-offblack transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
-      <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] shrink-0 opacity-80" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS.help}</svg>
-      <span>帮助 · 课程入口</span>
-      <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 ml-auto opacity-50" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    <a href="11-帮助.html" aria-current="${active === 'help' ? 'page' : 'false'}" class="group mt-4 flex items-center gap-3 pl-4 pr-3 h-10 rounded-lg text-[13.5px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${active === 'help' ? 'bg-brand-gradient text-white font-semibold shadow-brand' : 'text-secondary hover:bg-primary/[0.06] hover:text-primary active:bg-primary/10'}">
+      <svg viewBox="0 0 24 24" class="w-[18px] h-[18px] shrink-0 ${active === 'help' ? 'opacity-100' : 'opacity-70'}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS.help}</svg>
+      <span>帮助中心</span>
     </a>
   </nav>
   <div class="p-3 border-t border-hairline">
