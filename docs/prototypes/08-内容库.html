@@ -18,11 +18,8 @@
   <div id="sidebar-root"></div>
 
   <div class="pl-60">
-    <header class="h-16 bg-canvas/85 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center justify-between px-8">
+    <header class="h-16 bg-canvas/85 backdrop-blur border-b border-line sticky top-0 z-10 flex items-center px-8">
       <h1 class="font-display text-lg font-bold tracking-tighter">我的内容库</h1>
-      <a href="09-分发建议.html" class="px-4 h-9 rounded-xl bg-brand-gradient text-white text-sm font-semibold inline-flex items-center gap-1.5 shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
-        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12 20 5l-4 15-4-7-8-1Z"/></svg>去分发
-      </a>
     </header>
 
     <main class="p-8 mx-auto w-full max-w-[1440px] space-y-5 bg-page-wash">
@@ -49,6 +46,20 @@
         <span id="lib-count" class="ml-auto text-sm text-secondary">共 6 条 · 待发布 4 · 已发布 2</span>
       </div>
 
+      <!-- 发布指引：建议顺序 + 7 天复诊（原「分发计划」并入内容库）-->
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+        <span class="inline-flex items-center gap-2 text-[13px] text-offblack">
+          <span class="px-2 h-6 grid place-items-center rounded-lg bg-brand-gradient text-white text-[11px] font-medium shadow-brand shrink-0">建议顺序</span>
+          先发<b class="font-semibold">知乎</b>建权威 → 再发<b class="font-semibold">小红书</b>引流 → 最后<b class="font-semibold">大众点评</b>承接本地搜索
+        </span>
+        <span class="hidden md:block w-px h-5 bg-line"></span>
+        <span class="inline-flex items-center gap-1.5 text-[13px] text-secondary">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          发布后 7 天回来复诊，看 AI 有没有开始提到你
+        </span>
+        <a href="05-诊断列表.html?new=1" class="ml-auto shrink-0 h-8 px-3 rounded-lg border border-line text-[12.5px] font-medium text-secondary inline-flex items-center gap-1 transition hover:text-primary hover:border-primary/40">去复诊<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>
+      </div>
+
       <!-- 内容卡网格：响应式 1/2/3/4 列 -->
       <div id="lib-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         <!-- 1 · 文字 · 待发布 -->
@@ -63,7 +74,7 @@
             <span class="text-xs text-secondary">更新于 05-29</span>
             <div class="flex gap-1.5">
               <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
-              <a href="09-分发建议.html" class="px-2.5 h-8 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">加入分发</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
             </div>
           </div>
         </article>
@@ -84,7 +95,7 @@
             <span class="text-xs text-secondary">更新于 05-28</span>
             <div class="flex gap-1.5">
               <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
-              <a href="09-分发建议.html" class="px-2.5 h-8 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">加入分发</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
             </div>
           </div>
         </article>
@@ -101,7 +112,7 @@
             <span class="text-xs text-secondary">更新于 05-29</span>
             <div class="flex gap-1.5">
               <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
-              <a href="09-分发建议.html" class="px-2.5 h-8 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">加入分发</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
             </div>
           </div>
         </article>
@@ -125,7 +136,7 @@
             <span class="text-xs text-secondary">更新于 05-27</span>
             <div class="flex gap-1.5">
               <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
-              <a href="09-分发建议.html" class="px-2.5 h-8 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">加入分发</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
             </div>
           </div>
         </article>
@@ -149,7 +160,7 @@
             <span class="text-xs text-secondary">更新于 05-20</span>
             <div class="flex gap-1.5">
               <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
-              <a href="09-分发建议.html" class="px-2.5 h-8 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">加入分发</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
             </div>
           </div>
         </article>
@@ -170,7 +181,7 @@
             <span class="text-xs text-secondary">更新于 05-26</span>
             <div class="flex gap-1.5">
               <a href="07-内容生成.html" class="px-2.5 h-8 grid place-items-center rounded-lg border border-line text-xs font-medium transition hover:bg-line/50 active:bg-line">编辑</a>
-              <a href="09-分发建议.html" class="px-2.5 h-8 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">加入分发</a>
+              <button class="lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium transition hover:bg-primary/15">标记已发</button>
             </div>
           </div>
         </article>
@@ -207,6 +218,28 @@
         };
       });
 
+      // —— 发布状态：状态 chip + 「标记已发」开关 + 计数联动 ——
+      const CHIP = {
+        '待发布': '<span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-warning/10 text-warning text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-warning"></span>待发布</span>',
+        '已发布': '<span class="inline-flex items-center gap-1.5 px-2 h-6 rounded-lg bg-success/10 text-success text-xs font-medium"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已发布</span>',
+      };
+      function setPubBtn(btn, pub) {
+        btn.innerHTML = pub
+          ? '<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 mr-0.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>已发布'
+          : '标记已发';
+        btn.className = 'lib-pub px-2.5 h-8 inline-flex items-center justify-center rounded-lg text-xs font-medium transition ' +
+          (pub ? 'bg-success/10 text-success hover:bg-success/15' : 'bg-primary/10 text-primary hover:bg-primary/15');
+        btn.title = pub ? '点击撤销发布标记' : '发到该平台后点此标记';
+      }
+      function togglePub(m) {
+        const pub = m.status !== '已发布';
+        m.status = pub ? '已发布' : '待发布';
+        m.el.firstElementChild.children[1].outerHTML = CHIP[m.status];
+        const btn = m.el.querySelector('.lib-pub'); if (btn) setPubBtn(btn, pub);
+        if (window.AO) AO.toast(pub ? '已标记为「已发布」' : '已取消发布标记', pub ? 'success' : 'info');
+        apply();
+      }
+
       meta.forEach((m, i) => {
         // 平台徽标：把「类型 chip」与「平台 chip」并到卡片左上一组
         const head = m.el.firstElementChild;
@@ -222,10 +255,9 @@
         const edit = m.el.querySelector('a[href="07-内容生成.html"]');
         if (edit) edit.setAttribute('href', detailHref);
         m.el.dataset.href = detailHref; // 整卡可点 → 详情
-        // 「加入分发」→ 09（带 content + title 定位到这条内容）
-        const dist = m.el.querySelector('a[href="09-分发建议.html"]');
-        const h3 = m.el.querySelector('h3');
-        if (dist) dist.setAttribute('href', '09-分发建议.html?content=' + (i + 1) + (h3 ? '&title=' + encodeURIComponent(h3.textContent.trim()) : ''));
+        // 「标记已发」开关：按当前状态初始化
+        const pubBtn = m.el.querySelector('.lib-pub');
+        if (pubBtn) setPubBtn(pubBtn, m.status === '已发布');
       });
 
       function apply() {
@@ -251,8 +283,10 @@
       statusSel.addEventListener('change', () => { curStatus = statusSel.value; apply(); });
       platSel.addEventListener('change', () => { curPlat = platSel.value; apply(); });
 
-      // 整卡点击 → 内容详情（点底部按钮/链接/表单控件不触发）
+      // 卡片交互：「标记已发」切换；点空白处 → 内容详情（其它按钮/链接不触发）
       grid.addEventListener('click', (e) => {
+        const pubBtn = e.target.closest('.lib-pub');
+        if (pubBtn) { const m = meta.find((x) => x.el === pubBtn.closest('article')); if (m) togglePub(m); return; }
         if (e.target.closest('a, button, input, label, select')) return;
         const art = e.target.closest('article');
         if (art && art.dataset.href) location.href = art.dataset.href;

@@ -101,7 +101,7 @@
             <span class="text-success font-medium inline-flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">进入内容库<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
         </a>
-        <a href="09-分发建议.html" class="group relative overflow-hidden rounded-xl bg-surface border border-line shadow-card p-5 transition-all duration-200 hover:shadow-elevated hover:-translate-y-0.5 outline-none focus-visible:ring-2 focus-visible:ring-accent/30">
+        <a href="08-内容库.html" class="group relative overflow-hidden rounded-xl bg-surface border border-line shadow-card p-5 transition-all duration-200 hover:shadow-elevated hover:-translate-y-0.5 outline-none focus-visible:ring-2 focus-visible:ring-accent/30">
           <div class="absolute inset-x-0 top-0 h-14 bg-card-sheen pointer-events-none"></div>
           <div class="relative flex items-start justify-between">
             <div class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">已发布</div>
@@ -110,7 +110,7 @@
           <div class="relative mt-3 flex items-baseline gap-1.5"><span class="font-display text-[34px] leading-none font-bold tracking-tighter tabular-nums text-secondary">0</span><span class="text-sm text-secondary">篇</span></div>
           <div class="relative mt-3 pt-3 border-t border-hairline flex items-center justify-between text-xs">
             <span class="text-secondary">尚未发布</span>
-            <span class="text-accent font-medium inline-flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">去分发<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
+            <span class="text-accent font-medium inline-flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">去发布<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
         </a>
       </div>
@@ -165,7 +165,7 @@
       else if (s.gaps > 0)
         r = { title: '补齐 ' + s.gaps + ' 个「0 提及」缺口', desc: '已完成诊断 · 这些高频问题 AI 还没提到你，优先补内容', href: '07-内容生成.html?from=diag', cta: '去生成内容' };
       else if (s.hasContent && !s.distributed)
-        r = { title: '把内容分发到对应平台', desc: '内容已就绪 · 按平台建议发布，扩大 AI 可见度', href: '09-分发建议.html', cta: '去分发' };
+        r = { title: '把内容发布到对应平台', desc: '内容已就绪 · 去内容库按建议顺序发布、逐条标记已发', href: '08-内容库.html', cta: '去发布' };
       else
         r = { title: '7 天后回来复诊', desc: '已分发 · 过段时间复诊，对比可见度变化', href: '05-诊断列表.html?new=1', cta: '去复诊' };
       host.innerHTML =

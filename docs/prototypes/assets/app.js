@@ -8,7 +8,6 @@
     { key: 'diag', label: '内容诊断', href: '05-诊断列表.html' },
     { key: 'gen', label: '内容生成', href: '07-内容生成.html' },
     { key: 'content', label: '内容库', href: '08-内容库.html' },
-    { key: 'dist', label: '分发计划', href: '09-分发建议.html' },
   ];
 
   const ICONS = {
