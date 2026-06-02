@@ -57,25 +57,17 @@
         <button id="gen-reset" class="ml-auto shrink-0 h-8 px-3 rounded-lg border border-line text-[12.5px] font-medium text-secondary transition hover:text-primary hover:border-primary/40 inline-flex items-center gap-1"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>重新设置</button>
       </div>
 
-      <!-- ============ 结果区 · 两态：生成中 / 已生成 ============ -->
-      <!-- 生成中 -->
-      <section id="gen-loading" class="hidden bg-surface border border-line rounded-2xl shadow-card p-12 text-center">
-        <svg viewBox="0 0 24 24" class="w-9 h-9 mx-auto text-primary animate-spin" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.2-8.5" stroke-linecap="round"/></svg>
-        <div id="loading-text" class="mt-4 font-medium">正在生成…</div>
-        <div id="loading-pills" class="flex flex-wrap justify-center gap-2 mt-3"></div>
-      </section>
-
-      <!-- 已生成：多平台结果标签页 -->
+      <!-- ============ 结果区 · 渐进式：每平台 生成中→完成/失败，谁先好谁先出 ============ -->
       <section id="gen-result" class="hidden bg-surface border border-line rounded-2xl shadow-card">
         <div class="flex items-center justify-between gap-3 px-5 h-14 border-b border-line">
           <div class="flex items-center gap-2 min-w-0">
-            <span class="text-sm text-secondary inline-flex items-center gap-2 shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已生成 ·</span>
+            <span id="result-status" class="text-sm text-secondary inline-flex items-center gap-2 shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>已生成 ·</span>
             <div id="result-tabs" class="flex items-center gap-1 overflow-x-auto"></div>
           </div>
           <div class="flex items-center gap-2 shrink-0">
             <span class="hidden sm:inline-flex items-center gap-1 text-[11.5px] text-success"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>已自动存入草稿箱</span>
             <button id="gen-copy-active" class="h-9 px-3 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1.5 transition hover:bg-line/50"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制本条</button>
-            <button id="gen-regen" data-toast="正在按当前选题重新生成（演示）" data-toast-type="info" class="h-9 px-3 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1.5 transition hover:bg-line/50"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg>重新生成</button>
+            <button id="gen-regen" class="h-9 px-3 rounded-lg border border-line text-xs font-medium inline-flex items-center gap-1.5 transition hover:bg-line/50"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg>重新生成</button>
             <a href="08-内容库.html?status=%E8%8D%89%E7%A8%BF" class="h-9 px-4 rounded-xl bg-brand-gradient text-white text-sm font-semibold inline-flex items-center gap-1.5 shadow-brand transition-transform hover:-translate-y-0.5 active:translate-y-0">去内容库<svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></a>
           </div>
         </div>
@@ -225,46 +217,78 @@
         '</div>';
       }
 
+      // —— 渐进式：每个平台独立「生成中→完成/失败」，谁先好谁先出，单平台重试不连累其它 ——
+      let genSel = [], genStatus = {};
+      function statusIcon(st) {
+        if (st === 'done') return '<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-success shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>';
+        if (st === 'error') return '<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-danger shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+        return '<span class="w-3.5 h-3.5 shrink-0 rounded-full border-2 border-primary border-t-transparent animate-spin"></span>';
+      }
       function tabBtn(key, on) {
-        const f = state.forms[key] || PLATFORMS[key].primary;
-        return '<button class="rtab h-9 px-3 rounded-lg text-[13px] font-medium whitespace-nowrap transition ' +
-          (on ? 'bg-primary/10 text-primary' : 'text-secondary hover:bg-line/50') + '" data-plat="' + key + '">' + PLATFORMS[key].name + '<span class="ml-1 opacity-60 text-[11px]">' + FORM_LABEL[f] + '</span></button>';
+        const f = state.forms[key] || PLATFORMS[key].primary, st = genStatus[key] || 'pending';
+        return '<button class="rtab h-9 px-3 rounded-lg text-[13px] font-medium whitespace-nowrap transition inline-flex items-center gap-1.5 ' +
+          (on ? 'bg-primary/10 text-primary' : 'text-secondary hover:bg-line/50') + '" data-plat="' + key + '">' + statusIcon(st) + PLATFORMS[key].name + '<span class="opacity-60 text-[11px]">' + FORM_LABEL[f] + '</span></button>';
+      }
+      function renderTabs() { $('result-tabs').innerHTML = genSel.map((k) => tabBtn(k, k === state.active)).join(''); }
+      function panelPending(key, form) {
+        return '<div class="px-6 py-12 text-center">' +
+          '<span class="w-9 h-9 mx-auto rounded-full border-2 border-primary border-t-transparent animate-spin block"></span>' +
+          '<div class="mt-4 text-sm text-secondary">正在生成 <b class="text-offblack font-medium">' + PLATFORMS[key].name + ' · ' + FORM_LABEL[form] + '</b> 版…</div>' +
+          '<div class="mt-1 text-[12px] text-muted">好了会自动显示，其它平台不受影响</div></div>';
+      }
+      function panelError(key, form) {
+        return '<div class="px-6 py-12 text-center">' +
+          '<div class="w-12 h-12 mx-auto rounded-2xl bg-danger/10 text-danger grid place-items-center"><svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>' +
+          '<div class="mt-3 text-sm font-medium text-offblack">' + PLATFORMS[key].name + ' 这版生成失败（演示）</div>' +
+          '<div class="mt-1 text-[12px] text-muted">不影响其它平台，单独重试即可</div>' +
+          '<button class="rp-retry mt-4 h-9 px-4 rounded-lg bg-primary/10 text-primary text-sm font-medium inline-flex items-center gap-1.5 transition hover:bg-primary/15" data-plat="' + key + '"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8m0-5v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg>重试这版</button></div>';
+      }
+      function panelInner(key) {
+        const f = state.forms[key] || PLATFORMS[key].primary, st = genStatus[key] || 'pending';
+        return st === 'done' ? panelHTML(key, f) : (st === 'error' ? panelError(key, f) : panelPending(key, f));
+      }
+      function renderPanel(key) {
+        const p = $('result-panels').querySelector('.result-panel[data-plat="' + key + '"]');
+        if (p) p.innerHTML = panelInner(key);
       }
       function setActive(key) {
         state.active = key;
-        $('result-tabs').querySelectorAll('.rtab').forEach((b) => {
-          const on = b.dataset.plat === key;
-          b.className = 'rtab h-9 px-3 rounded-lg text-[13px] font-medium whitespace-nowrap transition ' + (on ? 'bg-primary/10 text-primary' : 'text-secondary hover:bg-line/50');
-        });
+        renderTabs();
         $('result-panels').querySelectorAll('.result-panel').forEach((d) => d.classList.toggle('hidden', d.dataset.plat !== key));
       }
-
-      // 三态即两步：'config'=第1步(配置)；'loading'/'result'=第2步(配置折叠为条)
+      function updateGenStatus() {
+        const done = genSel.filter((k) => genStatus[k] === 'done').length;
+        const err = genSel.filter((k) => genStatus[k] === 'error').length;
+        const el = $('result-status'); if (!el) return;
+        if (done + err < genSel.length) el.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>生成中 · 已完成 ' + done + '/' + genSel.length;
+        else el.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-success"></span>已生成 · ' + done + ' 版' + (err ? '（' + err + ' 个待重试）' : '');
+      }
+      function finishPlatform(key, forceOk) {
+        genStatus[key] = (!forceOk && Math.random() < 0.18) ? 'error' : 'done';
+        renderPanel(key); renderTabs(); updateGenStatus();
+      }
+      // 两步：'config'=第1步(配置)；'result'=第2步(配置折叠为条 + 渐进结果)
       function show(stateName) {
         const isConfig = stateName === 'config';
         $('gen-config').classList.toggle('hidden', !isConfig);
         const bar = $('gen-config-bar');
         bar.classList.toggle('hidden', isConfig);
         bar.classList.toggle('flex', !isConfig);
-        $('gen-loading').classList.toggle('hidden', stateName !== 'loading');
-        $('gen-result').classList.toggle('hidden', stateName !== 'result');
+        $('gen-result').classList.toggle('hidden', isConfig);
       }
-
-      function buildResult(sel) {
-        $('result-tabs').innerHTML = sel.map((k, i) => tabBtn(k, i === 0)).join('');
-        $('result-panels').innerHTML = sel.map((k, i) => { const f = state.forms[k] || PLATFORMS[k].primary; return '<div class="result-panel' + (i ? ' hidden' : '') + '" data-plat="' + k + '">' + panelHTML(k, f) + '</div>'; }).join('');
-        state.active = sel[0];
-      }
-
       function generate() {
         const sel = ORDER.filter((k) => state.platforms.indexOf(k) >= 0);
         if (!sel.length) { AO.toast('至少选 1 个发布平台', 'warn'); return; }
         $('bar-topic').textContent = $('gen-topic').value.trim() || '（未填选题）';
         $('bar-n').textContent = sel.length;
-        show('loading');
-        $('loading-text').textContent = '正在为 ' + sel.length + ' 个平台各生成一版…';
-        $('loading-pills').innerHTML = sel.map((k) => '<span class="px-2.5 h-6 grid place-items-center rounded-lg bg-primary/10 text-primary text-xs font-medium">' + PLATFORMS[k].name + '</span>').join('');
-        setTimeout(() => { buildResult(sel); show('result'); AO.toast('已生成 ' + sel.length + ' 版 · 已自动存入草稿箱（演示）', 'success'); }, 1100);
+        genSel = sel; genStatus = {}; sel.forEach((k) => { genStatus[k] = 'pending'; });
+        state.active = sel[0];
+        renderTabs();
+        $('result-panels').innerHTML = sel.map((k, i) => '<div class="result-panel' + (i ? ' hidden' : '') + '" data-plat="' + k + '">' + panelInner(k) + '</div>').join('');
+        updateGenStatus();
+        show('result');
+        AO.toast(sel.length + ' 个平台开始生成 · 谁先好谁先出（已存草稿箱）', 'info');
+        sel.forEach((k, i) => setTimeout(() => finishPlatform(k), 600 + i * 600));
       }
 
       // —— 事件 ——
@@ -298,15 +322,19 @@
         return '';
       }
       panels.addEventListener('click', (e) => {
+        const rt = e.target.closest('.rp-retry'); if (rt) { const k = rt.dataset.plat; genStatus[k] = 'pending'; renderPanel(k); renderTabs(); updateGenStatus(); setTimeout(() => finishPlatform(k, true), 700); return; }
         const cp = e.target.closest('.rp-copy'); if (cp) { const panel = cp.closest('.result-panel'); copyText(panelSection(panel, cp.dataset.copy), cp.dataset.copyLabel || ''); return; }
         const del = e.target.closest('.tag-del'); if (del) { del.closest('span').remove(); return; }
         const act = e.target.closest('.img-act'); if (act) AO.toast(act.dataset.act === 'download' ? '该图已开始下载（演示）' : '正在重生成这张（演示）', act.dataset.act === 'download' ? 'success' : 'info');
       });
-      // 顶部「复制本条」：复制当前平台面板的全部文案
+      // 顶部「复制本条」：复制当前平台面板的全部文案（未完成时提示）
       $('gen-copy-active').addEventListener('click', () => {
+        if (genStatus[state.active] !== 'done') { AO.toast('这条还在生成中 / 待重试', 'warn'); return; }
         const panel = $('result-panels').querySelector('.result-panel:not(.hidden)');
         if (panel) copyText(panelSection(panel, 'all'), '本条全部');
       });
+      // 顶部「重新生成」：按当前选题 / 平台重跑（渐进）
+      $('gen-regen').addEventListener('click', generate);
       panels.addEventListener('keydown', (e) => {
         if (e.key !== 'Enter') return;
         const inp = e.target.closest('.rp-tag-input'); if (!inp) return;

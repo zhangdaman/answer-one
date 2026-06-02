@@ -103,7 +103,7 @@
       <section class="bg-surface border border-line rounded-lg">
         <div class="flex items-center justify-between px-6 h-14 border-b border-line">
           <div class="flex items-center gap-2.5"><span class="w-1 h-5 rounded-full bg-brand-gradient"></span><h2 class="font-display font-bold tracking-tighter">基础信息</h2></div>
-          <span class="text-xs text-secondary">行内编辑，改完点右上角保存</span>
+          <span class="text-xs text-secondary">点「编辑」就地修改，逐项即时保存</span>
         </div>
         <dl class="divide-y divide-line">
           <div class="grid grid-cols-[140px_1fr_auto] items-center gap-4 px-6 py-3.5">
@@ -232,6 +232,10 @@
             <span class="text-sm font-medium text-offblack">品牌名称 <span class="text-danger">*</span></span>
             <input id="nb-name" type="text" maxlength="20" placeholder="如：茶语·杭州二店" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
           </label>
+          <label class="block">
+            <span class="text-sm font-medium text-offblack">一句话描述 <span class="text-muted font-normal">（选填，用于内容生成）</span></span>
+            <input id="nb-desc" type="text" maxlength="40" placeholder="一句话说清招牌与特色，如：杭州手作鲜奶茶，主打茉莉奶绿" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+          </label>
           <div class="grid grid-cols-2 gap-4">
             <div class="block">
               <span class="text-sm font-medium text-offblack">行业 / 品类</span>
@@ -250,6 +254,10 @@
               </div>
             </div>
           </div>
+          <label class="block">
+            <span class="text-sm font-medium text-offblack">关键卖点 <span class="text-muted font-normal">（选填，逗号分隔，最多 3 个，用于内容生成）</span></span>
+            <input id="nb-selling" type="text" placeholder="如：手作鲜奶, 现萃茶, 到店自取" class="mt-1.5 w-full h-10 px-3 rounded-lg border border-line bg-surface text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+          </label>
           <div class="block">
             <span class="text-sm font-medium text-offblack">目标 AI 平台 <span class="text-muted font-normal">（默认全选，可取消）</span></span>
             <div id="nb-platforms" class="mt-1.5 flex flex-wrap gap-1.5">
@@ -513,7 +521,7 @@
 
       // ——— 新建品牌弹窗 ———
       const modal = document.getElementById('newbrand-modal');
-      const ids = ['nb-name', 'nb-cat', 'nb-region'];
+      const ids = ['nb-name', 'nb-desc', 'nb-cat', 'nb-region', 'nb-selling'];
       const openNew = () => {
         modal.classList.remove('hidden');
         document.querySelectorAll('#nb-platforms .nb-plat').forEach((p) => { p.className = 'nb-plat h-8 px-3 rounded-lg border border-primary bg-primary/5 text-[12.5px] text-primary transition'; });
@@ -558,10 +566,11 @@
         const region = v('nb-region') || '未设置城市';
         const area = region.split('·').pop().trim() || region;
         const offPlats = [...document.querySelectorAll('#nb-platforms .nb-plat')].filter((p) => !p.classList.contains('border-primary')).map((p) => p.dataset.p);
+        const selling = v('nb-selling').split(/[，,、\s]+/).filter(Boolean).slice(0, 3);
         const b = {
           glyph: name.slice(0, 1), name, category: cat, area,
-          desc: '（待在档案补充一句话描述）', region,
-          selling: ['待在档案补充卖点'], platOn: 8 - offPlats.length, sampleCount: 0, platOff: offPlats,
+          desc: v('nb-desc') || '（待在档案补充一句话描述）', region,
+          selling: selling.length ? selling : ['待在档案补充卖点'], platOn: 8 - offPlats.length, sampleCount: 0, platOff: offPlats,
           note: '系统将自动生成提问样本', samples: [],
         };
         const i = BRAND_DATA.length;
